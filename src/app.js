@@ -3,7 +3,10 @@
 (function(React, d, w){
   var Ship = React.createClass({
     getInitialState:function(){
-      return {position:[0,0]};
+      return {
+        position:[0,0],
+        velocity:[0,0]
+      };
     },
     render : function(){
       var style = {
@@ -18,12 +21,20 @@
     updateState : function(input){
       var v = 5;
       var newState = {
+        velocity : this.state.velocity.slice(0),
         position : this.state.position.slice(0)
       };
-      if(input.keys.right){ newState.position[0] += v }
-      if(input.keys.left){ newState.position[0] -= v }
-      if(input.keys.up){ newState.position[1] -= v }
-      if(input.keys.down){ newState.position[1] += v }
+      if(input.keys.right)  { newState.velocity[0] = v }
+      if(input.keys.left)   { newState.velocity[0] = -v }
+      if(input.keys.up)     { newState.velocity[1] = -v }
+      if(input.keys.down)   { newState.velocity[1] = v }
+
+      newState.velocity[0] = newState.velocity[0] / 2;
+      newState.velocity[1] = newState.velocity[1] / 2;
+
+      newState.position[0] += newState.velocity[0];
+      newState.position[1] += newState.velocity[1];
+
       this.setState(newState);
     }
   });
@@ -32,6 +43,7 @@
     getInitialState: function(){
       return {
         input : {
+          time : (Date.now()),
           keys : {
             left  : false,
             right : false,
@@ -49,6 +61,18 @@
                 <Ship inputState={this.state.input}/>
              </div>
     },
+    tick : function( t ){
+      requestAnimationFrame(this.tick);
+      this.setState({
+        input:{
+          time : t,
+          keys : this.state.input.keys
+        }
+      });
+    },
+    componentWillMount : function(){
+      requestAnimationFrame( this.tick );
+    },
     keyHandler : function(valueToSet, e){
       var newKeys = {};
       switch(e.keyCode){
@@ -58,13 +82,18 @@
         case 40 : newKeys.down  = valueToSet; break;
       }
       this.setState({
-        input:{ keys:newKeys }
+        input:{
+          time : this.state.input.time,
+          keys : newKeys
+        }
       });
     }
   });
 
   var output = d.getElementById("main");
   React.renderComponent( <GameScreen/>, output);
+
+
 })(
     React,
     document,
