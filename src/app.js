@@ -77,13 +77,19 @@
       requestAnimationFrame( this.tick );
     },
     keyHandler : function(valueToSet, e){
-      var newKeys = {};
-      switch(e.keyCode){
-        case 37 : newKeys.left  = valueToSet; break;
-        case 38 : newKeys.up    = valueToSet; break;
-        case 39 : newKeys.right = valueToSet; break;
-        case 40 : newKeys.down  = valueToSet; break;
-      }
+      var newKeys = {
+        left  : this.state.input.keys.left,
+        right : this.state.input.keys.right,
+        up    : this.state.input.keys.up,
+        down  : this.state.input.keys.down,
+        space : this.state.input.keys.space
+      };
+
+      if(e.keyCode === 37) newKeys.left  = valueToSet;
+      if(e.keyCode === 38) newKeys.up    = valueToSet;
+      if(e.keyCode === 39) newKeys.right = valueToSet;
+      if(e.keyCode === 40) newKeys.down  = valueToSet;
+
       this.setState({
         input:{
           time : this.state.input.time,
