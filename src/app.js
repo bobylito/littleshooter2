@@ -5,7 +5,8 @@
     getInitialState:function(){
       return {
         position:[0,0],
-        velocity:[0,0]
+        velocity:[0,0],
+        previousT : Date.now()
       };
     },
     render : function(){
@@ -19,10 +20,12 @@
       this.updateState(props.inputState);
     },
     updateState : function(input){
-      var v = 5;
+      var v = 1;
+      var deltaT = input.time - this.state.previousT;
       var newState = {
         velocity : this.state.velocity.slice(0),
-        position : this.state.position.slice(0)
+        position : this.state.position.slice(0),
+        previousT: input.time
       };
       if(input.keys.right)  { newState.velocity[0] = v }
       if(input.keys.left)   { newState.velocity[0] = -v }
@@ -32,8 +35,8 @@
       newState.velocity[0] = newState.velocity[0] / 2;
       newState.velocity[1] = newState.velocity[1] / 2;
 
-      newState.position[0] += newState.velocity[0];
-      newState.position[1] += newState.velocity[1];
+      newState.position[0] += newState.velocity[0] * deltaT;
+      newState.position[1] += newState.velocity[1] * deltaT;
 
       this.setState(newState);
     }
