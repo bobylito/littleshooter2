@@ -76,6 +76,9 @@
     componentWillMount : function(){
       requestAnimationFrame( this.tick );
     },
+    componentDidMount : function(){
+      this.getDOMNode().focus();
+    },
     keyHandler : function(valueToSet, e){
       var newKeys = {
         left  : this.state.input.keys.left,
