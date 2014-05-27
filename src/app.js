@@ -1,20 +1,69 @@
 /** @jsx React.DOM */
 
 (function(React, d, w){
-  var Ship = React.createClass({
-    getInitialState:function(){
+  var id = (function(){var i = 0; return function(){ i+=1; return i;}; })();
+
+  var Rocket = React.createClass({
+    getInitalState : function(){
       return {
-        position:[0,0],
-        velocity:[0,0],
-        previousT : Date.now()
+        position : [0,0],
+        startT : Date.now()
       };
+    },
+    componentWillMount: function(){
+      this.setState({
+        position : this.props.position,
+        startT : Date.now()
+      });
+    },
+    componentWillReceiveProps : function( next ){
+      this.computeState(next)
+    },
+    computeState: function( props ){
+      var delta = props.inputState.time - this.state.startT;
+      var newState = {
+        startT : this.state.startT,
+        position : [
+          this.state.position[0],
+          this.state.position[1] - (delta / 100)
+        ]
+      }
+      this.setState(newState);
     },
     render : function(){
       var style = {
         top : this.state.position[1],
         left: this.state.position[0]
       };
-      return <div className='ship' style={style}/>;
+
+      return <div style={style} className="rocket"/>;
+    }
+  });
+
+  var Ship = React.createClass({
+    getInitialState:function(){
+      return {
+        position:[0,0],
+        velocity:[0,0],
+        previousT : Date.now(),
+        rockets : [],
+        lastFire : 0
+      };
+    },
+    render : function(){
+      var self = this;
+      var style = {
+        top : this.state.position[1],
+        left: this.state.position[0]
+      };
+      var rockets = this.state.rockets.map(function(m){
+        return self.transferPropsTo(
+          <Rocket key={m.id} position={m.pos}/>
+        );
+      });
+      return <div className='ship' style={style}>
+               {rockets}
+             </div>;
     },
     componentWillReceiveProps:function( props ){
       this.updateState(props.inputState);
@@ -25,7 +74,9 @@
       var newState = {
         velocity : this.state.velocity.slice(0),
         position : this.state.position.slice(0),
-        previousT: input.time
+        previousT: input.time,
+        rockets : this.state.rockets,
+        lastFire : this.state.lastFire
       };
       if(input.keys.right)  { newState.velocity[0] = v }
       if(input.keys.left)   { newState.velocity[0] = -v }
@@ -38,7 +89,20 @@
       newState.position[0] += newState.velocity[0] * deltaT;
       newState.position[1] += newState.velocity[1] * deltaT;
 
+      if(input.keys.space)  {
+        if( input.time > this.state.lastFire + 1000 ) {
+          newState.rockets.push( {
+            id : id(),
+            pos : newState.position.slice(0)
+          } );
+          newState.lastFire = input.time;
+        }
+      }
+
       this.setState(newState);
+    },
+    setFireCooldown: function( t ) {
+      this.state.canFire = false
     }
   });
 
@@ -64,7 +128,8 @@
                 <Ship inputState={this.state.input}/>
              </div>
     },
-    tick : function( t ){
+    tick : function(  ){
+      var t = Date.now();
       requestAnimationFrame(this.tick);
       this.setState({
         input:{
@@ -92,6 +157,7 @@
       if(e.keyCode === 38) newKeys.up    = valueToSet;
       if(e.keyCode === 39) newKeys.right = valueToSet;
       if(e.keyCode === 40) newKeys.down  = valueToSet;
+      if(e.keyCode === 32) newKeys.space = valueToSet;
 
       this.setState({
         input:{
