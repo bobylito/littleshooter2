@@ -22,10 +22,10 @@
     computeState: function( props ){
       var delta = props.inputState.time - this.state.startT;
       var newState = {
-        startT : this.state.startT,
+        startT : props.inputState.time,
         position : [
           this.state.position[0],
-          this.state.position[1] - (delta / 100)
+          this.state.position[1] - (delta)
         ]
       }
       this.setState(newState);
@@ -170,8 +170,6 @@
 
   var output = d.getElementById("main");
   React.renderComponent( <GameScreen/>, output);
-
-
 })(
     React,
     document,
