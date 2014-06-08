@@ -2,7 +2,7 @@
 
 var w = window;
 var d = w.document;
-var React = require('React');
+var React = require('react/addons');
 var _ = require('underscore');
 
 var id = (function(){var i = 0; return function(){ i+=1; return i;}; })();
@@ -88,7 +88,7 @@ var Ship = React.createClass({
   },
   componentWillReceiveProps:function( props ){
     this.updateState(props.inputState);
-    this.handleMessages(props.messages);
+    props.message = this.handleMessages(props.messages);
   },
   updateState : function(input){
     var v = 1;
@@ -112,7 +112,7 @@ var Ship = React.createClass({
     newState.position[1] += newState.velocity[1] * deltaT;
 
     if(input.keys.space)  {
-      if( input.time > this.state.lastFire + 1000 ) {
+      if( input.time > this.state.lastFire + 50 ) {
         newState.rockets.push( {
           id : id(),
           pos : newState.position.slice(0)
@@ -126,19 +126,20 @@ var Ship = React.createClass({
   handleMessages: function( messages ) {
     if( messages.length <= 0) return
     else {
-      var missingRocketIds = _(messages).chain().filter( function(m){
+      var msgs = _(messages).partition( function(m){
               return m.id === messageIDs.ROCKET_LOST;
-          }).map(function(m){
+          });
+      var missingRocketIds = _(msgs[0]).chain().map(function(m){
               return m.val;
           });
-      var remainingRockets = this.state.rockets.filter(function(r){
+      var remainingRockets = _.reject(this.state.rockets, function(r){
           return missingRocketIds.contains( r.id ).value();
       });
-      //console.log(remainingRockets);
+      this.setState( React.addons.update(this.state, {
+        rockets : {$set : remainingRockets}
+      }) );
+      return msgs[1];
     }
-  },
-  setFireCooldown: function( t ) {
-    this.state.canFire = false
   }
 });
 
@@ -159,9 +160,11 @@ var GameScreen = React.createClass({
   },
 
   render : function(){
+    var msgsToSend = messages;
+    messages = [];
     return <div className="game" onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
-              <Ship inputState={this.state.input} messages={messages}/>
+              <Ship inputState={this.state.input} messages={msgsToSend}/>
            </div>
   },
   tick : function(  ){
