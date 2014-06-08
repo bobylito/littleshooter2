@@ -6,8 +6,8 @@
     "grunt-contrib-jshint": "~0.6.3",
     "grunt-contrib-watch": "~0.5.2",
     "browserify": "^4.1.8",
-    "grunt-browserify": "^2.1.0",
-    "grunt-react": "^0.8.2"
+    "grunt-react": "^0.8.2",
+    "grunt-browserify": "^2.1.0"
   },
   "dependencies": {
     "envify": "^1.2.1",
