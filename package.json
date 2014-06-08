@@ -1,0 +1,17 @@
+{
+  "name": "LSX",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-watch": "~0.5.2",
+    "browserify": "^4.1.8",
+    "grunt-browserify": "^2.1.0",
+    "grunt-react": "^0.8.2"
+  },
+  "dependencies": {
+    "envify": "^1.2.1",
+    "react": "^0.10.0",
+    "underscore": "^1.6.0"
+  }
+}
