@@ -105,8 +105,8 @@ var Ship = React.createClass({
     if(input.keys.up)     { newState.velocity[1] = -v }
     if(input.keys.down)   { newState.velocity[1] = v }
 
-    newState.velocity[0] = newState.velocity[0] / 2;
-    newState.velocity[1] = newState.velocity[1] / 2;
+    newState.velocity[0] = newState.velocity[0] * 0.9;
+    newState.velocity[1] = newState.velocity[1] * 0.9;
 
     newState.position[0] = Math.min(Math.max(0,
           this.state.position[0] + newState.velocity[0] * deltaT),
