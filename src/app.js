@@ -108,8 +108,12 @@ var Ship = React.createClass({
     newState.velocity[0] = newState.velocity[0] / 2;
     newState.velocity[1] = newState.velocity[1] / 2;
 
-    newState.position[0] += newState.velocity[0] * deltaT;
-    newState.position[1] += newState.velocity[1] * deltaT;
+    newState.position[0] = Math.min(Math.max(0,
+          this.state.position[0] + newState.velocity[0] * deltaT),
+        this.props.screen.width - 20);
+    newState.position[1] = Math.min(Math.max(0,
+          this.state.position[1] + newState.velocity[1] * deltaT),
+        this.props.screen.height - 23);
 
     if(input.keys.space)  {
       if( input.time > this.state.lastFire + 50 ) {
@@ -162,10 +166,19 @@ var GameScreen = React.createClass({
   render : function(){
     var msgsToSend = messages;
     messages = [];
-    return <div className="game" onKeyDown = { this.keyHandler.bind(this, true) }
+    var style = {
+      width : this.props.width + "px",
+      height: this.props.height+ "px"
+    };
+    var screen = {
+      width : parseInt(this.props.width, 10),
+      height: parseInt(this.props.height, 10)
+    };
+    return <div className="game" style={style}
+                                 onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
-              <Ship inputState={this.state.input} messages={msgsToSend}/>
-           </div>
+              <Ship inputState={this.state.input} messages={msgsToSend} screen={screen}/>
+           </div>;
   },
   tick : function(  ){
     var t = Date.now();
@@ -208,4 +221,4 @@ var GameScreen = React.createClass({
 });
 
 var output = d.getElementById("main");
-React.renderComponent( <GameScreen/>, output);
+React.renderComponent( <GameScreen width="500" height="500" />, output);
