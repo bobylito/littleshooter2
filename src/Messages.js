@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var messages = [];
 var messageIDs = {
   ROCKET_LOST   : 0,
@@ -16,6 +18,6 @@ module.exports = {
     });
   },
   get : function(){
-    return messages.splice(0);
+    return _.groupBy(messages, 'id');
   }
 };

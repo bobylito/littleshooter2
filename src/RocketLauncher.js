@@ -29,22 +29,18 @@ var RocketLauncher = React.createClass({
     this.handleMessages(props.messages);
   },
   handleMessages: function( messages ) {
-    if( messages.length <= 0) return messages;
+    var launchMsgs = messages[Messages.ID.ROCKET_LAUNCH] || [];
+    var lostMsgs   = messages[Messages.ID.ROCKET_LOST] || [];
+
+    if( launchMsgs.length === 0 && lostMsgs.length === 0) return messages;
     else {
-      var msgs = _(messages).partition( function(m){
-        return m.id === Messages.ID.ROCKET_LOST || 
-               m.id === Messages.ID.ROCKET_LAUNCH;
-      });
-      var rocketMsgs =  _(msgs[0]).partition(function(r){
-        return r.id === Messages.ID.ROCKET_LOST;
-      });
-      var missingRocketIds = _(rocketMsgs[0]).chain().map(function(m){
+      var missingRocketIds = _(lostMsgs).chain().map(function(m){
         return m.val;
       });
       var remainingRockets = _.reject(this.state.rockets, function(r){
         return missingRocketIds.contains( r.id ).value();
       });
-      var newRockets = _.map(rocketMsgs[1], function(msg){
+      var newRockets = _.map(launchMsgs, function(msg){
         return {
           id: id(),
           pos: msg.val.pos
@@ -53,7 +49,6 @@ var RocketLauncher = React.createClass({
       this.setState( React.addons.update(this.state, {
         rockets : {$set : remainingRockets.concat(newRockets)}
       }) );
-      return msgs[1];
     }
   }
 });
