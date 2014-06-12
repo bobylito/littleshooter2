@@ -8,6 +8,7 @@ var _ = require('underscore');
 var Messages = require('./Messages.js');
 
 var Ship = require('./Ship');
+var RocketLauncher = require('./RocketLauncher.js');
 
 var GameScreen = React.createClass({
   getInitialState: function(){
@@ -40,6 +41,7 @@ var GameScreen = React.createClass({
                                  onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
               <Ship inputState={this.state.input} messages={msgsToSend} screen={screen}/>
+              <RocketLauncher inputState={this.state.input} messages={msgsToSend} screen={screen} />
            </div>;
   },
   tick : function(  ){
