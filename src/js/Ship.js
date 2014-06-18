@@ -56,7 +56,7 @@ var Ship = React.createClass({
     if(input.keys.space)  {
       if( input.time > this.state.lastFire + 50 ) {
         var shipPos = newState.position.slice(0);
-        shipPos[0] += 13;
+        shipPos[0] += 10;
         Messages.post( Messages.ID.ROCKET_LAUNCH, {
           pos : shipPos
         } );

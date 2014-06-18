@@ -1,26 +1,29 @@
-.game{position:relative; width:500px; height:500px; background:black;
-  outline: none; }
+@import 'nib'
+.game{
+  position:relative;
+  width:500px;
+  height:500px;
+  background:black;
+  outline: none;
+}
 .ship{
   position:absolute;
   width:20px;
   height:23px;
   background-image:url("/assets/spaceShip.png");
-  transition: transform 100ms;
-  -webkit-transform : rotateY(0deg);
+  transition: transform 600ms;
   transform : rotateY(0deg);
-}
-.left{
-  -webkit-transform : rotateY(45deg);
-  transform : rotateY(45deg);
-}
-.right{
-  -webkit-transform : rotateY(-45deg);
-  transform : rotateY(-45deg);
+  &.left{
+    transform : rotateY(45deg);
+  }
+  &.right{
+    transform : rotateY(-45deg);
+  }
 }
 .rocket {
   transform: translateZ(0);
   position:fixed;
-  width : 10px;
+  width : 6px;
   height: 10px;
   background:white;
 }

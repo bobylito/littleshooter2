@@ -41,9 +41,10 @@ var RocketLauncher = React.createClass({
         return missingRocketIds.contains( r.id ).value();
       });
       var newRockets = _.map(launchMsgs, function(msg){
+        var rocketPosition = [ msg.val.pos[0] + 4, msg.val.pos[1] + 2];
         return {
           id: id(),
-          pos: msg.val.pos
+          pos: rocketPosition
         };
       });
       this.setState( React.addons.update(this.state, {

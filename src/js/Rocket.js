@@ -6,7 +6,7 @@ var _ = require('underscore');
 var Messages = require('./Messages.js');
 
 var Rocket = React.createClass({
-  getInitalState : function(){
+  getInitialState : function(){
     return {
       position : [0,0],
       startT : Date.now()
