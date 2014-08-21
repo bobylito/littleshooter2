@@ -21,22 +21,21 @@ var Ship = function(){
 }
 
 Ship.prototype = {
-  left  : function(){ this.speed[0] -= 0.0001; },
-  right : function(){ this.speed[0] += 0.0001; },
-  up    : function(){ 
-    this.speed[1] -= 0.0001;
+  left  : function(){ this.speed[0] -= 0.0003; },
+  right : function(){ this.speed[0] += 0.0003; },
+  up    : function(){
+    this.speed[1] -= 0.0003;
   },
-  down  : function(){ this.speed[1] += 0.0001; },
+  down  : function(){ this.speed[1] += 0.0003; },
   move  : function( deltaT ){
-    this.speed[0] *= 0.9;
-    this.speed[1] *= 0.9;
+    this.speed[0] *= 0.8;
+    this.speed[1] *= 0.8;
     this.position[0] = Math.min(Math.max(0,
           this.position[0] + this.speed[0] * deltaT), 1);
     this.position[1] = Math.min(Math.max(0,
           this.position[1] + this.speed[1] * deltaT), 1);
   }
 };
-
 //Baddie
 var Ouno = function(){
   this.position = [0.5, -0.2];
