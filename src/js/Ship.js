@@ -10,6 +10,8 @@ var Ship = React.createClass({
     return {
       position:[0,0],
       velocity:[0,0],
+      height : 23,
+      width : 20,
       previousT : Date.now(),
       lastFire : 0
     };
@@ -17,8 +19,10 @@ var Ship = React.createClass({
   render : function(){
     var self = this;
     var style = {
-      top : this.props.world.player.ship.position[1] * this.props.screen.height,
-      left: this.props.world.player.ship.position[0] * this.props.screen.width
+      top : this.props.world.player.ship.position[1] *
+              (this.props.screen.height - this.state.height),
+      left: this.props.world.player.ship.position[0] *
+              (this.props.screen.width - this.state.width)
     };
     var cssClasses = ["ship"];
     var epsilon = 0.1;
