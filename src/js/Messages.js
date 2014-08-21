@@ -2,8 +2,12 @@ var _ = require('underscore');
 
 var messages = [];
 var messageIDs = {
-  ROCKET_LOST   : 0,
-  ROCKET_LAUNCH : 1
+  ROCKET_LOST     : 0,
+  ROCKET_LAUNCH   : 1,
+  SHIP_MOVE_RIGHT : 2,
+  SHIP_MOVE_LEFT  : 3,
+  SHIP_MOVE_UP    : 4, 
+  SHIP_MOVE_DOWN  : 5
 }
 
 module.exports = {

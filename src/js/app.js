@@ -7,12 +7,15 @@ var _ = require('underscore');
 
 var Messages = require('./Messages.js');
 
+var models = require('./model/World.js');
+
 var Ship = require('./Ship');
 var RocketLauncher = require('./RocketLauncher.js');
 
 var GameScreen = React.createClass({
   getInitialState: function(){
     return {
+      world : models.create(),
       input : {
         time : (Date.now()),
         keys : {
@@ -40,14 +43,15 @@ var GameScreen = React.createClass({
     return <div className="game" style={style}
                                  onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
-              <Ship inputState={this.state.input} messages={msgsToSend} screen={screen}/>
-              <RocketLauncher inputState={this.state.input} messages={msgsToSend} screen={screen} />
+              <Ship inputState={this.state.input} world={this.state.world} messages={msgsToSend} screen={screen}/>
+              <RocketLauncher inputState={this.state.input} world={this.state.world} messages={msgsToSend} screen={screen} />
            </div>;
   },
   tick : function(  ){
     var t = Date.now();
     requestAnimationFrame(this.tick);
     this.setState({
+      world: models.tick(Messages.get(), this.state.world),
       input:{
         time : t,
         keys : this.state.input.keys
