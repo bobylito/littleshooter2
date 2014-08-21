@@ -26,9 +26,9 @@ var RocketLauncher = React.createClass({
            </div>;
   },
   componentWillReceiveProps:function( props ){
-    this.handleMessages(props.messages);
+    this.handleMessages(props.messages, props.screen);
   },
-  handleMessages: function( messages ) {
+  handleMessages: function( messages, screen) {
     var launchMsgs = messages[Messages.ID.ROCKET_LAUNCH] || [];
     var lostMsgs   = messages[Messages.ID.ROCKET_LOST] || [];
 
@@ -41,7 +41,7 @@ var RocketLauncher = React.createClass({
         return missingRocketIds.contains( r.id ).value();
       });
       var newRockets = _.map(launchMsgs, function(msg){
-        var rocketPosition = [ msg.val.pos[0] + 4, msg.val.pos[1] + 2];
+        var rocketPosition = [ msg.val.pos[0] * (screen.width ), (msg.val.pos[1] * screen.height)];
         return {
           id: id(),
           pos: rocketPosition
