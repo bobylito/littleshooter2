@@ -11,6 +11,7 @@ var models = require('./model/World.js');
 
 var Ship = require('./Ship');
 var RocketLauncher = require('./RocketLauncher.js');
+var Horde = require('./Horde');
 
 var GameScreen = React.createClass({
   getInitialState: function(){
@@ -45,6 +46,7 @@ var GameScreen = React.createClass({
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
               <Ship inputState={this.state.input} world={this.state.world} messages={msgsToSend} screen={screen}/>
               <RocketLauncher inputState={this.state.input} world={this.state.world} messages={msgsToSend} screen={screen} />
+              <Horde world={this.state.world} screen={screen}/>
            </div>;
   },
   tick : function(  ){
