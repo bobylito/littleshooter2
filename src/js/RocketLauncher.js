@@ -6,8 +6,6 @@ var _ = require('underscore');
 var Rocket = require('./Rocket.js');
 var Messages = require('./Messages.js');
 
-var id = (function(){var i = 0; return function(){ i+=1; return i;}; })();
-
 var RocketLauncher = React.createClass({
   getInitialState: function(){
     return {
@@ -16,9 +14,9 @@ var RocketLauncher = React.createClass({
   },
   render : function(){
     var self = this;
-    var rockets = this.state.rockets.map(function(r){
+    var rockets = this.props.world.player.ship.rockets.map(function(r){
       return self.transferPropsTo(
-        <Rocket key={r.id} position={r.pos}/>
+        <Rocket key={r.id} position={r.position}/>
       );
     });
     return <div className="RocketLauncher">
@@ -26,32 +24,7 @@ var RocketLauncher = React.createClass({
            </div>;
   },
   componentWillReceiveProps:function( props ){
-    this.handleMessages(props.messages, props.screen);
   },
-  handleMessages: function( messages, screen) {
-    var launchMsgs = messages[Messages.ID.ROCKET_LAUNCH] || [];
-    var lostMsgs   = messages[Messages.ID.ROCKET_LOST] || [];
-
-    if( launchMsgs.length === 0 && lostMsgs.length === 0) return messages;
-    else {
-      var missingRocketIds = _(lostMsgs).chain().map(function(m){
-        return m.val;
-      });
-      var remainingRockets = _.reject(this.state.rockets, function(r){
-        return missingRocketIds.contains( r.id ).value();
-      });
-      var newRockets = _.map(launchMsgs, function(msg){
-        var rocketPosition = [ msg.val.pos[0] * (screen.width ), (msg.val.pos[1] * screen.height)];
-        return {
-          id: id(),
-          pos: rocketPosition
-        };
-      });
-      this.setState( React.addons.update(this.state, {
-        rockets : {$set : remainingRockets.concat(newRockets)}
-      }) );
-    }
-  }
 });
 
 module.exports = RocketLauncher;
