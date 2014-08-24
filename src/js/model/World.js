@@ -33,9 +33,7 @@ Ship.prototype = {
   PRFX_ID: "SHIP",
   left  : function(){ this.speed[0] -= 0.0003; },
   right : function(){ this.speed[0] += 0.0003; },
-  up    : function(){
-    this.speed[1] -= 0.0003;
-  },
+  up    : function(){ this.speed[1] -= 0.0003; },
   down  : function(){ this.speed[1] += 0.0003; },
   move  : function( deltaT ){
     this.speed[0] *= 0.8;
@@ -44,6 +42,9 @@ Ship.prototype = {
           this.position[0] + this.speed[0] * deltaT), 1);
     this.position[1] = Math.min(Math.max(0,
           this.position[1] + this.speed[1] * deltaT), 1);
+  },
+  collide: function(){
+    Messages.post( Messages.ID.SHIP_DESTROYED, this.id);
   }
 };
 
@@ -58,6 +59,9 @@ Rocket.prototype = {
   move: function(deltaT){
     this.position[0] += this.speed[0] * deltaT;
     this.position[1] += this.speed[1] * deltaT;
+  },
+  collide: function(){
+    Messages.post( Messages.ID.ROCKET_LOST, this.id);
   }
 };
 
@@ -75,6 +79,9 @@ Ouno.prototype = {
     this.position[0] += this.speed[0] * deltaT;
     this.position[1] += this.speed[1] * deltaT;
     if( this.position[1] > 1.2) this.position[1] = -0.2;
+  },
+  collide: function(){
+    Messages.post( Messages.ID.BADDIE_DESTROYED, this.id);
   }
 }
 
@@ -89,8 +96,7 @@ var handleMessages = function(messages, world){
   var launchMsgs = messages[Messages.ID.ROCKET_LAUNCH] || [];
   var lostMsgs   = messages[Messages.ID.ROCKET_LOST] || [];
 
-  if( launchMsgs.length === 0 && lostMsgs.length === 0) return messages;
-  else {
+  if( launchMsgs.length > 0 || lostMsgs.length > 0){
     var missingRocketIds = _(lostMsgs).chain().map(function(m){
       return m.val;
     });
@@ -101,12 +107,24 @@ var handleMessages = function(messages, world){
       var rocketPosition = [msg.val.pos[0], msg.val.pos[1]];
       return new Rocket( rocketPosition );
     });
-    world.player.ship.rockets =remainingRockets.concat(newRockets);
+    world.player.ship.rockets = remainingRockets.concat(newRockets);
+  }
+
+  //Baddies
+  var destroyedBaddies = messages[Messages.ID.BADDIE_DESTROYED] || [];
+
+  if(destroyedBaddies.length > 0){
+    var missingBaddiesID = _.chain(destroyedBaddies).map(function(b){
+      return b.val;
+    });
+    var remainingBaddies = _.reject(world.baddies, function(b){
+      return missingBaddiesID.contains( b.id ).value();
+    });
+    world.baddies = remainingBaddies;
   }
 };
 
-var worldTick = function(messages, world){
-  handleMessages(messages, world);
+var worldTick = function(world){
   world.player.ship.move(30);
   if(world.baddies.length === 0) world.baddies.push(new Ouno());
   world.baddies.forEach(function(b){
@@ -118,6 +136,14 @@ var worldTick = function(messages, world){
   var c = testCollision(world.player.ship.rockets.concat(world.player.ship),
                         world.baddies);
   if(c.length != 0) console.log(c);
+
+  _.chain(c).flatten().uniq().forEach(function(e){
+    e.collide();
+  });
+
+  var messages = Messages.get();
+  handleMessages(messages, world);
+  Messages.reset();
 
   return world;
 }

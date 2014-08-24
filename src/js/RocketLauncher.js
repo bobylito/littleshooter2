@@ -4,7 +4,6 @@ var React = require('react/addons');
 var _ = require('underscore');
 
 var Rocket = require('./Rocket.js');
-var Messages = require('./Messages.js');
 
 var RocketLauncher = React.createClass({
   getInitialState: function(){

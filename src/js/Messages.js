@@ -7,7 +7,9 @@ var messageIDs = {
   SHIP_MOVE_RIGHT : 2,
   SHIP_MOVE_LEFT  : 3,
   SHIP_MOVE_UP    : 4, 
-  SHIP_MOVE_DOWN  : 5
+  SHIP_MOVE_DOWN  : 5,
+  SHIP_DESTROYED  : 6,
+  BADDIE_DESTROYED: 7
 }
 
 module.exports = {

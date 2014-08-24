@@ -31,8 +31,6 @@ var GameScreen = React.createClass({
   },
 
   render : function(){
-    var msgsToSend = Messages.get();
-    Messages.reset();
     var style = {
       width : this.props.width + "px",
       height: this.props.height+ "px"
@@ -44,8 +42,8 @@ var GameScreen = React.createClass({
     return <div className="game" style={style}
                                  onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
-              <Ship inputState={this.state.input} world={this.state.world} messages={msgsToSend} screen={screen}/>
-              <RocketLauncher inputState={this.state.input} world={this.state.world} messages={msgsToSend} screen={screen} />
+              <Ship inputState={this.state.input} world={this.state.world} screen={screen}/>
+              <RocketLauncher inputState={this.state.input} world={this.state.world} screen={screen} />
               <Horde world={this.state.world} screen={screen}/>
            </div>;
   },
@@ -53,7 +51,7 @@ var GameScreen = React.createClass({
     var t = Date.now();
     requestAnimationFrame(this.tick);
     this.setState({
-      world: models.tick(Messages.get(), this.state.world),
+      world: models.tick(this.state.world),
       input:{
         time : t,
         keys : this.state.input.keys
