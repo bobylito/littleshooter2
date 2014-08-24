@@ -67,7 +67,7 @@ Rocket.prototype = {
 
 //Baddie
 var Ouno = function(){
-  this.position = [0.5, -0.2];
+  this.position = [ Math.random(), -0.2];
   this.speed = [0, 0.0001];
   this.size = [0.1, 0.1]
   this.id = this.PRFX_ID + id();
@@ -122,6 +122,10 @@ var handleMessages = function(messages, world){
     });
     world.baddies = remainingBaddies;
   }
+
+  //Points
+  var newPoints = destroyedBaddies.length * 10;
+  world.player.score += newPoints;
 };
 
 var worldTick = function(world){

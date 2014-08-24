@@ -12,6 +12,7 @@ var models = require('./model/World.js');
 var Ship = require('./Ship');
 var RocketLauncher = require('./RocketLauncher.js');
 var Horde = require('./Horde');
+var HUD = require('./HUD');
 
 var GameScreen = React.createClass({
   getInitialState: function(){
@@ -45,6 +46,7 @@ var GameScreen = React.createClass({
               <Ship inputState={this.state.input} world={this.state.world} screen={screen}/>
               <RocketLauncher inputState={this.state.input} world={this.state.world} screen={screen} />
               <Horde world={this.state.world} screen={screen}/>
+              <HUD world={this.state.world} screen={screen}/>
            </div>;
   },
   tick : function(  ){
