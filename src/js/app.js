@@ -8,6 +8,7 @@ var _ = require('underscore');
 var Messages = require('./Messages.js');
 
 var Intro = require('./screens/Intro.js');
+var Game = require('./screens/Game.js');
 
 var SCREENS = {
   INTRO     : 0,
@@ -15,10 +16,10 @@ var SCREENS = {
   GAME_OVER : 2
 };
 
-var GameScreen = React.createClass({
+var GameApp = React.createClass({
   getInitialState: function(){
     return {
-      currentScreen: 0,
+      currentScreen: 1,
       input : {
         time : (Date.now()),
         keys : {
@@ -28,10 +29,6 @@ var GameScreen = React.createClass({
           down  : false,
           space : false
         }
-      },
-      screenSettings : {
-        width: 0,
-        height: 0
       }
     };
   },
@@ -41,13 +38,18 @@ var GameScreen = React.createClass({
       width : this.props.width + "px",
       height: this.props.height+ "px"
     };
-    var screen = this.state.screenSettings;
+    var screen = {
+      width : parseInt(this.props.width, 10),
+      height: parseInt(this.props.height, 10)
+    };
     var screenComponent;
     switch(this.state.currentScreen){
       case SCREENS.INTRO    : 
         screenComponent = <Intro screen={screen} inputState={this.state.input}/>;
         break;
-      //case SCREENS.GAME     : screenComponent = <Game screen={screen} inputState={this.state.input}/>;
+      case SCREENS.GAME     : 
+        screenComponent = <Game screen={screen} inputState={this.state.input}/>;
+        break;
       //case SCREENS.GAME_OVER: screenComponent = <GameOver screen={screen} inputState={this.state.input}/>;
       default : throw new Error("Inconsistent screen state : "+this.state.currentScreen); 
     }
@@ -68,13 +70,6 @@ var GameScreen = React.createClass({
     });
   },
   componentWillReceiveProps : function(props){
-    var stateWithScreen = React.addons.update(this.state, {
-      screenSettings: {$set: {
-        width : parseInt(props.width, 10),
-        height: parseInt(props.height, 10)
-      }}
-    });
-    this.setState(stateWithScreen);
   },
   componentWillMount : function(){
     requestAnimationFrame( this.tick );
@@ -107,4 +102,4 @@ var GameScreen = React.createClass({
 });
 
 var output = d.getElementById("main");
-React.renderComponent( <GameScreen width="500" height="500" />, output);
+React.renderComponent( <GameApp width="500" height="500" />, output);

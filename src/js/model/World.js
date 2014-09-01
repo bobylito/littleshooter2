@@ -26,6 +26,7 @@ var Ship = function(){
   this.position = [0.5, 0.8];
   this.speed = [0,0];
   this.rockets = [];
+  this.size = [0.04, 0.04];
   this.id = this.PRFX_ID + id();
 }
 
@@ -36,10 +37,11 @@ Ship.prototype = {
   up    : function(){ this.speed[1] -= 0.0003; },
   down  : function(){ this.speed[1] += 0.0003; },
   move  : function( deltaT ){
+    //var halfSize = [this.size[0] / 2, this.size[1] / 2];
     this.speed[0] *= 0.8;
     this.speed[1] *= 0.8;
     this.position[0] = Math.min(Math.max(0,
-          this.position[0] + this.speed[0] * deltaT), 1);
+           this.position[0] + this.speed[0] * deltaT), 1);
     this.position[1] = Math.min(Math.max(0,
           this.position[1] + this.speed[1] * deltaT), 1);
   },
