@@ -123,6 +123,10 @@ var handleMessages = function(messages, world){
     world.baddies = remainingBaddies;
   }
 
+  // Ship destruction
+  var destroyedShip = messages[Messages.ID.SHIP_DESTROYED] || [];
+  if(destroyedShip.length > 0) world.player.life--;
+
   //Points
   var newPoints = destroyedBaddies.length * 10;
   world.player.score += newPoints;
@@ -139,7 +143,6 @@ var worldTick = function(world){
   });
   var c = testCollision(world.player.ship.rockets.concat(world.player.ship),
                         world.baddies);
-  if(c.length != 0) console.log(c);
 
   _.chain(c).flatten().uniq().forEach(function(e){
     e.collide();

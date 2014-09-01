@@ -7,18 +7,17 @@ var _ = require('underscore');
 
 var Messages = require('./Messages.js');
 
-var Intro = require('./screens/Intro.js');
+var models = require('./model/World.js');
 
-var SCREENS = {
-  INTRO     : 0,
-  GAME      : 1,
-  GAME_OVER : 2
-};
+var Ship = require('./Ship');
+var RocketLauncher = require('./RocketLauncher.js');
+var Horde = require('./Horde');
+var HUD = require('./HUD');
 
 var GameScreen = React.createClass({
   getInitialState: function(){
     return {
-      currentScreen: 0,
+      world : models.create(),
       input : {
         time : (Date.now()),
         keys : {
@@ -28,10 +27,6 @@ var GameScreen = React.createClass({
           down  : false,
           space : false
         }
-      },
-      screenSettings : {
-        width: 0,
-        height: 0
       }
     };
   },
@@ -41,40 +36,29 @@ var GameScreen = React.createClass({
       width : this.props.width + "px",
       height: this.props.height+ "px"
     };
-    var screen = this.state.screenSettings;
-    var screenComponent;
-    switch(this.state.currentScreen){
-      case SCREENS.INTRO    : 
-        screenComponent = <Intro screen={screen} inputState={this.state.input}/>;
-        break;
-      //case SCREENS.GAME     : screenComponent = <Game screen={screen} inputState={this.state.input}/>;
-      //case SCREENS.GAME_OVER: screenComponent = <GameOver screen={screen} inputState={this.state.input}/>;
-      default : throw new Error("Inconsistent screen state : "+this.state.currentScreen); 
-    }
+    var screen = {
+      width : parseInt(this.props.width, 10),
+      height: parseInt(this.props.height, 10)
+    };
     return <div className="game" style={style}
                                  onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
-              {screenComponent}
+              <Ship inputState={this.state.input} world={this.state.world} screen={screen}/>
+              <RocketLauncher inputState={this.state.input} world={this.state.world} screen={screen} />
+              <Horde world={this.state.world} screen={screen}/>
+              <HUD world={this.state.world} screen={screen}/>
            </div>;
   },
   tick : function(  ){
     var t = Date.now();
     requestAnimationFrame(this.tick);
     this.setState({
+      world: models.tick(this.state.world),
       input:{
         time : t,
         keys : this.state.input.keys
       }
     });
-  },
-  componentWillReceiveProps : function(props){
-    var stateWithScreen = React.addons.update(this.state, {
-      screenSettings: {$set: {
-        width : parseInt(props.width, 10),
-        height: parseInt(props.height, 10)
-      }}
-    });
-    this.setState(stateWithScreen);
   },
   componentWillMount : function(){
     requestAnimationFrame( this.tick );

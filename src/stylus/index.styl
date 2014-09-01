@@ -1,4 +1,7 @@
 @import 'nib'
+*{
+  font-family: Helvetica, Arial;
+}
 .game{
   position:relative;
   width:500px;
@@ -6,6 +9,13 @@
   background:black;
   outline: none;
   overflow: hidden;
+}
+.intro{
+  text-align: center;
+  color:white;
+  h1, h2{
+    margin:auto;
+  }
 }
 .ship{
   position:absolute;
@@ -28,11 +38,20 @@
 }
 .hud {
   .points {
-    position: relative;
+    position: absolute;
     top: 0;
     right: 0;
     text-align:right;
     color:white;
-
+  }
+  .life{
+    position: absolute;
+    top: 0;
+    left: 0;
+    .ship{
+      position: relative;
+      display:inline-block;
+      margin: 5px;
+    }
   }
 }
