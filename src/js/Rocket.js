@@ -14,7 +14,7 @@ var Rocket = React.createClass({
   render : function(){
     var style = {
       top : this.props.position[1] * this.props.screen.height,
-      left: this.props.position[0] * this.props.screen.width
+      left: (this.props.position[0] * this.props.screen.width) + 5
     };
 
     return <div style={style} className="rocket"/>;

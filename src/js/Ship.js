@@ -19,9 +19,9 @@ var Ship = React.createClass({
     var ship = this.props.world.player.ship;
     var style = {
       top : ship.position[1] *
-              (this.props.screen.height - this.state.height),
+              (this.props.screen.height),
       left: ship.position[0] *
-              (this.props.screen.width - this.state.width)
+              (this.props.screen.width)
     };
     var cssClasses = ["ship"];
     var epsilon = 0.1;
@@ -49,11 +49,16 @@ var Ship = React.createClass({
 
     if(input.keys.space)  {
       if( input.time > this.state.lastFire + 50 ) {
-        var shipPos = world.player.ship.position.slice(0);
+        var ship    = world.player.ship;
+        var shipPos = ship.position;
         Messages.post(
           Messages.ID.ROCKET_LAUNCH,
           Messages.channelIDs.GAME,
-          { pos : shipPos }
+          { pos : [
+              shipPos[0] + ship.size[0] / 2,
+              shipPos[1] + ship.size[1] 
+            ]
+          }
         );
         newState.lastFire = input.time;
       }
