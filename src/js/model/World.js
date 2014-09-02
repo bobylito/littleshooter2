@@ -136,7 +136,11 @@ var handleMessages = function(messages, world){
 
 var worldTick = function(world){
   world.player.ship.move(30);
-  if(world.baddies.length === 0) world.baddies.push(new Ouno());
+  if(world.baddies.length === 0) {
+    _.range(100).forEach( function(){
+      world.baddies.push(new Ouno());
+    });
+  }
   world.baddies.forEach(function(b){
     b.move(30);
   });
