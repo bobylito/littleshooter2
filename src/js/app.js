@@ -19,7 +19,7 @@ var SCREENS = {
 var GameApp = React.createClass({
   getInitialState: function(){
     return {
-      currentScreen: 1,
+      currentScreen: 0,
       input : {
         time : (Date.now()),
         keys : {
@@ -44,14 +44,14 @@ var GameApp = React.createClass({
     };
     var screenComponent;
     switch(this.state.currentScreen){
-      case SCREENS.INTRO    : 
+      case SCREENS.INTRO    :
         screenComponent = <Intro screen={screen} inputState={this.state.input}/>;
         break;
-      case SCREENS.GAME     : 
+      case SCREENS.GAME     :
         screenComponent = <Game screen={screen} inputState={this.state.input}/>;
         break;
       //case SCREENS.GAME_OVER: screenComponent = <GameOver screen={screen} inputState={this.state.input}/>;
-      default : throw new Error("Inconsistent screen state : "+this.state.currentScreen); 
+      default : throw new Error("Inconsistent screen state : "+this.state.currentScreen);
     }
     return <div className="game" style={style}
                                  onKeyDown = { this.keyHandler.bind(this, true) }
@@ -62,12 +62,18 @@ var GameApp = React.createClass({
   tick : function(  ){
     var t = Date.now();
     requestAnimationFrame(this.tick);
+    this.checkMessages();
     this.setState({
       input:{
         time : t,
         keys : this.state.input.keys
       }
     });
+  },
+  checkMessages : function(){
+    var messages = Messages.get(Messages.channelIDs.ROOT);
+    if(messages[Messages.ID.CHANGE_SCREEN] &&
+        messages[Messages.ID.CHANGE_SCREEN].length > 0) this.setState({currentScreen: 1});
   },
   componentWillReceiveProps : function(props){
   },

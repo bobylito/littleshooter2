@@ -46,7 +46,7 @@ Ship.prototype = {
           this.position[1] + this.speed[1] * deltaT), 1);
   },
   collide: function(){
-    Messages.post( Messages.ID.SHIP_DESTROYED, this.id);
+    Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
   }
 };
 
@@ -63,7 +63,7 @@ Rocket.prototype = {
     this.position[1] += this.speed[1] * deltaT;
   },
   collide: function(){
-    Messages.post( Messages.ID.ROCKET_LOST, this.id);
+    Messages.post( Messages.ID.ROCKET_LOST, Messages.channelIDs.GAME, this.id);
   }
 };
 
@@ -83,7 +83,7 @@ Ouno.prototype = {
     if( this.position[1] > 1.2) this.position[1] = -0.2;
   },
   collide: function(){
-    Messages.post( Messages.ID.BADDIE_DESTROYED, this.id);
+    Messages.post( Messages.ID.BADDIE_DESTROYED, Messages.channelIDs.GAME, this.id);
   }
 }
 
@@ -150,9 +150,9 @@ var worldTick = function(world){
     e.collide();
   });
 
-  var messages = Messages.get();
+  var messages = Messages.get(Messages.channelIDs.GAME);
   handleMessages(messages, world);
-  Messages.reset();
+  Messages.reset( Messages.channelIDs.GAME );
 
   return world;
 }

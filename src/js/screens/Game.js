@@ -32,10 +32,6 @@ var GameScreen = React.createClass({
   },
 
   render : function(){
-    var style = {
-      width : this.props.screen.width + "px",
-      height: this.props.screen.height+ "px"
-    };
     return <div>
               <Ship inputState={this.state.input} world={this.state.world} screen={this.props.screen}/>
               <RocketLauncher inputState={this.state.input} world={this.state.world} screen={this.props.screen} />

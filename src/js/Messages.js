@@ -6,24 +6,39 @@ var messageIDs = {
   ROCKET_LAUNCH   : 1,
   SHIP_MOVE_RIGHT : 2,
   SHIP_MOVE_LEFT  : 3,
-  SHIP_MOVE_UP    : 4, 
+  SHIP_MOVE_UP    : 4,
   SHIP_MOVE_DOWN  : 5,
   SHIP_DESTROYED  : 6,
-  BADDIE_DESTROYED: 7
+  BADDIE_DESTROYED: 7,
+  CHANGE_SCREEN   : 8
 }
+
+var channelIDs = {
+  ROOT : 0,
+  GAME : 1
+};
+var channels = (function(){
+  return _.map(channelIDs, function(){
+    return [];
+  });
+})();
 
 module.exports = {
   ID    : messageIDs,
-  reset : function(){
-    messages = [];
+  channelIDs: channelIDs,
+  reset : function( channel ){
+    var channelOrRoot = channel || channelIDs.ROOT;
+    channels[channelOrRoot] = [];
   },
-  post  : function(id, val){
-    messages.push({
+  post  : function(id, channel, val){
+    var channelOrRoot = channel || channelIDs.ROOT;
+    channels[channelOrRoot].push({
       id:id,
       val:val || null
     });
   },
-  get : function(){
-    return _.groupBy(messages, 'id');
+  get : function( channel ){
+    var channelOrRoot = channel || channelIDs.ROOT;
+    return _.groupBy(channels[channelOrRoot], 'id');
   }
 };

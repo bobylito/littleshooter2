@@ -42,17 +42,19 @@ var Ship = React.createClass({
       lastFire : this.state.lastFire
     };
 
-    if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT ) }
-    if(input.keys.left)   { Messages.post( Messages.ID.SHIP_MOVE_LEFT  ) }
-    if(input.keys.up)     { Messages.post( Messages.ID.SHIP_MOVE_UP    ) }
-    if(input.keys.down)   { Messages.post( Messages.ID.SHIP_MOVE_DOWN  ) }
+    if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT, Messages.channelIDs.GAME ) }
+    if(input.keys.left)   { Messages.post( Messages.ID.SHIP_MOVE_LEFT , Messages.channelIDs.GAME ) }
+    if(input.keys.up)     { Messages.post( Messages.ID.SHIP_MOVE_UP   , Messages.channelIDs.GAME ) }
+    if(input.keys.down)   { Messages.post( Messages.ID.SHIP_MOVE_DOWN , Messages.channelIDs.GAME ) }
 
     if(input.keys.space)  {
       if( input.time > this.state.lastFire + 50 ) {
         var shipPos = world.player.ship.position.slice(0);
-        Messages.post( Messages.ID.ROCKET_LAUNCH, {
-          pos : shipPos
-        } );
+        Messages.post(
+          Messages.ID.ROCKET_LAUNCH,
+          Messages.channelIDs.GAME,
+          { pos : shipPos }
+        );
         newState.lastFire = input.time;
       }
     }
