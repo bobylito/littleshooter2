@@ -6,7 +6,7 @@ TODO - React vs Games
  [ ] Add screens system
   [x] sortof
   [x] intro
-  [ ] Add back the game
+  [x] Add back the game
   [ ] Game Over
  [ ] Fix position (make rockets shoot straight)
  [ ] Script sequence of ennemies
