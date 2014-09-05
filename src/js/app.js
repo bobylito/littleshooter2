@@ -9,6 +9,7 @@ var Messages = require('./Messages.js');
 
 var Intro = require('./screens/Intro.js');
 var Game = require('./screens/Game.js');
+var GameOver = require('./screens/GameOver.js');
 
 var SCREENS = {
   INTRO     : 0,
@@ -50,7 +51,9 @@ var GameApp = React.createClass({
       case SCREENS.GAME     :
         screenComponent = <Game screen={screen} inputState={this.state.input}/>;
         break;
-      //case SCREENS.GAME_OVER: screenComponent = <GameOver screen={screen} inputState={this.state.input}/>;
+      case SCREENS.GAME_OVER: 
+        screenComponent = <GameOver screen={screen} inputState={this.state.input}/>;
+        break;
       default : throw new Error("Inconsistent screen state : "+this.state.currentScreen);
     }
     return <div className="game" style={style}
@@ -73,7 +76,12 @@ var GameApp = React.createClass({
   checkMessages : function(){
     var messages = Messages.get(Messages.channelIDs.ROOT);
     if(messages[Messages.ID.CHANGE_SCREEN] &&
-        messages[Messages.ID.CHANGE_SCREEN].length > 0) this.setState({currentScreen: 1});
+        messages[Messages.ID.CHANGE_SCREEN].length > 0) {
+          var msg = messages[Messages.ID.CHANGE_SCREEN];
+          console.log(msg);
+          var nextScreen = this.state.currentScreen < 2 ? this.state.currentScreen + 1 : 0;  
+          this.setState({currentScreen: nextScreen});
+        }
   },
   componentWillReceiveProps : function(props){
   },
