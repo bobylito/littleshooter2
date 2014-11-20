@@ -5,7 +5,7 @@ var Messages = require('../Messages.js');
 
 var GameOver = React.createClass({
   render:function(){
-    var world = this.props.world;
+    var world = this.props.lastScreenData;
     return <div className="intro">
       <h1>Game over</h1>
       <h2>Score : {world.player.score}</h2>

@@ -21,6 +21,7 @@ var GameApp = React.createClass({
   getInitialState: function(){
     return {
       currentScreen: 0,
+      lastScreenData: {},
       input : {
         time : (Date.now()),
         keys : {
@@ -46,13 +47,13 @@ var GameApp = React.createClass({
     var screenComponent;
     switch(this.state.currentScreen){
       case SCREENS.INTRO    :
-        screenComponent = <Intro screen={screen} inputState={this.state.input}/>;
+        screenComponent =    <Intro screen={screen} inputState={this.state.input} lastScreenData={this.state.lastScreenData}/>;
         break;
       case SCREENS.GAME     :
-        screenComponent = <Game screen={screen} inputState={this.state.input}/>;
+        screenComponent =     <Game screen={screen} inputState={this.state.input} lastScreenData={this.state.lastScreenData}/>;
         break;
       case SCREENS.GAME_OVER: 
-        screenComponent = <GameOver screen={screen} inputState={this.state.input}/>;
+        screenComponent = <GameOver screen={screen} inputState={this.state.input} lastScreenData={this.state.lastScreenData}/>;
         break;
       default : throw new Error("Inconsistent screen state : "+this.state.currentScreen);
     }
@@ -78,10 +79,9 @@ var GameApp = React.createClass({
     if(messages[Messages.ID.CHANGE_SCREEN] &&
         messages[Messages.ID.CHANGE_SCREEN].length > 0) {
           var msg = messages[Messages.ID.CHANGE_SCREEN];
-          console.log(msg);
           var nextScreen = this.state.currentScreen < 2 ? this.state.currentScreen + 1 : 0;  
           Messages.reset();
-          this.setState({currentScreen: nextScreen});
+          this.setState({currentScreen: nextScreen, lastScreenData: msg[0].val});
         }
   },
   componentWillReceiveProps : function(props){
