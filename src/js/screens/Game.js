@@ -41,7 +41,8 @@ var GameScreen = React.createClass({
   },
   tick : function( newProps ){
     var nextWorld = models.tick(this.state.world);
-    if(nextWorld.player.life < 1) Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT, nextWorld);
+    if(nextWorld.player.life < 1)
+      Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT, nextWorld);
     this.setState({
       world: nextWorld,
       input: newProps.inputState

@@ -11,7 +11,8 @@ var Intro = React.createClass({
     </div>;
   },
   componentWillReceiveProps:function(next){
-    if(next.inputState.keys.space) Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT);
+    if(next.inputState.keys.space)
+      Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT);
   }
 });
 
