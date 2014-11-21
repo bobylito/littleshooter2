@@ -1,10 +1,9 @@
 var Messages = require('../Messages.js');
 var _ = require('underscore');
 
-var id = (function(){
-  var current = Number.MIN_SAFE_INTEGER;
-  return function idGen(){ return current++; };
-})();
+var utils = require('../Utils.js');
+
+var id = utils.idGenFactory();
 
 //World
 var World = function( tick ){
@@ -47,6 +46,7 @@ Ship.prototype = {
   },
   collide: function(){
     Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
+    Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
   }
 };
 
@@ -84,6 +84,7 @@ Ouno.prototype = {
   },
   collide: function(){
     Messages.post( Messages.ID.BADDIE_DESTROYED, Messages.channelIDs.GAME, this.id);
+    Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
   }
 }
 

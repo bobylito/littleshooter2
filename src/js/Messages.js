@@ -10,13 +10,16 @@ var messageIDs = {
   SHIP_MOVE_DOWN  : 5,
   SHIP_DESTROYED  : 6,
   BADDIE_DESTROYED: 7,
-  CHANGE_SCREEN   : 8
+  CHANGE_SCREEN   : 8,
+  EXPLOSION       : 9
 }
 
 var channelIDs = {
   ROOT : 0,
-  GAME : 1
+  GAME : 1,
+  FX   : 2
 };
+
 var channels = (function(){
   return _.map(channelIDs, function(){
     return [];

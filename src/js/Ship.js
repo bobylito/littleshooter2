@@ -38,8 +38,8 @@ var Ship = React.createClass({
     var newState = {
       height    : this.state.height,
       width     : this.state.width,
-      previousT: input.time,
-      lastFire : this.state.lastFire
+      previousT : input.time,
+      lastFire  : this.state.lastFire
     };
 
     if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT, Messages.channelIDs.GAME ) }
