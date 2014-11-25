@@ -17,10 +17,11 @@ var ParticleSystem = require('../fx/ParticleSystem');
 
 var GameScreen = React.createClass({
   getInitialState: function(){
+    var now = Date.now();
     return {
-      world : models.create(),
+      world : models.create( now ),
       input : {
-        time : (Date.now()),
+        time : now,
         keys : {
           left  : false,
           right : false,
@@ -42,7 +43,7 @@ var GameScreen = React.createClass({
            </div>;
   },
   tick : function( newProps ){
-    var nextWorld = models.tick(this.state.world);
+    var nextWorld = models.tick(this.state.world, newProps.inputState.time);
     if(nextWorld.player.life < 1)
       Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT, nextWorld);
     this.setState({

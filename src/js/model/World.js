@@ -6,11 +6,11 @@ var utils = require('../Utils.js');
 var id = utils.idGenFactory();
 
 //World
-var World = function( tick ){
+var World = function( timestamp ){
   this.player = new Player;
   this.baddies = [];
-  this.tick = tick;
-  this.firstTick = tick;
+  this.timestamp = timestamp;
+  this.firstTimestamp = timestamp;
 };
 
 //Player
@@ -135,18 +135,19 @@ var handleMessages = function(messages, world){
   world.player.score += newPoints;
 };
 
-var worldTick = function(world){
-  world.player.ship.move(30);
+var worldTick = function(world, nextTimestamp){
+  var deltaT = nextTimestamp - world.timestamp;
+  world.player.ship.move(deltaT);
   if(world.baddies.length === 0) {
     _.range(100).forEach( function(){
       world.baddies.push(new Ouno());
     });
   }
   world.baddies.forEach(function(b){
-    b.move(30);
+    b.move(deltaT);
   });
   world.player.ship.rockets.forEach(function(r){
-    r.move(30);
+    r.move(deltaT);
   });
   var c = testCollision(world.player.ship.rockets.concat(world.player.ship),
                         world.baddies);
@@ -159,6 +160,7 @@ var worldTick = function(world){
   handleMessages(messages, world);
   Messages.reset( Messages.channelIDs.GAME );
 
+  world.timestamp = nextTimestamp;
   return world;
 }
 
@@ -178,8 +180,8 @@ var collide = function(i1, i2){
           i1.position[1] < (i2.position[1] + 0.5 * i2.size[1])
 }
 
-var createWorld = function(){
-  return new World();
+var createWorld = function( timestamp ){
+  return new World( timestamp );
 }
 
 module.exports = {
