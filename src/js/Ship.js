@@ -3,6 +3,7 @@
 var React = require('react/addons');
 var _ = require('underscore');
 
+var T = require('./Transform');
 var Messages = require('./Messages.js');
 
 var Ship = React.createClass({
@@ -18,12 +19,11 @@ var Ship = React.createClass({
     var self = this;
     var ship = this.props.world.player.ship;
     var style = {
-      top : ship.position[1] *
-              (this.props.screen.height),
-      left: ship.position[0] *
-              (this.props.screen.width)
+      transform : T.translate( 
+          ship.position[0] * (this.props.screen.width),
+          ship.position[1] * (this.props.screen.height))
     };
-    var cssClasses = ["ship"];
+    var cssClasses = ["ship", "positionable"];
     var epsilon = 0.1;
     if(ship.speed[0] > epsilon) cssClasses.push("right");
     if(ship.speed[0] < -epsilon) cssClasses.push("left");
