@@ -5,10 +5,14 @@ var Ouno = React.createClass({
     var model = this.props.model;
     var screen = this.props.screen;
     var style = {
-      top : model.position[1] * screen.height,
-      left: model.position[0] * screen.width
-    }
-    return <div className="ouno" style={style} ></div>
+      transform: this.transform(
+        model.position[0] * screen.width,
+        model.position[1] * screen.height)
+    };
+    return <div className="ouno positionable" style={style} ></div>;
+  },
+  transform: function(x, y){
+    return "translate("+x+"px,"+y+"px)";
   }
 });
 module.exports = Ouno;
