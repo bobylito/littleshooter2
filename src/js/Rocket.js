@@ -2,6 +2,7 @@
 
 var React = require('react/addons');
 var _ = require('underscore');
+var T = require('./Transform');
 
 var Messages = require('./Messages.js');
 
@@ -13,11 +14,12 @@ var Rocket = React.createClass({
   },
   render : function(){
     var style = {
-      top : this.props.position[1] * this.props.screen.height,
-      left: (this.props.position[0] * this.props.screen.width) + 5
+      transform: T.translate(
+        this.props.position[0] * this.props.screen.width  - 3,
+        this.props.position[1] * this.props.screen.height - 10)
     };
 
-    return <div style={style} className="rocket"/>;
+    return <div style={style} className="rocket positionable"/>;
   }
 });
 
