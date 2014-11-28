@@ -13,7 +13,7 @@ var RocketLauncher = React.createClass({
         <Rocket key={r.id} position={r.position}/>
       );
     });
-    return <div className="RocketLauncher">
+    return <div className="rocket-launcher">
              {rockets}
            </div>;
   },

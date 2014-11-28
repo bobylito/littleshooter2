@@ -2,6 +2,7 @@
 *{
   font-family: Helvetica, Arial;
 }
+
 .game{
   position:relative;
   width:500px;
@@ -21,6 +22,7 @@
     font-size:80%;
   }
 }
+
 .positionable {
   position: absolute;
   top:0;
@@ -32,22 +34,27 @@
   height:23px;
   background-image:url("/assets/spaceShip.png");
   transition: transform 600ms;
+  z-index: 3;
 }
 .particle{
   width     : 5px;
   height    : 5px;
   background: red;
 }
-.rocket {
-  width : 6px;
-  height: 10px;
-  background:white;
+.rocket-launcher {
+  z-index: 1;
+  .rocket {
+    width : 6px;
+    height: 10px;
+    background:white;
+  }
 }
 .ouno{
   width: 20px;
   height : 20px;
   background-image:url("/assets/ouno.png");
 }
+
 .hud {
   .points {
     position: absolute;
