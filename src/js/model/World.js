@@ -136,10 +136,10 @@ var handleMessages = function(messages, world){
 };
 
 var worldTick = function(world, nextTimestamp){
-  var deltaT = nextTimestamp - world.timestamp;
+  var deltaT = (nextTimestamp - world.timestamp) * 2;
   world.player.ship.move(deltaT);
-  if(world.baddies.length === 0) {
-    _.range(100).forEach( function(){
+  if(world.baddies.length < 100) {
+    _.range(5).forEach( function(){
       world.baddies.push(new Ouno());
     });
   }
