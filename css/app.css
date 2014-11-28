@@ -96,7 +96,7 @@
 /* line 26 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .positionable{position:absolute;top:0;left:0}
 /* line 31 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.ship{width:20px;height:23px;background-image:url("/assets/spaceShip.png");z-index:3}
+.ship{width:20px;height:23px;background-image:url("../assets/spaceShip.png");z-index:3}
 /* line 37 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .particle{width:5px;height:5px;background:#f00}
 /* line 42 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
@@ -104,7 +104,7 @@
 /* line 44 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .rocket-launcher .rocket{width:6px;height:10px;background:#fff}
 /* line 50 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.ouno{width:20px;height:20px;background-image:url("/assets/ouno.png")}
+.ouno{width:20px;height:20px;background-image:url("../assets/ouno.png")}
 /* line 56 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 
 /* line 57 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
