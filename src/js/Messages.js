@@ -11,7 +11,8 @@ var messageIDs = {
   SHIP_DESTROYED  : 6,
   BADDIE_DESTROYED: 7,
   CHANGE_SCREEN   : 8,
-  EXPLOSION       : 9
+  EXPLOSION       : 9,
+  BADDIE_HIT      : 10
 }
 
 var channelIDs = {

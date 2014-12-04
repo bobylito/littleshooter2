@@ -10,7 +10,15 @@ var Ouno = React.createClass({
         model.position[0] * screen.width,
         model.position[1] * screen.height)
     };
-    return <div className="ouno positionable" style={style} ></div>;
+    if(model.flash){
+      return <div className="ouno positionable flash" style={style} ></div>;
+    }
+    else {
+      return <div className="ouno positionable" style={style} ></div>;
+    }
+  },
+  componentWillReceiveProps : function(props){
+    
   }
 });
 module.exports = Ouno;

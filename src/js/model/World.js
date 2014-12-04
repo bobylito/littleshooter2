@@ -69,23 +69,35 @@ Rocket.prototype = {
 
 //Baddie
 var Ouno = function(){
-  this.position = [ Math.random(), -0.2];
-  this.speed = [0, 0.0001];
-  this.size = [0.1, 0.1]
-  this.id = this.PRFX_ID + id();
+  this.position     = [ Math.random(), -0.2];
+  this.acceleration = [0, 0.00001];
+  this.speed        = [0, 0.0001];
+  this.size         = [0.1, 0.1];
+  this.life         = 3;
+  this.id           = this.PRFX_ID + id();
 }
 
 Ouno.prototype = {
   PRFX_ID:"OUNO",
   move: function(deltaT){
+    this.speed[1] = Math.min( 0.0001, this.speed[1] + this.acceleration[1]);
     this.position[0] += this.speed[0] * deltaT;
     this.position[1] += this.speed[1] * deltaT;
     if( this.position[1] > 1.2) this.position[1] = -0.2;
+    this.flash=false;
   },
   collide: function(){
-    Messages.post( Messages.ID.BADDIE_DESTROYED, Messages.channelIDs.GAME, this.id);
-    Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
-  }
+    if( this.life > 0 ){
+      this.life--;
+      this.position[1] = this.position[1] - 0.05;
+      this.speed[1] = -0.0001;
+      this.flash=true;
+    }
+    else {
+      Messages.post( Messages.ID.BADDIE_DESTROYED, Messages.channelIDs.GAME, this.id);
+      Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
+    }
+  },
 }
 
 var handleMessages = function(messages, world){
@@ -138,7 +150,7 @@ var handleMessages = function(messages, world){
 var worldTick = function(world, nextTimestamp){
   var deltaT = (nextTimestamp - world.timestamp) * 2;
   world.player.ship.move(deltaT);
-  if(world.baddies.length < 100) {
+  if(world.baddies.length < 20) {
     _.range(5).forEach( function(){
       world.baddies.push(new Ouno());
     });
