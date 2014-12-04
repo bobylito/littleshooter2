@@ -82,7 +82,18 @@ var GameApp = React.createClass({
           var msg = messages[Messages.ID.CHANGE_SCREEN];
           var nextScreen = this.state.currentScreen < 2 ? this.state.currentScreen + 1 : 0;
           Messages.reset();
-          this.setState({currentScreen: nextScreen, lastScreenData: msg[0].val});
+          this.setState({currentScreen: nextScreen,
+                         lastScreenData: msg[0].val,
+                         input : {
+                           time : (this.state.input.time),
+                           keys : {
+                             left  : false,
+                             right : false,
+                             up    : false,
+                             down  : false,
+                             space : false,
+                             enter : false}}
+                         });
         }
   },
   componentWillReceiveProps : function(props){
