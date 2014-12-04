@@ -31,14 +31,14 @@ var Ship = function(){
 
 Ship.prototype = {
   PRFX_ID: "SHIP",
-  left  : function(){ this.speed[0] -= 0.0003; },
-  right : function(){ this.speed[0] += 0.0003; },
-  up    : function(){ this.speed[1] -= 0.0003; },
-  down  : function(){ this.speed[1] += 0.0003; },
+  left  : function(){ this.speed[0] -= 0.0022; },
+  right : function(){ this.speed[0] += 0.0022; },
+  up    : function(){ this.speed[1] -= 0.0022; },
+  down  : function(){ this.speed[1] += 0.0022; },
   move  : function( deltaT ){
     var halfSize = [this.size[0] / 2, this.size[1] / 2];
-    this.speed[0] *= 0.8;
-    this.speed[1] *= 0.8;
+    this.speed[0] *= 0.3;
+    this.speed[1] *= 0.3;
     this.position[0] = Math.min(Math.max(0,
            this.position[0] + this.speed[0] * deltaT), 1 - this.size[0]);
     this.position[1] = Math.min(Math.max(0,
