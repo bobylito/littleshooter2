@@ -10,11 +10,13 @@ var GameOver = React.createClass({
       <h1>Game over</h1>
       <h2>Score : {world.player.score}</h2>
       <h2>Rank : </h2>
-      <p>Press space to restart </p>
+      <p>
+      Press <span className="button">return</span>
+      to restart </p>
     </div>;
   },
   componentWillReceiveProps:function(next){
-    if(next.inputState.keys.space) Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT);
+    if(next.inputState.keys.enter) Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT);
   }
 });
 
