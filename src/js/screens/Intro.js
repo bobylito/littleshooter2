@@ -10,6 +10,7 @@ var Intro = React.createClass({
       <h2>
         Press <span className="button">RETURN</span>
       </h2>
+      <div className="ship"></div>
     </div>;
   },
   componentWillReceiveProps:function(next){

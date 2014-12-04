@@ -8,11 +8,11 @@ var GameOver = React.createClass({
     var world = this.props.lastScreenData;
     return <div className="intro">
       <h1>Game over</h1>
-      <h2>Score : {world.player.score}</h2>
-      <h2>Rank : </h2>
-      <p>
+      <p>Score : {world.player.score}</p>
+      <p>Rank : </p>
+      <h2>
       Press <span className="button">return</span>
-      to restart </p>
+      </h2>
     </div>;
   },
   componentWillReceiveProps:function(next){
