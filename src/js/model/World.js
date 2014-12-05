@@ -53,6 +53,7 @@ Ship.prototype = {
 
     Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
     Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
+    Messages.post( Messages.ID.FLASH, Messages.channelIDs.FX, this.position);
     this.isInvincible = true;
     this.invincibleTimeout = Date.now() + 1000;
     this.position = [0.5, 0.8];

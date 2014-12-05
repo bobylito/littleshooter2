@@ -12,7 +12,8 @@ var messageIDs = {
   BADDIE_DESTROYED: 7,
   CHANGE_SCREEN   : 8,
   EXPLOSION       : 9,
-  BADDIE_HIT      : 10
+  BADDIE_HIT      : 10,
+  FLASH           : 20
 }
 
 var channelIDs = {
