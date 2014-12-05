@@ -21,12 +21,15 @@ var Ship = React.createClass({
     var style = {
       transform : T.translate( 
           ship.position[0] * (this.props.screen.width),
-          ship.position[1] * (this.props.screen.height))
-    };
+          ship.position[1] * (this.props.screen.height))};
     var cssClasses = ["ship", "positionable"];
+
     var epsilon = 0.1;
     if(ship.speed[0] > epsilon) cssClasses.push("right");
     if(ship.speed[0] < -epsilon) cssClasses.push("left");
+
+    if(ship.isInvincible) cssClasses.push("blink");
+
     return <div className={ cssClasses.join(" ")} style={style}></div>;
   },
   componentWillReceiveProps:function( props ){

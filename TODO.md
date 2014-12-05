@@ -11,9 +11,11 @@ TODO - React vs Games
  [X] Fix position (make rockets shoot straight)
  [ ] Script sequence of ennemies
  [ ] Make different kind of ennemies
+ [X] Ship is invisible for a short period when destroyed
  [ ] Add special FX
   [X] Explosion
   [ ] Stars
+  [X] Flash (when ship explod)
 
  0.2 : Mobile
 -------------
@@ -28,3 +30,8 @@ Gameplay
   [ ] Bullets (push ennemies/very limited damage, fast, illimited qt, autofire?)
   [ ] Bomb/Rockets (destroy, slow, limited, cooldown/quantity?)
  [ ] Ennemies have life
+
+TOOLS / Framework
+-----------------
+
+ [ ] Message sent in the future

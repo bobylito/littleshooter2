@@ -3,6 +3,10 @@
   font-family: Helvetica, Arial;
 }
 
+.screen {
+  width: inherit;
+  height: inherit;
+}
 .game{
   position  : relative;
   width     : 500px;
@@ -45,6 +49,9 @@
   height          : 23px;
   background-image: url("../assets/spaceShip.png");
   z-index         : 3;
+  &.blink {
+    animation : blink 200ms infinite;
+  }
 }
 .particle{
   width     : 5px;
@@ -93,4 +100,18 @@
 .button{
   border: 4px solid red;
   padding: 3px;
+}
+
+.fx {
+  width: 100%;
+  height: 100%;
+  &.flash {
+    background:white;
+  }
+}
+// Animations
+@keyframes blink {
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  100% { opacity: 0; }
 }

@@ -1,7 +1,4 @@
 /** @jsx React.DOM */
-
-var w = window;
-var d = w.document;
 var React = require('react/addons');
 var _ = require('underscore');
 
