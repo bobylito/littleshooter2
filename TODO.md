@@ -29,9 +29,10 @@ Gameplay
  [ ] Two type of weapons :
   [ ] Bullets (push ennemies/very limited damage, fast, illimited qt, autofire?)
   [ ] Bomb/Rockets (destroy, slow, limited, cooldown/quantity?)
- [ ] Ennemies have life
+ [X] Ennemies have life
 
 TOOLS / Framework
 -----------------
 
  [ ] Message sent in the future
+ [ ] Fx main module (just one import)
