@@ -103,10 +103,30 @@
 }
 
 .fx {
-  width: 100%;
+  width : 100%;
   height: 100%;
   &.flash {
     background:white;
+  }
+
+  .starfield {
+    position: absolute;
+    top     : -1500px;
+    left    : 0;
+    &.stars {
+      width: 100%;
+      height: 2000px;
+      background-repeat: repeat-y;
+    }
+    &.l-1 {
+      animation: vertical-scroll 10s linear infinite;
+    }
+    &.l-2 {
+      animation: vertical-scroll 15s linear infinite;
+    }
+    &.l-3 {
+      animation: vertical-scroll 20s linear infinite;
+    }
   }
 }
 // Animations
@@ -114,4 +134,9 @@
   0%   { opacity: 0; }
   50%  { opacity: 1; }
   100% { opacity: 0; }
+}
+
+@keyframes vertical-scroll {
+  0%    { transform: translateY( 0 ) }
+  100%  { transform: translateY( 1500px ) }
 }

@@ -13,8 +13,7 @@ var Ship = require('../Ship');
 var RocketLauncher = require('../RocketLauncher');
 var Horde = require('../Horde');
 var HUD = require('../HUD');
-var ParticleSystem = require('../fx/ParticleSystem');
-var Flash = require('../fx/Flash');
+var FX = require('../fx');
 
 var GameScreen = React.createClass({
   getInitialState: function(){
@@ -36,8 +35,7 @@ var GameScreen = React.createClass({
 
   render : function(){
     return <div className="screen">
-              <Flash inputState={this.state.input} world={this.state.world} screen={this.props.screen}/>
-              <ParticleSystem inputState={this.state.input} world={this.state.world} screen={this.props.screen}/>
+              <FX inputState={this.state.input} world={this.state.world} screen={this.props.screen}/>
               <Ship inputState={this.state.input} world={this.state.world} screen={this.props.screen}/>
               <RocketLauncher inputState={this.state.input} world={this.state.world} screen={this.props.screen} />
               <Horde world={this.state.world} screen={this.props.screen}/>
