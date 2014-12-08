@@ -26,7 +26,7 @@ var ParticleSystem = React.createClass({
       var style   = {
         transform: T.translate(newPos[0], newPos[1])
       };
-      return <div className="particle positionable" style={style}/>;
+      return <div className="particle positionable" style={style} key={p.id}/>;
     });
     return <div className="particleSystem">{particles}</div>
   },
