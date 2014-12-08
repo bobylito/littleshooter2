@@ -8,9 +8,6 @@ var Messages = require('./Messages.js');
 
 var Rocket = React.createClass({
   componentWillReceiveProps : function( next ){
-    if(this.props.position[1] < -1) {
-      Messages.post( Messages.ID.ROCKET_LOST, Messages.channelIDs.GAME, this.props.key);
-    }
   },
   render : function(){
     var style = {
