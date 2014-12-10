@@ -29,7 +29,8 @@ var GameApp = React.createClass({
           right : false,
           up    : false,
           down  : false,
-          space : false
+          space : false,
+          enter : false,
         }
       }
     };
@@ -52,7 +53,7 @@ var GameApp = React.createClass({
       case SCREENS.GAME     :
         screenComponent =     <Game screen={screen} inputState={this.state.input} lastScreenData={this.state.lastScreenData}/>;
         break;
-      case SCREENS.GAME_OVER: 
+      case SCREENS.GAME_OVER:
         screenComponent = <GameOver screen={screen} inputState={this.state.input} lastScreenData={this.state.lastScreenData}/>;
         break;
       default : throw new Error("Inconsistent screen state : "+this.state.currentScreen);
@@ -79,9 +80,20 @@ var GameApp = React.createClass({
     if(messages[Messages.ID.CHANGE_SCREEN] &&
         messages[Messages.ID.CHANGE_SCREEN].length > 0) {
           var msg = messages[Messages.ID.CHANGE_SCREEN];
-          var nextScreen = this.state.currentScreen < 2 ? this.state.currentScreen + 1 : 0;  
+          var nextScreen = this.state.currentScreen < 2 ? this.state.currentScreen + 1 : 0;
           Messages.reset();
-          this.setState({currentScreen: nextScreen, lastScreenData: msg[0].val});
+          this.setState({currentScreen: nextScreen,
+                         lastScreenData: msg[0].val,
+                         input : {
+                           time : (this.state.input.time),
+                           keys : {
+                             left  : false,
+                             right : false,
+                             up    : false,
+                             down  : false,
+                             space : false,
+                             enter : false}}
+                         });
         }
   },
   componentWillReceiveProps : function(props){
@@ -98,7 +110,8 @@ var GameApp = React.createClass({
       right : this.state.input.keys.right,
       up    : this.state.input.keys.up,
       down  : this.state.input.keys.down,
-      space : this.state.input.keys.space
+      space : this.state.input.keys.space,
+      enter : this.state.input.keys.enter
     };
 
     if(e.keyCode === 37) newKeys.left  = valueToSet;
@@ -106,6 +119,7 @@ var GameApp = React.createClass({
     if(e.keyCode === 39) newKeys.right = valueToSet;
     if(e.keyCode === 40) newKeys.down  = valueToSet;
     if(e.keyCode === 32) newKeys.space = valueToSet;
+    if(e.keyCode === 13) newKeys.enter = valueToSet;
 
     this.setState({
       input:{

@@ -1,15 +1,19 @@
 var Messages = require('../Messages.js');
 var _ = require('underscore');
 
-var utils = require('../Utils.js');
+var Baddies = require('./Baddies');
+var Waves   = require('./Waves');
+var utils   = require('../Utils.js');
 
 var id = utils.idGenFactory();
 
 //World
 var World = function( timestamp ){
-  this.player = new Player;
-  this.baddies = [];
-  this.timestamp = timestamp;
+  this.player         = new Player;
+  this.baddies        = [];
+  this.waveManager    = new Waves.WavesManager();
+  this.currentWave    = null;
+  this.timestamp      = timestamp;
   this.firstTimestamp = timestamp;
 };
 
@@ -26,67 +30,67 @@ var Ship = function(){
   this.speed = [0,0];
   this.rockets = [];
   this.size = [0.04, 0.046];
+  this.isInvincible = false;
+  this.invincibleTimeout = null;
   this.id = this.PRFX_ID + id();
 }
 
 Ship.prototype = {
   PRFX_ID: "SHIP",
-  left  : function(){ this.speed[0] -= 0.0003; },
-  right : function(){ this.speed[0] += 0.0003; },
-  up    : function(){ this.speed[1] -= 0.0003; },
-  down  : function(){ this.speed[1] += 0.0003; },
+  left  : function(){ this.speed[0] -= 0.0022; },
+  right : function(){ this.speed[0] += 0.0022; },
+  up    : function(){ this.speed[1] -= 0.0022; },
+  down  : function(){ this.speed[1] += 0.0022; },
+  tick  : function( deltaT, world ){
+    this.move(deltaT);
+  },
   move  : function( deltaT ){
     var halfSize = [this.size[0] / 2, this.size[1] / 2];
-    this.speed[0] *= 0.8;
-    this.speed[1] *= 0.8;
+    this.speed[0] *= 0.3;
+    this.speed[1] *= 0.3;
     this.position[0] = Math.min(Math.max(0,
            this.position[0] + this.speed[0] * deltaT), 1 - this.size[0]);
     this.position[1] = Math.min(Math.max(0,
           this.position[1] + this.speed[1] * deltaT), 1 - this.size[1]);
+    if(this.isInvincible && this.invincibleTimeout < Date.now() )
+      this.isInvincible = false;
   },
   collide: function(){
+    if(this.isInvincible) return;
+
     Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
     Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
+    Messages.post( Messages.ID.FLASH, Messages.channelIDs.FX, this.position);
+    this.isInvincible = true;
+    this.invincibleTimeout = Date.now() + 1000;
+    this.position = [0.5, 0.8];
   }
 };
 
-var Rocket = function(pos){
+var Rocket = function(pos, direction, isFromBaddies){
   this.position = pos;
-  this.speed = [0, -0.001];
-  this.id = this.PRFX_ID + id();
+  this.speed    = direction || [0, -0.001];
+  this.size     = [0.1,0.1];
+  this.id       = this.PRFX_ID + id();
+  this.isFromBaddies = isFromBaddies;
 };
 
 Rocket.prototype = {
-  PRFX_ID: "RCKT",
-  move: function(deltaT){
+  PRFX_ID : "RCKT",
+  tick    : function( deltaT, world ){
+    this.move( deltaT );
+    if(this.position[1] < -0.2 || this.position[1] > 1.2) {
+      Messages.post( Messages.ID.ROCKET_LOST, Messages.channelIDs.GAME, this.id);
+    }
+  },
+  move    : function(deltaT){
     this.position[0] += this.speed[0] * deltaT;
     this.position[1] += this.speed[1] * deltaT;
   },
-  collide: function(){
+  collide : function(){
     Messages.post( Messages.ID.ROCKET_LOST, Messages.channelIDs.GAME, this.id);
   }
 };
-
-//Baddie
-var Ouno = function(){
-  this.position = [ Math.random(), -0.2];
-  this.speed = [0, 0.0001];
-  this.size = [0.1, 0.1]
-  this.id = this.PRFX_ID + id();
-}
-
-Ouno.prototype = {
-  PRFX_ID:"OUNO",
-  move: function(deltaT){
-    this.position[0] += this.speed[0] * deltaT;
-    this.position[1] += this.speed[1] * deltaT;
-    if( this.position[1] > 1.2) this.position[1] = -0.2;
-  },
-  collide: function(){
-    Messages.post( Messages.ID.BADDIE_DESTROYED, Messages.channelIDs.GAME, this.id);
-    Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
-  }
-}
 
 var handleMessages = function(messages, world){
   //Ship movements
@@ -107,8 +111,9 @@ var handleMessages = function(messages, world){
       return missingRocketIds.contains( r.id ).value();
     });
     var newRockets = _.map(launchMsgs, function(msg){
-      var rocketPosition = [msg.val.pos[0], msg.val.pos[1]];
-      return new Rocket( rocketPosition );
+      var rocketPosition  = [msg.val.pos[0], msg.val.pos[1]];
+      var rocketDirection = msg.val.dir ? [msg.val.dir[0], msg.val.dir[1]] : null;
+      return new Rocket( rocketPosition, rocketDirection, msg.val.isFromBaddies);
     });
     world.player.ship.rockets = remainingRockets.concat(newRockets);
   }
@@ -136,21 +141,24 @@ var handleMessages = function(messages, world){
 };
 
 var worldTick = function(world, nextTimestamp){
-  var deltaT = (nextTimestamp - world.timestamp) * 2;
-  world.player.ship.move(deltaT);
-  if(world.baddies.length < 100) {
-    _.range(5).forEach( function(){
-      world.baddies.push(new Ouno());
-    });
+  var deltaT = (nextTimestamp - world.timestamp);
+  world.player.ship.tick(deltaT, world);
+  if(!!world.currentWave && world.currentWave.hasNext()){
+    var nextMonsters = world.currentWave.getNextMonsters(nextTimestamp);
+    Array.prototype.push.apply( world.baddies, nextMonsters);
   }
+  else if( world.baddies.length === 0) {
+    world.currentWave = world.waveManager.getNextWave( nextTimestamp );
+  }
+
   world.baddies.forEach(function(b){
-    b.move(deltaT);
+    b.tick(deltaT, world);
   });
   world.player.ship.rockets.forEach(function(r){
-    r.move(deltaT);
+    r.tick(deltaT, world);
   });
-  var c = testCollision(world.player.ship.rockets.concat(world.player.ship),
-                        world.baddies);
+  var c = testCollision(world.player.ship.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.player.ship),
+                        world.baddies.concat( world.player.ship.rockets.filter( function(r){ return r.isFromBaddies; })));
 
   _.chain(c).flatten().uniq().forEach(function(e){
     e.collide();
@@ -174,10 +182,10 @@ var testCollision = function(grp1, grp2){
 };
 
 var collide = function(i1, i2){
-  return  i1.position[0] > (i2.position[0] - 0.5 * i2.size[0]) &&
-          i1.position[0] < (i2.position[0] + 0.5 * i2.size[0]) &&
-          i1.position[1] > (i2.position[1] - 0.5 * i2.size[1]) &&
-          i1.position[1] < (i2.position[1] + 0.5 * i2.size[1])
+  return  (i1.position[0] +  i1.size[0]) > (i2.position[0] ) &&
+          (i1.position[0] )              < (i2.position[0] + i2.size[0]) &&
+          (i1.position[1] +  i1.size[1]) > (i2.position[1] ) &&
+          (i1.position[1] )              < (i2.position[1] + i2.size[1])
 }
 
 var createWorld = function( timestamp ){

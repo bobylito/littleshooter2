@@ -1,13 +1,10 @@
 /** @jsx React.DOM */
-
-var w = window;
-var d = w.document;
 var React = require('react/addons');
-var _ = require('underscore');
+var _     = require('underscore');
 
 var Messages = require('../Messages.js');
-var Utils = require('../Utils.js');
-var T = require('../Transform');
+var Utils    = require('../Utils.js');
+var T        = require('../Transform');
 
 var id = Utils.idGenFactory();
 
@@ -27,9 +24,9 @@ var ParticleSystem = React.createClass({
         (p.pos[1] + p.dir[1] * elapsed) * screen.height
       ];
       var style   = {
-        transform: T.translate(newPos[0], newPos[1]) 
+        transform: T.translate(newPos[0], newPos[1])
       };
-      return <div className="particle positionable" style={style}/>;
+      return <div className="particle positionable" style={style} key={p.id}/>;
     });
     return <div className="particleSystem">{particles}</div>
   },

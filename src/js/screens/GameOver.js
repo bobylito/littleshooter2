@@ -8,13 +8,15 @@ var GameOver = React.createClass({
     var world = this.props.lastScreenData;
     return <div className="intro">
       <h1>Game over</h1>
-      <h2>Score : {world.player.score}</h2>
-      <h2>Rank : </h2>
-      <p>Press space to restart </p>
+      <p>Score : {world.player.score}</p>
+      <p>Rank : </p>
+      <h2>
+      Press <span className="button">return</span>
+      </h2>
     </div>;
   },
   componentWillReceiveProps:function(next){
-    if(next.inputState.keys.space) Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT);
+    if(next.inputState.keys.enter) Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT);
   }
 });
 

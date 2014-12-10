@@ -5,7 +5,7 @@ var Horde = React.createClass({
   render: function(){
     var self = this;
     var baddies = this.props.world.baddies.map(function(b){
-      return <Ouno model={b} screen={self.props.screen}/>
+      return <Ouno model={b} screen={self.props.screen} key={b.id}/>
     });
     return <div>
       {baddies}

@@ -3,36 +3,55 @@
   font-family: Helvetica, Arial;
 }
 
+.screen {
+  width: inherit;
+  height: inherit;
+}
 .game{
-  position:relative;
-  width:500px;
-  height:500px;
-  background:black;
-  outline: none;
-  overflow: hidden;
+  position  : relative;
+  width     : 500px;
+  height    : 500px;
+  background: black;
+  outline   : none;
+  overflow  : hidden;
 }
 .intro{
+  position: absolute;
+  top     : 20%;
+  width   : 100%;
+  color   : white;
   text-align: center;
-  color:white;
+  text-transform: uppercase;
+
   h1, h2{
     margin:auto;
-    text-transform: uppercase;
   }
   h2{
     font-size:80%;
+    margin-top: 20px;
+  }
+
+  .ship{
+    position    : absolute;
+    top         : 400%;
+    left        : 50%;
+    margin-left : -10px; 
   }
 }
 
 .positionable {
   position: absolute;
-  top:0;
-  left:0;
+  top     : 0;
+  left    : 0;
 }
 .ship{
-  width:20px;
-  height:23px;
-  background-image:url("../assets/spaceShip.png");
-  z-index: 3;
+  width           : 20px;
+  height          : 23px;
+  background-image: url("../assets/spaceShip.png");
+  z-index         : 3;
+  &.blink {
+    animation : blink 200ms infinite;
+  }
 }
 .particle{
   width     : 5px;
@@ -51,6 +70,21 @@
   width: 20px;
   height : 20px;
   background-image:url("../assets/ouno.png");
+}
+.douo{
+  width: 20px;
+  height : 20px;
+  background-image:url("../assets/duo.png");
+}
+.trouo{
+  width: 20px;
+  height : 20px;
+  background-image:url("../assets/trouo.png");
+}
+
+.flash {
+  background-image : none;
+  background:white;
 }
 
 .hud {
@@ -71,4 +105,48 @@
       margin: 5px;
     }
   }
+}
+
+.button{
+  border: 4px solid red;
+  padding: 3px;
+}
+
+.fx {
+  width : 100%;
+  height: 100%;
+  &.flash {
+    background:white;
+  }
+
+  .starfield {
+    position: absolute;
+    top     : -1500px;
+    left    : 0;
+    &.stars {
+      width: 100%;
+      height: 2000px;
+      background-repeat: repeat-y;
+    }
+    &.l-1 {
+      animation: vertical-scroll 10s linear infinite;
+    }
+    &.l-2 {
+      animation: vertical-scroll 15s linear infinite;
+    }
+    &.l-3 {
+      animation: vertical-scroll 20s linear infinite;
+    }
+  }
+}
+// Animations
+@keyframes blink {
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes vertical-scroll {
+  0%    { transform: translateY( 0 ) }
+  100%  { transform: translateY( 1500px ) }
 }
