@@ -2,15 +2,18 @@ var Messages = require('../Messages.js');
 var _ = require('underscore');
 
 var Baddies = require('./Baddies');
-var utils = require('../Utils.js');
+var Waves   = require('./Waves');
+var utils   = require('../Utils.js');
 
 var id = utils.idGenFactory();
 
 //World
 var World = function( timestamp ){
-  this.player = new Player;
-  this.baddies = [];
-  this.timestamp = timestamp;
+  this.player         = new Player;
+  this.baddies        = [];
+  this.waveManager    = new Waves.WavesManager();
+  this.currentWave    = null;
+  this.timestamp      = timestamp;
   this.firstTimestamp = timestamp;
 };
 
@@ -140,11 +143,14 @@ var handleMessages = function(messages, world){
 var worldTick = function(world, nextTimestamp){
   var deltaT = (nextTimestamp - world.timestamp);
   world.player.ship.tick(deltaT, world);
-  if(world.baddies.length < 20) {
-    _.range(5).forEach( function(){
-      world.baddies.push(new Baddies.Trouo());
-    });
+  if(!!world.currentWave && world.currentWave.hasNext){
+    var nextMonsters = world.currentWave.getNextMonsters(nextTimestamp);
+    Array.prototype.push.apply( world.baddies, nextMonsters);
   }
+  else {
+    world.currentWave = world.waveManager.getNextWave( nextTimestamp );
+  }
+
   world.baddies.forEach(function(b){
     b.tick(deltaT, world);
   });
