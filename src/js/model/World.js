@@ -143,11 +143,11 @@ var handleMessages = function(messages, world){
 var worldTick = function(world, nextTimestamp){
   var deltaT = (nextTimestamp - world.timestamp);
   world.player.ship.tick(deltaT, world);
-  if(!!world.currentWave && world.currentWave.hasNext){
+  if(!!world.currentWave && world.currentWave.hasNext()){
     var nextMonsters = world.currentWave.getNextMonsters(nextTimestamp);
     Array.prototype.push.apply( world.baddies, nextMonsters);
   }
-  else {
+  else if( world.baddies.length === 0) {
     world.currentWave = world.waveManager.getNextWave( nextTimestamp );
   }
 
