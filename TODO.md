@@ -18,6 +18,7 @@ TODO - React vs Games
   [X] Explosion
   [X] Stars
   [X] Flash (when ship explod)
+ [ ] Sound effects
 
  0.2 : Mobile
 -------------
