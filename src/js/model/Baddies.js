@@ -64,7 +64,7 @@ var Ouno = function( position, movePattern){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
     acceleration : [0, 0.00001],
-    maxSpeed     : [0, 0.0002],
+    maxSpeed     : [0, 0.0003],
     size         : [0.04, 0.04],
     weight       : 1,
     life         : 3
@@ -78,7 +78,7 @@ var Douo = function( position, movePattern ){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
     acceleration : [0, 0.00001],
-    maxSpeed     : [0, 0.00003],
+    maxSpeed     : [0, 0.0001],
     size         : [0.04, 0.04],
     weight       : 4,
     life         : 20
