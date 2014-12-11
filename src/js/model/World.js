@@ -70,7 +70,7 @@ Ship.prototype = {
 var Rocket = function(pos, direction, isFromBaddies){
   this.position = pos;
   this.speed    = direction || [0, -0.001];
-  this.size     = [0.1,0.1];
+  this.size     = [0.01,0.02];
   this.id       = this.PRFX_ID + id();
   this.isFromBaddies = isFromBaddies;
 };

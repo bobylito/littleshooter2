@@ -64,7 +64,7 @@ var Ouno = function( position ){
     position     : position || [ Math.random(), -0.2],
     acceleration : [0, 0.00001],
     maxSpeed     : [0, 0.0001],
-    size         : [0.1, 0.1],
+    size         : [0.04, 0.04],
     life         : 3
   });
 };
@@ -77,7 +77,7 @@ var Douo = function( position ){
     position     : position || [ Math.random(), -0.2],
     acceleration : [0, 0.00001],
     maxSpeed     : [0, 0.00005],
-    size         : [0.1, 0.1],
+    size         : [0.04, 0.04],
     life         : 10
   });
 };
@@ -91,7 +91,7 @@ var Trouo = function( position ){
     position     : position || [ Math.random(), -0.2],
     acceleration : [0, 0.00002],
     maxSpeed     : [0, 0.0002],
-    size         : [0.1, 0.1],
+    size         : [0.04, 0.04],
     life         : 1
   });
   this.lastFire     = 0;
