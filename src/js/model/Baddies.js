@@ -83,12 +83,13 @@ var Douo = function( position, movePattern ){
     weight       : 4,
     life         : 20
   });
+  this.lastFire     = 0;
 };
 Douo.prototype = Object.create(Monster.prototype);
 Douo.prototype.constructor = Douo;
 Douo.prototype.PRFX_ID = "douo";
 Douo.prototype.afterMove = function( dt, world ){
-  var x = this.position[0];
+  var x = this.position[0] + this.size[0]/2;
   var xPlayer = world.player.ship.position[0];
   if( world.timestamp > ( this.lastFire + 1000 ) &&
       xPlayer < x + 0.1 &&
@@ -96,7 +97,7 @@ Douo.prototype.afterMove = function( dt, world ){
     Messages.post(
       Messages.ID.ROCKET_LAUNCH,
       Messages.channelIDs.GAME,
-      { pos : [ x, this.position[1] ],
+      { pos : [ x , this.position[1] ],
         dir : [ 0, 0.001 ],
         isFromBaddies : true });
     this.lastFire = world.timestamp;
@@ -113,7 +114,6 @@ var Trouo = function( position, movePattern ){
     weight       : 0.75,
     life         : 1
   });
-  this.lastFire     = 0;
 };
 Trouo.prototype = Object.create(Monster.prototype);
 Trouo.prototype.constructor = Trouo;
