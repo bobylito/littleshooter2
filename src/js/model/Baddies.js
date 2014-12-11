@@ -21,6 +21,7 @@ var Monster = function( config ) {
   this.maxSpeed     = config.maxSpeed || [0, 0.0001];
   this.size         = config.size || [0.1, 0.1];
   this.life         = config.life || 3;
+  this.weight       = config.weight || 1;
   this.id           = this.PRFX_ID + id();
 }
 
@@ -48,7 +49,7 @@ Monster.prototype = {
   collide: function(){
     if( this.life > 0 ){
       this.life--;
-      this.position[1] = this.position[1] - 0.05;
+      this.position[1] = this.position[1] - (0.08 / (this.weight * this.weight)) ;
       this.speed[1] = -0.0001;
       this.flash=true;
     }
@@ -59,12 +60,13 @@ Monster.prototype = {
   }
 };
 
-var Ouno = function( position ){
+var Ouno = function( position, movePattern){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
     acceleration : [0, 0.00001],
-    maxSpeed     : [0, 0.0001],
+    maxSpeed     : [0, 0.0002],
     size         : [0.04, 0.04],
+    weight       : 1,
     life         : 3
   });
 };
@@ -72,34 +74,20 @@ Ouno.prototype = Object.create( Monster.prototype );
 Ouno.prototype.constructor = Ouno;
 Ouno.prototype.PRFX_ID = "ouno";
 
-var Douo = function( position ){
+var Douo = function( position, movePattern ){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
     acceleration : [0, 0.00001],
-    maxSpeed     : [0, 0.00005],
+    maxSpeed     : [0, 0.00003],
     size         : [0.04, 0.04],
-    life         : 10
+    weight       : 4,
+    life         : 20
   });
 };
 Douo.prototype = Object.create(Monster.prototype);
 Douo.prototype.constructor = Douo;
 Douo.prototype.PRFX_ID = "douo";
-
-//Make it launch rockets!
-var Trouo = function( position ){
-  Monster.call( this, {
-    position     : position || [ Math.random(), -0.2],
-    acceleration : [0, 0.00002],
-    maxSpeed     : [0, 0.0002],
-    size         : [0.04, 0.04],
-    life         : 1
-  });
-  this.lastFire     = 0;
-};
-Trouo.prototype = Object.create(Monster.prototype);
-Trouo.prototype.constructor = Trouo;
-Trouo.prototype.PRFX_ID = "trouo";
-Trouo.prototype.afterMove = function( dt, world ){
+Douo.prototype.afterMove = function( dt, world ){
   var x = this.position[0];
   var xPlayer = world.player.ship.position[0];
   if( world.timestamp > ( this.lastFire + 1000 ) &&
@@ -115,16 +103,32 @@ Trouo.prototype.afterMove = function( dt, world ){
   }
 };
 
+//Make it launch rockets!
+var Trouo = function( position, movePattern ){
+  Monster.call( this, {
+    position     : position || [ Math.random(), -0.2],
+    acceleration : [0, 0.00002],
+    maxSpeed     : [0, 0.0005],
+    size         : [0.04, 0.04],
+    weight       : 0.75,
+    life         : 1
+  });
+  this.lastFire     = 0;
+};
+Trouo.prototype = Object.create(Monster.prototype);
+Trouo.prototype.constructor = Trouo;
+Trouo.prototype.PRFX_ID = "trouo";
+
 var monsterCatalog = {
   "ouno"  : Ouno,
   "douo"  : Douo,
   "trouo" : Trouo
 };
-var makeMonster = function makeMonster(monsterId, position){
+var makeMonster = function makeMonster(monsterId, position, movePattern){
   var MonsterConstructor= monsterCatalog[monsterId];
   if(!constructor) throw "COME ON PEOPLE! This is not a valid monsterID!";
   else {
-    return new MonsterConstructor(position);
+    return new MonsterConstructor(position, movePattern);
   }
 }
 

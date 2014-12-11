@@ -15,8 +15,12 @@ Wave.prototype = {
     var delta = currentTime - this.t0;
     var monstersDefAndRest = this.takeMonster(delta, this.monsters, []);
     this.monsters = monstersDefAndRest[0];
-    return _.map( monstersDefAndRest[1], function(monsterID){
-      return Baddies.make(monsterID);
+    return _.map( monstersDefAndRest[1], function(monsterID, i, all){
+      var pos = [
+        (i + 1) / (all.length + 1),
+        -0.05
+      ];
+      return Baddies.make(monsterID, pos);
     });
   },
   hasNext : function(){
@@ -38,12 +42,38 @@ function WavesManager(){
 WavesManager.prototype = {
   CONFIG : [
     [
-      [0, "ouno"],
-      [0, "ouno"],
-      [2000, "douo"],
-      [2000, "ouno"],
-      [5000, "trouo"],
-      [5000, "ouno"]
+      [0,    "ouno", "straight"],
+      [2000,  "ouno", "straight"],
+      [3000, "ouno", "straight"],
+      [4000, "ouno", "straight"],
+      [5000, "ouno", "straight"],
+      [5000, "ouno", "straight"],
+      [10000, "ouno", "straight"],
+      [10000, "ouno", "straight"],
+      [10000, "ouno", "straight"],
+      [15000, "ouno", "straight"],
+      [15000, "ouno", "straight"],
+      [20000,  "ouno", "straight"],
+      [20000, "ouno", "straight"],
+      [23000, "ouno", "straight"],
+      [23000, "ouno", "straight"],
+      [23000, "ouno", "straight"]
+    ],
+    [
+      [0,    "ouno", "straight"],
+      [0,  "ouno", "straight"],
+      [4000,  "trouo",   "straight"],
+      [4000,  "trouo",  "straight"],
+      [8000,    "ouno", "straight"],
+      [8000,  "trouo",   "straight"],
+      [8000,  "ouno", "straight"]
+    ],
+    [
+      [0,    "ouno", "straight"],
+      [0,  "ouno", "straight"],
+      [4000,  "trouo",   "straight"],
+      [4000,  "trouo",  "straight"],
+      [8000,  "douo", "straight"],
     ]
   ],
   getNextWave: function( timestamp ){
