@@ -92,7 +92,11 @@ Rocket.prototype = {
   }
 };
 
-var handleMessages = function(messages, world){
+var handleMessages = function(messages, world, nextTimestamp){
+  //Wave trigger
+  if(!!messages[Messages.ID.START_NEXT_WAVE]){
+    world.currentWave = world.waveManager.getNextWave( nextTimestamp )
+  }
   //Ship movements
   if(!!messages[Messages.ID.SHIP_MOVE_UP]) world.player.ship.up();
   if(!!messages[Messages.ID.SHIP_MOVE_DOWN]) world.player.ship.down();
@@ -148,7 +152,7 @@ var worldTick = function(world, nextTimestamp){
     Array.prototype.push.apply( world.baddies, nextMonsters);
   }
   else if( world.baddies.length === 0) {
-    world.currentWave = world.waveManager.getNextWave( nextTimestamp );
+    world.currentWave = null;
   }
 
   world.baddies.forEach(function(b){
@@ -165,7 +169,7 @@ var worldTick = function(world, nextTimestamp){
   });
 
   var messages = Messages.get(Messages.channelIDs.GAME);
-  handleMessages(messages, world);
+  handleMessages(messages, world, nextTimestamp);
   Messages.reset( Messages.channelIDs.GAME );
 
   world.timestamp = nextTimestamp;

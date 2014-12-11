@@ -9,15 +9,17 @@ TODO - React vs Games
   [x] Add back the game
   [X] Game Over
  [X] Fix position (make rockets shoot straight)
- [ ] Script sequence of ennemies
- [-] Make different kind of ennemies
+ [X] Script sequence of ennemies
+ [X] Make different kind of ennemies
   [X] Duo : same as ouno but slower and tougher
-  [ ] Trio : faster, less life and can shoot
+  [X] Trio : faster, less life and can shoot
  [X] Ship is invisible for a short period when destroyed
  [X] Add special FX
   [X] Explosion
   [X] Stars
   [X] Flash (when ship explod)
+ [ ] Animate screens
+  [ ] Wave intro
  [ ] Sound effects
 
  0.2 : Mobile
