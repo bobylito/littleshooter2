@@ -12,7 +12,8 @@ TODO - React vs Games
  [ ] Script sequence of ennemies
   [X] Basic wave system
   [ ] Script how the enemies enter the screen
-   [ ] original position patterns :
+   [X] Simple dispatch : equal space of all the ennemies entering the screen at the same time
+   [ ] original position patterns?
    [ ] move patterns
  [X] Make different kind of ennemies
   [X] Duo : same as ouno but slower and tougher
