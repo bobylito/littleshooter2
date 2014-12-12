@@ -15,12 +15,12 @@ Wave.prototype = {
     var delta = currentTime - this.t0;
     var monstersDefAndRest = this.takeMonster(delta, this.monsters, []);
     this.monsters = monstersDefAndRest[0];
-    return _.map( monstersDefAndRest[1], function(monsterID, i, all){
+    return _.map( monstersDefAndRest[1], function(monsterIDWithPattern, i, all){
       var pos = [
         (i + 1) / (all.length + 1),
         -0.05
       ];
-      return Baddies.make(monsterID, pos);
+      return Baddies.make(monsterIDWithPattern[0], pos, monsterIDWithPattern[1]);
     });
   },
   hasNext : function(){
@@ -31,7 +31,10 @@ Wave.prototype = {
     if( monsters[0][0] > currentTime) return [monsters, res];
 
     var tail = _.tail(monsters);
-    res.push( monsters[0][1] );
+    var monsterName = monsters[0][1];
+    var monsterPattern = monsters[0][2];
+    res.push( [monsterName, monsterPattern] );
+
     return this.takeMonster(currentTime, tail, res);
   }
 };
@@ -45,15 +48,15 @@ WavesManager.prototype = {
       [0,    "ouno", "straight"],
       [2000,  "ouno", "straight"],
       [3000, "ouno", "straight"],
-      [4000, "ouno", "straight"],
-      [5000, "ouno", "straight"],
-      [5000, "ouno", "straight"],
-      [10000, "ouno", "straight"],
-      [10000, "ouno", "straight"],
-      [10000, "ouno", "straight"],
-      [15000, "ouno", "straight"],
-      [15000, "ouno", "straight"],
-      [20000,  "ouno", "straight"],
+      [4000, "ouno", "square"],
+      [5000, "ouno", "square"],
+      [5000, "ouno", "square"],
+      [10000, "ouno", "square"],
+      [10000, "ouno", "square"],
+      [10000, "ouno", "square"],
+      [15000, "ouno", "square"],
+      [15000, "ouno", "square"],
+      [20000,  "ouno", "square"],
       [20000, "ouno", "straight"],
       [23000, "ouno", "straight"],
       [23000, "ouno", "straight"],
