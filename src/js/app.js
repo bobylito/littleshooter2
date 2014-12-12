@@ -126,6 +126,11 @@ var GameApp = React.createClass({
         time : this.state.input.time,
         keys : newKeys
       }
+    }, function unableAutoFire(){
+      var newState = React.addons.update( this.state, {
+        input: { keys: { enter : { $set : false }}} 
+      });
+      this.setState(newState);
     });
   }
 });
