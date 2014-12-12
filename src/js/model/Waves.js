@@ -46,6 +46,19 @@ WavesManager.prototype = {
   CONFIG : [
     [
       [0,    "ouno", "straight"],
+      [0,  "ouno", "straight"]
+    ],
+    [
+      [0,    "ouno", "straight"],
+      [0,  "ouno", "straight"],
+      [4000,  "trouo",   "straight"],
+      [4000,  "trouo",  "straight"],
+      [8000,    "ouno", "straight"],
+      [8000,  "trouo",   "straight"],
+      [8000,  "ouno", "straight"]
+    ],
+    [
+      [0,    "ouno", "straight"],
       [2000,  "ouno", "straight"],
       [3000, "ouno", "straight"],
       [4000, "ouno", "square"],
@@ -61,15 +74,6 @@ WavesManager.prototype = {
       [23000, "ouno", "straight"],
       [23000, "ouno", "straight"],
       [23000, "ouno", "straight"]
-    ],
-    [
-      [0,    "ouno", "straight"],
-      [0,  "ouno", "straight"],
-      [4000,  "trouo",   "straight"],
-      [4000,  "trouo",  "straight"],
-      [8000,    "ouno", "straight"],
-      [8000,  "trouo",   "straight"],
-      [8000,  "ouno", "straight"]
     ],
     [
       [0,    "ouno", "straight"],

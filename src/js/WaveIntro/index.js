@@ -15,15 +15,10 @@ var WaveIntro = React.createClass({
   },
   render:function(){
     if( this.state.step === 0){
-      var score = _.reduce( this.props.world.stats.currentWave.kill,
-                            function(memo, monsters){
-                              return memo + monsters.length * 50;
-                            }, 0);
-
       return <div className="wave-intro intro">
           <h1 className="">Victory!</h1>
           <KillList stats={this.props.world.stats}/>
-          <Score score={ score } />
+          <Score score={ this.state.score } />
           <p>
             Press <span className="button">enter</span>
           </p>
@@ -60,6 +55,17 @@ var WaveIntro = React.createClass({
         step : 1
       });
     }
+    else {
+      var score = _.reduce( this.props.world.stats.currentWave.kill,
+                            function(memo, monsters){
+                              return memo + monsters.length * 50;
+                            }, 0);
+      this.setState({
+        score: score
+      });
+      Messages.post(Messages.ID.UPDATE_SCORE, Messages.channelIDs.GAME, score);
+    }
+
   }
 });
 module.exports=WaveIntro;
