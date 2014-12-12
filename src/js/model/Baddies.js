@@ -70,10 +70,14 @@ Monster.prototype = {
     this.speed[1] = Math.min( this.maxSpeed[1], this.speed[1] + acc[1]);
     this.position[0] += this.speed[0] * deltaT;
     this.position[1] += this.speed[1] * deltaT;
-    if( this.position[1] > 1.2) this.position[1] = -0.2;
+    if( this.position[1] > 1) { 
+      //this.position[1] = -0.2;
+      Messages.post( Messages.ID.BADDIE_WIN, Messages.channelIDs.GAME, this.id);
+      world.stats.miss( this.PRFX_ID, world.timestamp );
+    }
     this.flash=false;
   },
-  collide: function(){
+  collide: function( world ){
     if( this.life > 0 ){
       this.life--;
       this.position[1] = this.position[1] - (0.08 / (this.weight * this.weight)) ;
@@ -83,6 +87,7 @@ Monster.prototype = {
     else {
       Messages.post( Messages.ID.BADDIE_DESTROYED, Messages.channelIDs.GAME, this.id);
       Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
+      world.stats.kill( this.PRFX_ID, world.timestamp );
     }
   }
 };

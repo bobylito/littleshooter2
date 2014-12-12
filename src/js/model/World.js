@@ -3,6 +3,7 @@ var _ = require('underscore');
 
 var Baddies = require('./Baddies');
 var Waves   = require('./Waves');
+var Stats   = require('./Stats');
 var utils   = require('../Utils.js');
 
 var id = utils.idGenFactory();
@@ -15,6 +16,7 @@ var World = function( timestamp ){
   this.currentWave    = null;
   this.timestamp      = timestamp;
   this.firstTimestamp = timestamp;
+  this.stats          = new Stats( timestamp );
 };
 
 //Player
@@ -61,6 +63,7 @@ Ship.prototype = {
     Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
     Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
     Messages.post( Messages.ID.FLASH, Messages.channelIDs.FX, this.position);
+
     this.isInvincible = true;
     this.invincibleTimeout = Date.now() + 1000;
     this.position = [0.5, 0.8];
@@ -96,6 +99,7 @@ var handleMessages = function(messages, world, nextTimestamp){
   //Wave trigger
   if(!!messages[Messages.ID.START_NEXT_WAVE]){
     world.currentWave = world.waveManager.getNextWave( nextTimestamp )
+    world.stats.newWave( nextTimestamp );
   }
   //Ship movements
   if(!!messages[Messages.ID.SHIP_MOVE_UP]) world.player.ship.up();
@@ -124,9 +128,11 @@ var handleMessages = function(messages, world, nextTimestamp){
 
   //Baddies
   var destroyedBaddies = messages[Messages.ID.BADDIE_DESTROYED] || [];
+  var succeedingBaddies = messages[Messages.ID.BADDIE_WIN] || [];
+  var allBaddiesToRemove = destroyedBaddies.concat(succeedingBaddies);
 
-  if(destroyedBaddies.length > 0){
-    var missingBaddiesID = _.chain(destroyedBaddies).map(function(b){
+  if(allBaddiesToRemove.length > 0){
+    var missingBaddiesID = _.chain(allBaddiesToRemove).map(function(b){
       return b.val;
     });
     var remainingBaddies = _.reject(world.baddies, function(b){
@@ -137,7 +143,10 @@ var handleMessages = function(messages, world, nextTimestamp){
 
   // Ship destruction
   var destroyedShip = messages[Messages.ID.SHIP_DESTROYED] || [];
-  if(destroyedShip.length > 0) world.player.life--;
+  if(destroyedShip.length > 0){
+    world.player.life--;
+    world.stats.death( world.timestamp );
+  }
 
   //Points
   var newPoints = destroyedBaddies.length * 10;
@@ -165,7 +174,7 @@ var worldTick = function(world, nextTimestamp){
                         world.baddies.concat( world.player.ship.rockets.filter( function(r){ return r.isFromBaddies; })));
 
   _.chain(c).flatten().uniq().forEach(function(e){
-    e.collide();
+    e.collide( world );
   });
 
   var messages = Messages.get(Messages.channelIDs.GAME);

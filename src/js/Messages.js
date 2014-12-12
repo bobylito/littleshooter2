@@ -13,6 +13,7 @@ var messageIDs = {
   CHANGE_SCREEN   : 8,
   EXPLOSION       : 9,
   BADDIE_HIT      : 10,
+  BADDIE_WIN      : 11,
   FLASH           : 20,
   START_NEXT_WAVE : 30,
 }
