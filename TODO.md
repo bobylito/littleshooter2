@@ -10,14 +10,22 @@ TODO - React vs Games
   [X] Game Over
  [X] Fix position (make rockets shoot straight)
  [ ] Script sequence of ennemies
- [-] Make different kind of ennemies
+  [X] Basic wave system
+  [ ] Script how the enemies enter the screen
+   [X] Simple dispatch : equal space of all the ennemies entering the screen at the same time
+   [ ] original position patterns?
+   [ ] move patterns
+ [X] Make different kind of ennemies
   [X] Duo : same as ouno but slower and tougher
-  [ ] Trio : faster, less life and can shoot
+  [X] Trio : faster, less life and can shoot
+  [ ] BOSS?
  [X] Ship is invisible for a short period when destroyed
  [X] Add special FX
   [X] Explosion
   [X] Stars
   [X] Flash (when ship explod)
+ [ ] Animate screens
+  [ ] Wave intro
  [ ] Sound effects
 
  0.2 : Mobile

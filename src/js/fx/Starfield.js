@@ -28,9 +28,9 @@ var Starfield = React.createClass({
   componentWillMount: function(){
     //Create image with canvas
     this.setState({
-      bg1 : this.createStars(100),
+      bg1 : this.createStars(20),
       bg2 : this.createStars(50),
-      bg3 : this.createStars(10)
+      bg3 : this.createStars(100)
     });
   },
   createStars : function(n){
