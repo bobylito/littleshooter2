@@ -1,6 +1,7 @@
 @import 'nib'
+@import 'fonts'
 *{
-  font-family: Helvetica, Arial;
+  font-family: silkscreenbold;
 }
 
 .screen {
@@ -65,6 +66,9 @@
     height: 10px;
     background:white;
   }
+}
+span.monster{
+  display: inline-block;
 }
 .ouno{
   width: 20px;
@@ -138,6 +142,22 @@
       animation: vertical-scroll 20s linear infinite;
     }
   }
+}
+
+.kill-list {
+  text-transform : none;
+  font-size: 20px;
+  ul { 
+    padding: 0;
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+.score{
+  text-transform: none;
+  font-size: 20px;
 }
 
 // Animations

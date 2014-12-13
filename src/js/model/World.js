@@ -149,8 +149,10 @@ var handleMessages = function(messages, world, nextTimestamp){
   }
 
   //Points
-  var newPoints = destroyedBaddies.length * 10;
-  world.player.score += newPoints;
+  var scoreMessages = messages[Messages.ID.UPDATE_SCORE] || [];
+  if(scoreMessages.length > 0){
+    world.player.score += scoreMessages[0].val;
+  }
 };
 
 var worldTick = function(world, nextTimestamp){

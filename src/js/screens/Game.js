@@ -14,7 +14,6 @@ var RocketLauncher = require('../RocketLauncher');
 var Horde = require('../Horde');
 var WaveIntro = require('../WaveIntro');
 var HUD = require('../HUD');
-var FX = require('../fx');
 
 var GameScreen = React.createClass({
   getInitialState: function(){
@@ -39,7 +38,6 @@ var GameScreen = React.createClass({
                 <Horde world={this.state.world} screen={this.props.screen}/> : 
                 <WaveIntro inputState={this.state.input} world={this.state.world} screen={this.props.screen} />;
     return <div className="screen">
-              <FX inputState={this.state.input} world={this.state.world} screen={this.props.screen}/>
               {hordeOrIntro}
               <Ship inputState={this.state.input} world={this.state.world} screen={this.props.screen}/>
               <RocketLauncher inputState={this.state.input} world={this.state.world} screen={this.props.screen} />
