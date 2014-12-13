@@ -10,6 +10,7 @@ var Messages = require('./Messages.js');
 var Intro = require('./screens/Intro.js');
 var Game = require('./screens/Game.js');
 var GameOver = require('./screens/GameOver.js');
+var FX = require('./fx');
 
 var SCREENS = {
   INTRO     : 0,
@@ -61,6 +62,7 @@ var GameApp = React.createClass({
     return <div className="game" style={style}
                                  onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
+              <FX inputState={this.state.input} screen={screen}/>
               {screenComponent}
            </div>;
   },
