@@ -78,6 +78,7 @@ Monster.prototype = {
     this.flash=false;
   },
   collide: function( world ){
+    if( world.player.ship.isInvincible ) return;
     if( this.life > 0 ){
       this.life--;
       this.position[1] = this.position[1] - (0.08 / (this.weight * this.weight)) ;

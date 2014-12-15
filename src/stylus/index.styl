@@ -4,6 +4,10 @@
   font-family: silkscreenbold;
 }
 
+strong{
+  color: red;
+}
+
 .screen {
   width: inherit;
   height: inherit;
@@ -141,6 +145,17 @@ span.monster{
     &.l-3 {
       animation: vertical-scroll 20s linear infinite;
     }
+    &.reversed{
+      &.l-1 {
+        animation: vertical-scroll-reversed 2s linear infinite;
+      }
+      &.l-2 {
+        animation: vertical-scroll-reversed 4s linear infinite;
+      }
+      &.l-3 {
+        animation: vertical-scroll-reversed 6s linear infinite;
+      }
+    }
   }
 }
 
@@ -170,4 +185,9 @@ span.monster{
 @keyframes vertical-scroll {
   0%    { transform: translateY( 0 ) }
   100%  { transform: translateY( 1500px ) }
+}
+
+@keyframes vertical-scroll-reversed {
+  0%    { transform: translateY( 1500px ) }
+  100%  { transform: translateY( 0 ) }
 }

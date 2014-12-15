@@ -16,7 +16,8 @@ var messageIDs = {
   BADDIE_WIN      : 11,
   FLASH           : 20,
   START_NEXT_WAVE : 30,
-  UPDATE_SCORE    : 40
+  UPDATE_SCORE    : 40,
+  PLAYER_LOSE     : 50
 }
 
 var channelIDs = {
@@ -42,7 +43,7 @@ module.exports = {
     var channelOrRoot = channel || channelIDs.ROOT;
     channels[channelOrRoot].push({
       id:id,
-      val:val || null
+      val: (_.isUndefined(val) ? null : val)
     });
   },
   get : function( channel ){

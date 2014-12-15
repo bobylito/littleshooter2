@@ -14,6 +14,7 @@ var FX = React.createClass({
       <Starfield inputState={this.props.inputState} screen={this.props.screen}/>
     </div>;
   }
+
 });
 
 module.exports=FX;
