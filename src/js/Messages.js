@@ -16,7 +16,8 @@ var messageIDs = {
   BADDIE_WIN      : 11,
   FLASH           : 20,
   START_NEXT_WAVE : 30,
-  UPDATE_SCORE    : 40
+  UPDATE_SCORE    : 40,
+  PLAYER_LOSE     : 50
 }
 
 var channelIDs = {

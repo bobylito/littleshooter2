@@ -31,6 +31,7 @@ TODO - React vs Games
  [ ] Polish
   [X] Font
   [ ] Animations (text, more?)
+   [ ] Sequence FX animations with a callback
  [ ] Defeat
  [ ] Textual cut scenes
  [ ] Wepons
@@ -44,11 +45,13 @@ Gameplay
 
  [X] Bullets push ennemies
  [X] Split in missions
- [ ] Target of missions : have a limited number of ennemies reaching past the player
+ [X] Target of missions : have a limited number of ennemies reaching past the player
  [ ] Two type of weapons :
-  [ ] Bullets (push ennemies/very limited damage, fast, illimited qt, autofire?)
+  [X] Bullets (push ennemies/very limited damage, fast, illimited qt, autofire?)
   [ ] Bomb/Rockets (destroy, slow, limited, cooldown/quantity?)
  [X] Ennemies have life
+ [X] Ship life is unlimited but ship can't shoot nor collide when invicible
+ [X] Life (as in the HUD) are time machine tockens used when earth is defeated
 
 TOOLS / Framework
 -----------------

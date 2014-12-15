@@ -36,10 +36,12 @@ var WaveIntro = React.createClass({
       if( step > 0 ){ 
         if(this.state.isVictory)
           Messages.post(Messages.ID.START_NEXT_WAVE, Messages.channelIDs.GAME);
-        else
+        else{
+          Messages.post(Messages.ID.PLAYER_LOSE, Messages.channelIDs.GAME);
           Messages.post(Messages.ID.START_NEXT_WAVE,
                         Messages.channelIDs.GAME,
                         this.props.world.waveManager.currentWave);
+        }
       }
       else {
         this.setState({
@@ -78,7 +80,6 @@ var WaveIntro = React.createClass({
         });
       }
     }
-
   }
 });
 module.exports=WaveIntro;

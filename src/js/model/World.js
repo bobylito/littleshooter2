@@ -96,6 +96,8 @@ Rocket.prototype = {
 };
 
 var handleMessages = function(messages, world, nextTimestamp){
+  if(!!messages[Messages.ID.PLAYER_LOSE]) world.player.life--;
+
   //Wave trigger
   if(!!messages[Messages.ID.START_NEXT_WAVE]){
     var nextWaveNumber = messages[Messages.ID.START_NEXT_WAVE][0].val;
@@ -146,7 +148,6 @@ var handleMessages = function(messages, world, nextTimestamp){
   // Ship destruction
   var destroyedShip = messages[Messages.ID.SHIP_DESTROYED] || [];
   if(destroyedShip.length > 0){
-    world.player.life--;
     world.stats.death( world.timestamp );
   }
 

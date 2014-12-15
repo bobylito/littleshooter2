@@ -45,13 +45,15 @@ var Ship = React.createClass({
       lastFire  : this.state.lastFire
     };
 
+    var ship = this.props.world.player.ship;
+
     if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT, Messages.channelIDs.GAME ) }
     if(input.keys.left)   { Messages.post( Messages.ID.SHIP_MOVE_LEFT , Messages.channelIDs.GAME ) }
     if(input.keys.up)     { Messages.post( Messages.ID.SHIP_MOVE_UP   , Messages.channelIDs.GAME ) }
     if(input.keys.down)   { Messages.post( Messages.ID.SHIP_MOVE_DOWN , Messages.channelIDs.GAME ) }
 
     if(input.keys.space)  {
-      if( input.time > this.state.lastFire + 50 ) {
+      if( input.time > this.state.lastFire + 50 && !ship.isInvincible) {
         var ship    = world.player.ship;
         var shipPos = ship.position;
         Messages.post(
