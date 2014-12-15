@@ -42,7 +42,7 @@ module.exports = {
     var channelOrRoot = channel || channelIDs.ROOT;
     channels[channelOrRoot].push({
       id:id,
-      val:val || null
+      val: (_.isUndefined(val) ? null : val)
     });
   },
   get : function( channel ){

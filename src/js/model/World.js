@@ -98,9 +98,11 @@ Rocket.prototype = {
 var handleMessages = function(messages, world, nextTimestamp){
   //Wave trigger
   if(!!messages[Messages.ID.START_NEXT_WAVE]){
-    world.currentWave = world.waveManager.getNextWave( nextTimestamp )
+    var nextWaveNumber = messages[Messages.ID.START_NEXT_WAVE][0].val;
+    world.currentWave  = world.waveManager.getNextWave( nextTimestamp, nextWaveNumber );
     world.stats.newWave( nextTimestamp );
   }
+
   //Ship movements
   if(!!messages[Messages.ID.SHIP_MOVE_UP]) world.player.ship.up();
   if(!!messages[Messages.ID.SHIP_MOVE_DOWN]) world.player.ship.down();

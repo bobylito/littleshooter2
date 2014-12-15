@@ -40,7 +40,7 @@ Wave.prototype = {
 };
 
 function WavesManager(){
-  this.currentWave = 0;
+  this.currentWave = -1;
 }
 WavesManager.prototype = {
   CONFIG : [
@@ -83,9 +83,24 @@ WavesManager.prototype = {
       [8000,  "douo", "straight"],
     ]
   ],
-  getNextWave: function( timestamp ){
-    var nextWaveConfig = this.CONFIG[(this.currentWave++) % this.CONFIG.length];
+  getNextWave: function( timestamp, waveNumber){
+    if( _.isNumber(waveNumber) ) 
+      this.currentWave = waveNumber % this.CONFIG.length;
+    else 
+      this.currentWave = (this.currentWave + 1) % this.CONFIG.length;
+
+    var nextWaveConfig = this.CONFIG[this.currentWave];
     return new Wave(timestamp, nextWaveConfig);
+  },
+  getTotalMonsterInCurrentWave : function(){
+    if( this.currentWave === -1 ) return undefined;
+    else
+      return this.CONFIG[this.currentWave].length;
+  },
+  getCurrentWave: function(){
+    if( this.currentWave === -1 ) return undefined;
+    else
+      return this.CONFIG[this.currentWave];
   }
 };
 
