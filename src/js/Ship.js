@@ -37,7 +37,6 @@ var Ship = React.createClass({
   },
   updateState : function(input, world){
     var v = 1;
-    var deltaT = input.time - this.state.previousT;
     var newState = {
       height    : this.state.height,
       width     : this.state.width,
@@ -47,10 +46,10 @@ var Ship = React.createClass({
 
     var ship = this.props.world.player.ship;
 
-    if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT, Messages.channelIDs.GAME ) }
-    if(input.keys.left)   { Messages.post( Messages.ID.SHIP_MOVE_LEFT , Messages.channelIDs.GAME ) }
-    if(input.keys.up)     { Messages.post( Messages.ID.SHIP_MOVE_UP   , Messages.channelIDs.GAME ) }
-    if(input.keys.down)   { Messages.post( Messages.ID.SHIP_MOVE_DOWN , Messages.channelIDs.GAME ) }
+    if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT, Messages.channelIDs.GAME, input.keys.right) }
+    if(input.keys.left)   { Messages.post( Messages.ID.SHIP_MOVE_LEFT , Messages.channelIDs.GAME, input.keys.left) }
+    if(input.keys.up)     { Messages.post( Messages.ID.SHIP_MOVE_UP   , Messages.channelIDs.GAME, input.keys.up) }
+    if(input.keys.down)   { Messages.post( Messages.ID.SHIP_MOVE_DOWN , Messages.channelIDs.GAME, input.keys.down) }
 
     if(input.keys.space)  {
       if( input.time > this.state.lastFire + 50 && !ship.isInvincible) {

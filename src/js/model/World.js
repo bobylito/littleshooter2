@@ -1,6 +1,7 @@
 var Messages = require('../Messages.js');
 var _ = require('underscore');
 
+var Ship    = require('./Ship');
 var Baddies = require('./Baddies');
 var Waves   = require('./Waves');
 var Rocket  = require('./Rocket');
@@ -27,51 +28,6 @@ var Player = function(){
   this.ship = new Ship();
 }
 
-//Ship
-var Ship = function(){
-  this.position = [0.5, 0.8];
-  this.speed = [0,0];
-  this.rockets = [];
-  this.size = [0.04, 0.046];
-  this.isInvincible = false;
-  this.invincibleTimeout = null;
-  this.id = this.PRFX_ID + id();
-}
-
-Ship.prototype = {
-  PRFX_ID: "SHIP",
-  left  : function(){ this.speed[0] -= 0.0022; },
-  right : function(){ this.speed[0] += 0.0022; },
-  up    : function(){ this.speed[1] -= 0.0022; },
-  down  : function(){ this.speed[1] += 0.0022; },
-  tick  : function( deltaT, world ){
-    this.move(deltaT);
-  },
-  move  : function( deltaT ){
-    var halfSize = [this.size[0] / 2, this.size[1] / 2];
-    this.speed[0] *= 0.3;
-    this.speed[1] *= 0.3;
-    this.position[0] = Math.min(Math.max(0,
-           this.position[0] + this.speed[0] * deltaT), 1 - this.size[0]);
-    this.position[1] = Math.min(Math.max(0,
-          this.position[1] + this.speed[1] * deltaT), 1 - this.size[1]);
-    if(this.isInvincible && this.invincibleTimeout < Date.now() )
-      this.isInvincible = false;
-  },
-  collide: function(){
-    if(this.isInvincible) return;
-
-    Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
-    Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
-    Messages.post( Messages.ID.FLASH, Messages.channelIDs.FX, this.position);
-
-    this.isInvincible = true;
-    this.invincibleTimeout = Date.now() + 1000;
-    this.position = [0.5, 0.8];
-  }
-};
-
-
 var handleMessages = function(messages, world, nextTimestamp){
   if(!!messages[Messages.ID.PLAYER_LOSE]) world.player.life--;
 
@@ -83,10 +39,10 @@ var handleMessages = function(messages, world, nextTimestamp){
   }
 
   //Ship movements
-  if(!!messages[Messages.ID.SHIP_MOVE_UP]) world.player.ship.up();
-  if(!!messages[Messages.ID.SHIP_MOVE_DOWN]) world.player.ship.down();
-  if(!!messages[Messages.ID.SHIP_MOVE_LEFT]) world.player.ship.left();
-  if(!!messages[Messages.ID.SHIP_MOVE_RIGHT]) world.player.ship.right();
+  if(!!messages[Messages.ID.SHIP_MOVE_UP])    world.player.ship.up(messages[Messages.ID.SHIP_MOVE_UP][0].val);
+  if(!!messages[Messages.ID.SHIP_MOVE_DOWN])  world.player.ship.down(messages[Messages.ID.SHIP_MOVE_DOWN][0].val);
+  if(!!messages[Messages.ID.SHIP_MOVE_LEFT])  world.player.ship.left(messages[Messages.ID.SHIP_MOVE_LEFT][0].val);
+  if(!!messages[Messages.ID.SHIP_MOVE_RIGHT]) world.player.ship.right(messages[Messages.ID.SHIP_MOVE_RIGHT][0].val);
 
   //Rockets
   var launchMsgs = messages[Messages.ID.ROCKET_LAUNCH] || [];
