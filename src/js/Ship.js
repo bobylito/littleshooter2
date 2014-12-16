@@ -61,7 +61,7 @@ var Ship = React.createClass({
           Messages.channelIDs.GAME,
           { pos : [
               shipPos[0] + ship.size[0] / 2,
-              shipPos[1] + ship.size[1] 
+              shipPos[1]  
             ]
           }
         );

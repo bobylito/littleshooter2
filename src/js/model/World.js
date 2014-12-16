@@ -3,6 +3,7 @@ var _ = require('underscore');
 
 var Baddies = require('./Baddies');
 var Waves   = require('./Waves');
+var Rocket  = require('./Rocket');
 var Stats   = require('./Stats');
 var utils   = require('../Utils.js');
 
@@ -70,30 +71,6 @@ Ship.prototype = {
   }
 };
 
-var Rocket = function(pos, direction, isFromBaddies){
-  this.position = pos;
-  this.speed    = direction || [0, -0.001];
-  this.size     = [0.01,0.02];
-  this.id       = this.PRFX_ID + id();
-  this.isFromBaddies = isFromBaddies;
-};
-
-Rocket.prototype = {
-  PRFX_ID : "RCKT",
-  tick    : function( deltaT, world ){
-    this.move( deltaT );
-    if(this.position[1] < -0.2 || this.position[1] > 1.2) {
-      Messages.post( Messages.ID.ROCKET_LOST, Messages.channelIDs.GAME, this.id);
-    }
-  },
-  move    : function(deltaT){
-    this.position[0] += this.speed[0] * deltaT;
-    this.position[1] += this.speed[1] * deltaT;
-  },
-  collide : function(){
-    Messages.post( Messages.ID.ROCKET_LOST, Messages.channelIDs.GAME, this.id);
-  }
-};
 
 var handleMessages = function(messages, world, nextTimestamp){
   if(!!messages[Messages.ID.PLAYER_LOSE]) world.player.life--;
@@ -125,7 +102,11 @@ var handleMessages = function(messages, world, nextTimestamp){
     var newRockets = _.map(launchMsgs, function(msg){
       var rocketPosition  = [msg.val.pos[0], msg.val.pos[1]];
       var rocketDirection = msg.val.dir ? [msg.val.dir[0], msg.val.dir[1]] : null;
-      return new Rocket( rocketPosition, rocketDirection, msg.val.isFromBaddies);
+      var isFromBaddies   = !!msg.val.isFromBaddies;
+      if( isFromBaddies )
+        return new Rocket.Rocket( rocketPosition, rocketDirection, true);
+      else
+        return new Rocket.Large( rocketPosition, rocketDirection, false);
     });
     world.player.ship.rockets = remainingRockets.concat(newRockets);
   }

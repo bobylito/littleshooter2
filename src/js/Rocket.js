@@ -10,13 +10,16 @@ var Rocket = React.createClass({
   componentWillReceiveProps : function( next ){
   },
   render : function(){
+    var screen = this.props.screen;
+    var rocket = this.props.rocket;
     var style = {
       transform: T.translate(
-        this.props.position[0] * this.props.screen.width  - 3,
-        this.props.position[1] * this.props.screen.height - 10)
+        rocket.position[0] * screen.width,
+        rocket.position[1] * screen.height)
     };
+    var className = "rocket positionable " + this.props.rocket.PRFX_ID;
 
-    return <div style={style} className="rocket positionable"/>;
+    return <div style={style} className={className}/>;
   }
 });
 
