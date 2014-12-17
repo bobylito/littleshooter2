@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react/addons');
+var PureRenderMixin = require('react').addons.PureRenderMixin;
 var _ = require('underscore');
 
 var Messages = require('../Messages.js');
@@ -32,6 +33,9 @@ var Starfield = React.createClass({
       bg2 : this.createStars(50),
       bg3 : this.createStars(100)
     });
+  },
+  shouldComponentUpdate: function(){
+    return false;
   },
   createStars : function(n){
     var c = document.createElement("canvas");
