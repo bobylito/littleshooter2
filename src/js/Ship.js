@@ -9,41 +9,32 @@ var Messages = require('./Messages.js');
 var Ship = React.createClass({
   getInitialState:function(){
     return {
-      height : 23,
-      width : 20,
-      previousT : Date.now(),
       lastFire : 0
     };
   },
   render : function(){
     var self = this;
-    var ship = this.props.world.player.ship;
     var style = {
       transform : T.translate( 
           ship.position[0] * (this.props.screen.width),
           ship.position[1] * (this.props.screen.height))};
     var cssClasses = ["ship", "positionable"];
 
-    var epsilon = 0.1;
-    if(ship.speed[0] > epsilon) cssClasses.push("right");
-    if(ship.speed[0] < -epsilon) cssClasses.push("left");
-
     if(ship.isInvincible) cssClasses.push("blink");
 
     return <div className={ cssClasses.join(" ")} style={style}></div>;
+  },
+  shouldComponentUpdate: function(nextProps){
+    //It should work but it won't since the model is not immutable
+    var currentShip = this.props.world.player.ship;
+    var nextShip = nextProps.world.player.ship;
+    return (currentShip.position[0] != nextShip.position[0] ||
+           currentShip.position[1] != nextShip.position[1]);
   },
   componentWillReceiveProps:function( props ){
     this.updateState(props.inputState, props.world);
   },
   updateState : function(input, world){
-    var v = 1;
-    var newState = {
-      height    : this.state.height,
-      width     : this.state.width,
-      previousT : input.time,
-      lastFire  : this.state.lastFire
-    };
-
     var ship = this.props.world.player.ship;
 
     if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT, Messages.channelIDs.GAME, input.keys.right) }
@@ -64,11 +55,13 @@ var Ship = React.createClass({
             ]
           }
         );
-        newState.lastFire = input.time;
+        
+        this.setState({
+          lastFire: input.time
+        });
       }
     }
 
-    this.setState(newState);
   },
 });
 

@@ -39,7 +39,7 @@ var GameScreen = React.createClass({
                 <WaveIntro inputState={this.state.input} world={this.state.world} screen={this.props.screen} />;
     return <div className="screen">
               {hordeOrIntro}
-              <Ship inputState={this.state.input} world={this.state.world} screen={this.props.screen}/>
+              <Ship inputState={this.state.input} screen={this.props.screen} x={this.props.world.player.ship.position[0]} />
               <RocketLauncher inputState={this.state.input} world={this.state.world} screen={this.props.screen} />
               <HUD world={this.state.world} screen={this.props.screen}/>
            </div>;
