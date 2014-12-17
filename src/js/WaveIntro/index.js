@@ -30,6 +30,9 @@ var WaveIntro = React.createClass({
         </div>;
     }
   },
+  shouldComponentUpdate: function(){
+    return !!this.props.inputState.keys.enter;
+  },
   componentWillReceiveProps: function(props){
     if(props.inputState.keys.enter) {
       var step = this.state.step;
