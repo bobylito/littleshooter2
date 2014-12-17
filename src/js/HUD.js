@@ -12,6 +12,10 @@ var HUD = React.createClass({
       <div className="points">{player.score}</div>
       <div className="life">{life}</div>
     </div>;
+  },
+  shouldComponentUpdate: function(nextProps){
+    return this.props.world.player.life  != nextProps.world.player.life ||
+           this.props.world.player.score != nextProps.world.player.score;
   }
 });
 

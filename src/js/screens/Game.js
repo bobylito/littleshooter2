@@ -34,8 +34,8 @@ var GameScreen = React.createClass({
   },
 
   render : function(){
-    var hordeOrIntro = this.state.world.currentWave ? 
-                <Horde world={this.state.world} screen={this.props.screen}/> : 
+    var hordeOrIntro = this.state.world.currentWave ?
+                <Horde world={this.state.world} screen={this.props.screen}/> :
                 <WaveIntro inputState={this.state.input} world={this.state.world} screen={this.props.screen} />;
     return <div className="screen">
               {hordeOrIntro}
