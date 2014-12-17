@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     browserify: {
       options: {
         transform: [ require('grunt-react').browserify ],
-        bundleOptions:{
+        browserifyOptions:{
           debug: true
         }
       },

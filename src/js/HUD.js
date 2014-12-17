@@ -6,7 +6,7 @@ var HUD = React.createClass({
   render:function(){
     var player = this.props.world.player;
     var life = _.map( _.range(player.life), function(i){
-      return <div className="ship"/>
+      return <div className="ship" key={i}/>
     });
     return <div className="hud">
       <div className="points">{player.score}</div>

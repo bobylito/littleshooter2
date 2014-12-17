@@ -154,7 +154,7 @@ var GameApp = React.createClass({
       }
     }, function unableAutoFire(){
       var newState = React.addons.update( this.state, {
-        input: { keys: { enter : { $set : false }}} 
+        input: { keys: { enter : { $set : false }}}
       });
       this.setState(newState);
     });
@@ -162,4 +162,4 @@ var GameApp = React.createClass({
 });
 
 var output = d.getElementById("main");
-React.renderComponent( <GameApp width="500" height="500" />, output);
+React.render( <GameApp width="500" height="500" />, output);
