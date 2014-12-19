@@ -13,7 +13,7 @@ var Ship = React.createClass({
     };
   },
   render : function(){
-    var self = this;
+    var ship = this.props.world.player.ship;
     var style = {
       transform : T.translate( 
           ship.position[0] * (this.props.screen.width),

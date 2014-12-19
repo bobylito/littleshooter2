@@ -15,7 +15,7 @@ var Ship = function(){
 }
 
 var accel = function accel(i){
-  return Math.min(0.003, 0.0001 * i); 
+  return Math.min(0.003, 0.0001 * i);
 };
 Ship.prototype = {
   PRFX_ID: "SHIP",
@@ -47,6 +47,9 @@ Ship.prototype = {
     this.isInvincible = true;
     this.invincibleTimeout = Date.now() + 1000;
     this.position = [0.5, 0.8];
+  },
+  copy: function(){
+    return Object.create(this);
   }
 };
 
