@@ -29,7 +29,10 @@ var Ship = React.createClass({
     var currentShip = this.props.ship;
     var nextShip = nextProps.ship;
     return (currentShip.position[0] != nextShip.position[0] ||
-           currentShip.position[1] != nextShip.position[1]);
+            currentShip.position[1] != nextShip.position[1]  || 
+            ( currentShip.isInvincible && !nextShip.isInvincible) ||
+            (!currentShip.isInvincible &&  nextShip.isInvincible)
+           );
   },
   componentWillReceiveProps:function( props ){
     this.updateState(props.inputState, props.world);

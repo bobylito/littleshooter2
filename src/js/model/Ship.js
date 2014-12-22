@@ -9,7 +9,6 @@ var Ship = function( config ){
   this.id       = this.PRFX_ID + id();
   this.position = config.position || [0.5, 0.8];
   this.speed    = config.speed    || [0,0];
-  this.rockets  = config.rockets  || [];
   this.size     = [0.04, 0.046];
   this.isInvincible      = config.isInvincible || false;
   this.invincibleTimeout = config.invincibleTimeout || null;

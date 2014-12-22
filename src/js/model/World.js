@@ -19,6 +19,7 @@ var World = function( timestamp ){
   this.timestamp      = timestamp;
   this.firstTimestamp = timestamp;
   this.stats          = new Stats( timestamp );
+  this.rockets        = [];
 };
 
 //Player
@@ -48,7 +49,7 @@ var handleMessages = function(messages, world, nextTimestamp){
     var missingRocketIds = _(lostMsgs).chain().map(function(m){
       return m.val;
     });
-    var remainingRockets = _.reject(world.player.ship.rockets, function(r){
+    var remainingRockets = _.reject(world.rockets, function(r){
       return missingRocketIds.contains( r.id ).value();
     });
     var newRockets = _.map(launchMsgs, function(msg){
@@ -60,7 +61,7 @@ var handleMessages = function(messages, world, nextTimestamp){
       else
         return new Rocket.Large( rocketPosition, rocketDirection, false);
     });
-    world.player.ship.rockets = remainingRockets.concat(newRockets);
+    world.rockets = remainingRockets.concat(newRockets);
   }
 
   //Baddies
@@ -117,12 +118,12 @@ var worldTick = function(world, nextTimestamp){
   world.baddies.forEach(function(b){
     b.tick(deltaT, world);
   });
-  world.player.ship.rockets.forEach(function(r){
+  world.rockets.forEach(function(r){
     r.tick(deltaT, world);
   });
 
-  var c = testCollision(world.player.ship.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.player.ship),
-                        world.baddies.concat( world.player.ship.rockets.filter( function(r){ return r.isFromBaddies; })));
+  var c = testCollision(world.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.player.ship),
+                        world.baddies.concat( world.rockets.filter( function(r){ return r.isFromBaddies; })));
 
   _.chain(c).flatten().uniq().groupBy( "PRFX_ID" ).each( function( objects, prfx ){
     if( prfx === Ship.prototype.PRFX_ID ){
