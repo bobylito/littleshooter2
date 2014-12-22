@@ -38,11 +38,7 @@ var handleMessages = function(messages, world, nextTimestamp){
     world.stats.newWave( nextTimestamp );
   }
 
-  //Ship movements
-  if(!!messages[Messages.ID.SHIP_MOVE_UP])    world.player.ship.up(messages[Messages.ID.SHIP_MOVE_UP][0].val);
-  if(!!messages[Messages.ID.SHIP_MOVE_DOWN])  world.player.ship.down(messages[Messages.ID.SHIP_MOVE_DOWN][0].val);
-  if(!!messages[Messages.ID.SHIP_MOVE_LEFT])  world.player.ship.left(messages[Messages.ID.SHIP_MOVE_LEFT][0].val);
-  if(!!messages[Messages.ID.SHIP_MOVE_RIGHT]) world.player.ship.right(messages[Messages.ID.SHIP_MOVE_RIGHT][0].val);
+  world.player.ship = updateShipWithMessages( world.player.ship, messages );
 
   //Rockets
   var launchMsgs = messages[Messages.ID.ROCKET_LAUNCH] || [];
@@ -95,9 +91,23 @@ var handleMessages = function(messages, world, nextTimestamp){
   }
 };
 
+var updateShipWithMessages = function updateShipWithMessages( ship, messages ){
+  var newShip = ship.copy();
+
+  //Ship moves
+  if(!!messages[Messages.ID.SHIP_MOVE_UP])    ship.up(messages[Messages.ID.SHIP_MOVE_UP][0].val);
+  if(!!messages[Messages.ID.SHIP_MOVE_DOWN])  ship.down(messages[Messages.ID.SHIP_MOVE_DOWN][0].val);
+  if(!!messages[Messages.ID.SHIP_MOVE_LEFT])  ship.left(messages[Messages.ID.SHIP_MOVE_LEFT][0].val);
+  if(!!messages[Messages.ID.SHIP_MOVE_RIGHT]) ship.right(messages[Messages.ID.SHIP_MOVE_RIGHT][0].val);
+
+  return newShip;
+};
+
 var worldTick = function(world, nextTimestamp){
   var deltaT = (nextTimestamp - world.timestamp);
-  world.player.ship.tick(deltaT, world);
+
+  world.player.ship = world.player.ship.tick(deltaT, world);
+
   if(!!world.currentWave && world.currentWave.hasNext()){
     var nextMonsters = world.currentWave.getNextMonsters(nextTimestamp);
     Array.prototype.push.apply( world.baddies, nextMonsters);
@@ -112,6 +122,7 @@ var worldTick = function(world, nextTimestamp){
   world.player.ship.rockets.forEach(function(r){
     r.tick(deltaT, world);
   });
+
   var c = testCollision(world.player.ship.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.player.ship),
                         world.baddies.concat( world.player.ship.rockets.filter( function(r){ return r.isFromBaddies; })));
 

@@ -4,19 +4,44 @@ var Messages = require('../Messages.js');
 var utils   = require('../Utils.js');
 var id = utils.idGenFactory();
 
-var Ship = function(){
-  this.position = [0.5, 0.8];
-  this.speed = [0,0];
-  this.rockets = [];
-  this.size = [0.04, 0.046];
-  this.isInvincible = false;
+var Ship = function( config ){
+  config = config || {};
+  this.id       = this.PRFX_ID + id();
+  this.position = config.position || [0.5, 0.8];
+  this.speed    = config.speed    || [0,0];
+  this.rockets  = config.rockets  || [];
+  this.size     = [0.04, 0.046];
+  this.isInvincible      = false;
   this.invincibleTimeout = null;
-  this.id = this.PRFX_ID + id();
 }
 
 var accel = function accel(i){
   return Math.min(0.003, 0.0001 * i);
 };
+
+var Physics = {
+  friction : function( speed, coef, deltaT ){
+    return [
+      speed[0] * coef,
+      speed[1] * coef
+    ];
+  },
+  move : function( position, speed, deltaT, screenBounds, shipSize){
+    return [
+      Math.min(
+        Math.max(
+          screenBounds[0][0],
+          position[0] + speed[0] * deltaT),
+        screenBounds[0][1] - shipSize[0]),
+      Math.min(
+        Math.max(
+          screenBounds[1][0],
+          position[1] + speed[1] * deltaT),
+        screenBounds[1][1] - shipSize[1])
+    ];
+  },
+};
+
 Ship.prototype = {
   PRFX_ID: "SHIP",
   left  : function( i ){ this.speed[0] -= accel(i); },
@@ -24,18 +49,12 @@ Ship.prototype = {
   up    : function( i ){ this.speed[1] -= accel(i); },
   down  : function( i ){ this.speed[1] += accel(i); },
   tick  : function( deltaT, world ){
-    this.move(deltaT);
-  },
-  move  : function( deltaT ){
-    var halfSize = [this.size[0] / 2, this.size[1] / 2];
-    this.speed[0] *= 0.3;
-    this.speed[1] *= 0.3;
-    this.position[0] = Math.min(Math.max(0,
-           this.position[0] + this.speed[0] * deltaT), 1 - this.size[0]);
-    this.position[1] = Math.min(Math.max(0,
-          this.position[1] + this.speed[1] * deltaT), 1 - this.size[1]);
-    if(this.isInvincible && this.invincibleTimeout < Date.now() )
-      this.isInvincible = false;
+    var newState = this.copy();
+    newState.speed = Physics.friction( newState.speed, 0.3, deltaT );
+    newState.position = Physics.move( newState.position, newState.speed, deltaT, [[0,1], [0,1]], newState.size);
+    if(newState.isInvincible && newState.invincibleTimeout < Date.now() )
+      newState.isInvincible = false;
+    return newState;
   },
   collide: function(){
     if(this.isInvincible) return;
@@ -49,7 +68,7 @@ Ship.prototype = {
     this.position = [0.5, 0.8];
   },
   copy: function(){
-    return Object.create(this);
+    return new Ship( this )
   }
 };
 

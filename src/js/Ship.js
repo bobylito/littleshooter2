@@ -13,7 +13,7 @@ var Ship = React.createClass({
     };
   },
   render : function(){
-    var ship = this.props.world.player.ship;
+    var ship = this.props.ship;
     var style = {
       transform : T.translate( 
           ship.position[0] * (this.props.screen.width),
@@ -26,8 +26,8 @@ var Ship = React.createClass({
   },
   shouldComponentUpdate: function(nextProps){
     //It should work but it won't since the model is not immutable
-    var currentShip = this.props.world.player.ship;
-    var nextShip = nextProps.world.player.ship;
+    var currentShip = this.props.ship;
+    var nextShip = nextProps.ship;
     return (currentShip.position[0] != nextShip.position[0] ||
            currentShip.position[1] != nextShip.position[1]);
   },
@@ -35,17 +35,17 @@ var Ship = React.createClass({
     this.updateState(props.inputState, props.world);
   },
   updateState : function(input, world){
-    var ship = this.props.world.player.ship;
+    var ship = this.props.ship;
 
-    if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT, Messages.channelIDs.GAME, input.keys.right) }
-    if(input.keys.left)   { Messages.post( Messages.ID.SHIP_MOVE_LEFT , Messages.channelIDs.GAME, input.keys.left) }
-    if(input.keys.up)     { Messages.post( Messages.ID.SHIP_MOVE_UP   , Messages.channelIDs.GAME, input.keys.up) }
-    if(input.keys.down)   { Messages.post( Messages.ID.SHIP_MOVE_DOWN , Messages.channelIDs.GAME, input.keys.down) }
+    if(input.keys.right)  { Messages.post( Messages.ID.SHIP_MOVE_RIGHT, Messages.channelIDs.GAME, input.keys.right); }
+    if(input.keys.left)   { Messages.post( Messages.ID.SHIP_MOVE_LEFT , Messages.channelIDs.GAME, input.keys.left); }
+    if(input.keys.up)     { Messages.post( Messages.ID.SHIP_MOVE_UP   , Messages.channelIDs.GAME, input.keys.up); }
+    if(input.keys.down)   { Messages.post( Messages.ID.SHIP_MOVE_DOWN , Messages.channelIDs.GAME, input.keys.down); }
 
     if(input.keys.space)  {
       if( input.time > this.state.lastFire + 50 && !ship.isInvincible) {
-        var ship    = world.player.ship;
         var shipPos = ship.position;
+        
         Messages.post(
           Messages.ID.ROCKET_LAUNCH,
           Messages.channelIDs.GAME,
