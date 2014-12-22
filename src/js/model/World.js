@@ -92,15 +92,13 @@ var handleMessages = function(messages, world, nextTimestamp){
 };
 
 var updateShipWithMessages = function updateShipWithMessages( ship, messages ){
-  var newShip = ship.copy();
-
-  //Ship moves
-  if(!!messages[Messages.ID.SHIP_MOVE_UP])    ship.up(messages[Messages.ID.SHIP_MOVE_UP][0].val);
-  if(!!messages[Messages.ID.SHIP_MOVE_DOWN])  ship.down(messages[Messages.ID.SHIP_MOVE_DOWN][0].val);
-  if(!!messages[Messages.ID.SHIP_MOVE_LEFT])  ship.left(messages[Messages.ID.SHIP_MOVE_LEFT][0].val);
-  if(!!messages[Messages.ID.SHIP_MOVE_RIGHT]) ship.right(messages[Messages.ID.SHIP_MOVE_RIGHT][0].val);
-
-  return newShip;
+  var keyCounts = [
+    (!!messages[Messages.ID.SHIP_MOVE_UP])    ? messages[Messages.ID.SHIP_MOVE_UP][0].val    : 0,
+    (!!messages[Messages.ID.SHIP_MOVE_RIGHT]) ? messages[Messages.ID.SHIP_MOVE_RIGHT][0].val : 0,
+    (!!messages[Messages.ID.SHIP_MOVE_DOWN])  ? messages[Messages.ID.SHIP_MOVE_DOWN][0].val  : 0,
+    (!!messages[Messages.ID.SHIP_MOVE_LEFT])  ? messages[Messages.ID.SHIP_MOVE_LEFT][0].val  : 0
+  ];
+  return ship.thrust(keyCounts);
 };
 
 var worldTick = function(world, nextTimestamp){

@@ -44,12 +44,20 @@ var Physics = {
 
 Ship.prototype = {
   PRFX_ID: "SHIP",
-  left  : function( i ){ this.speed[0] -= accel(i); },
-  right : function( i ){ this.speed[0] += accel(i); },
-  up    : function( i ){ this.speed[1] -= accel(i); },
-  down  : function( i ){ this.speed[1] += accel(i); },
+  _left  : function( i ){ this.speed[0] -= accel(i); },
+  _right : function( i ){ this.speed[0] += accel(i); },
+  _up    : function( i ){ this.speed[1] -= accel(i); },
+  _down  : function( i ){ this.speed[1] += accel(i); },
+  thrust: function( keyCounts ) {
+    var newState = this._copy();
+    newState._up(    keyCounts[0] );
+    newState._right( keyCounts[1] );
+    newState._down(  keyCounts[2] );
+    newState._left(  keyCounts[3] );
+    return newState;
+  },
   tick  : function( deltaT, world ){
-    var newState = this.copy();
+    var newState = this._copy();
     newState.speed = Physics.friction( newState.speed, 0.3, deltaT );
     newState.position = Physics.move( newState.position, newState.speed, deltaT, [[0,1], [0,1]], newState.size);
     if(newState.isInvincible && newState.invincibleTimeout < Date.now() )
@@ -67,7 +75,7 @@ Ship.prototype = {
     this.invincibleTimeout = Date.now() + 1000;
     this.position = [0.5, 0.8];
   },
-  copy: function(){
+  _copy: function(){
     return new Ship( this )
   }
 };
