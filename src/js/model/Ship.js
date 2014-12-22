@@ -11,8 +11,8 @@ var Ship = function( config ){
   this.speed    = config.speed    || [0,0];
   this.rockets  = config.rockets  || [];
   this.size     = [0.04, 0.046];
-  this.isInvincible      = false;
-  this.invincibleTimeout = null;
+  this.isInvincible      = config.isInvincible || false;
+  this.invincibleTimeout = config.invincibleTimeout || null;
 }
 
 var accel = function accel(i){
@@ -54,7 +54,7 @@ Ship.prototype = {
     newState._right( keyCounts[1] );
     newState._down(  keyCounts[2] );
     newState._left(  keyCounts[3] );
-    return newState;
+    return Object.freeze(newState);
   },
   tick  : function( deltaT, world ){
     var newState = this._copy();
@@ -62,18 +62,21 @@ Ship.prototype = {
     newState.position = Physics.move( newState.position, newState.speed, deltaT, [[0,1], [0,1]], newState.size);
     if(newState.isInvincible && newState.invincibleTimeout < Date.now() )
       newState.isInvincible = false;
-    return newState;
+    return Object.freeze(newState);
   },
-  collide: function(){
-    if(this.isInvincible) return;
+  collide: function( world, nextT ){
+    if(this.isInvincible) return this;
 
     Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
     Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
     Messages.post( Messages.ID.FLASH, Messages.channelIDs.FX, this.position);
 
-    this.isInvincible = true;
-    this.invincibleTimeout = Date.now() + 1000;
-    this.position = [0.5, 0.8];
+    var newState = this._copy();
+    newState.isInvincible = true;
+    newState.invincibleTimeout = nextT + 1000;
+    newState.position = [0.5, 0.8];
+
+    return Object.freeze(newState);
   },
   _copy: function(){
     return new Ship( this )

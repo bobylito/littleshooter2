@@ -124,8 +124,13 @@ var worldTick = function(world, nextTimestamp){
   var c = testCollision(world.player.ship.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.player.ship),
                         world.baddies.concat( world.player.ship.rockets.filter( function(r){ return r.isFromBaddies; })));
 
-  _.chain(c).flatten().uniq().forEach(function(e){
-    e.collide( world );
+  _.chain(c).flatten().uniq().groupBy( "PRFX_ID" ).each( function( objects, prfx ){
+    if( prfx === Ship.prototype.PRFX_ID ){
+      world.player.ship = objects[0].collide( world, nextTimestamp );
+    }
+    else _.each( objects, 
+                    function( object ){
+                      object.collide( world, nextTimestamp ); })
   });
 
   var messages = Messages.get(Messages.channelIDs.GAME);
