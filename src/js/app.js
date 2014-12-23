@@ -73,7 +73,12 @@ var GameApp = React.createClass({
         break;
       default : throw new Error("Inconsistent screen state : "+this.state.currentScreen);
     }
-    return <div className="game" style={style}
+    var className = "game";
+    if(!!Messages.get(Messages.channelIDs.FX)[Messages.ID.EXPLOSION]){
+      console.log("Shake");
+      className += " shake";
+    }
+    return <div className={className} style={style}
                                  onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
               <FX inputState={this.state.input} screen={screen}/>
