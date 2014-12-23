@@ -20,6 +20,8 @@ strong{
   outline   : none;
   overflow  : hidden;
 }
+
+
 .intro{
   position: absolute;
   top     : 20%;
@@ -40,7 +42,7 @@ strong{
     position    : absolute;
     top         : 400%;
     left        : 50%;
-    margin-left : -10px; 
+    margin-left : -10px;
   }
 }
 
@@ -67,6 +69,16 @@ strong{
   z-index: 1;
   .rocket {
     width : 5px;
+    height: 10px;
+    background:white;
+  }
+  .n-rocket {
+    width : 5px;
+    height: 10px;
+    background:white;
+  }
+  .l-rocket {
+    width : 10px;
     height: 10px;
     background:white;
   }
@@ -175,6 +187,10 @@ span.monster{
   font-size: 20px;
 }
 
+.shake{
+  animation: shake 150ms linear;
+}
+
 // Animations
 @keyframes blink {
   0%   { opacity: 0; }
@@ -190,4 +206,12 @@ span.monster{
 @keyframes vertical-scroll-reversed {
   0%    { transform: translateY( 1500px ) }
   100%  { transform: translateY( 0 ) }
+}
+
+@keyframes shake {
+  0%      { transform: translateX( -20px ) }
+  20%     { transform: translateX(  20px ) }
+  55%     { transform: translateX( -20px ) }
+  75%     { transform: translateX(  20px ) }
+  100%    { transform: translateX(   0px ) }
 }

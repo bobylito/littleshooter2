@@ -58,3 +58,8 @@ TOOLS / Framework
 
  [ ] Message sent in the future
  [X] Fx main module (just one import)
+
+CLEAN
+-----
+
+ [ ] Construct model in an immutable way

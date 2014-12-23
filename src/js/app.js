@@ -26,18 +26,32 @@ var GameApp = React.createClass({
       input : {
         time : (Date.now()),
         keys : {
-          left  : false,
-          right : false,
-          up    : false,
-          down  : false,
-          space : false,
+          left  : 0,
+          right : 0,
+          up    : 0,
+          down  : 0,
+          space : 0,
           enter : false,
         }
       }
     };
   },
 
+  deltaTOrZero : function( currentT, keyValue ){
+    if(keyValue === 0) return 0;
+    else return currentT - keyValue;
+  },
   render : function(){
+    var currentT = this.state.input.time;
+    var stateWithDeltaKeys = React.addons.update( this.state.input,
+          {
+            keys : { left  : { $set :this.deltaTOrZero(currentT, this.state.input.keys.left  ) },
+                     right : { $set :this.deltaTOrZero(currentT, this.state.input.keys.right ) },
+                     down  : { $set :this.deltaTOrZero(currentT, this.state.input.keys.down  ) },
+                     up    : { $set :this.deltaTOrZero(currentT, this.state.input.keys.up    ) },
+                     space : { $set :this.deltaTOrZero(currentT, this.state.input.keys.space ) } }
+          }
+        );
     var style = {
       width : this.props.width + "px",
       height: this.props.height+ "px"
@@ -48,18 +62,23 @@ var GameApp = React.createClass({
     };
     var screenComponent;
     switch(this.state.currentScreen){
-      case SCREENS.INTRO    :
-        screenComponent =    <Intro screen={screen} inputState={this.state.input} lastScreenData={this.state.lastScreenData}/>;
+      case SCREENS.INTRO :
+        screenComponent = <Intro screen={screen} inputState={stateWithDeltaKeys} lastScreenData={this.state.lastScreenData}/>;
         break;
-      case SCREENS.GAME     :
-        screenComponent =     <Game screen={screen} inputState={this.state.input} lastScreenData={this.state.lastScreenData}/>;
+      case SCREENS.GAME :
+        screenComponent = <Game screen={screen} inputState={stateWithDeltaKeys} lastScreenData={this.state.lastScreenData}/>;
         break;
       case SCREENS.GAME_OVER:
-        screenComponent = <GameOver screen={screen} inputState={this.state.input} lastScreenData={this.state.lastScreenData}/>;
+        screenComponent = <GameOver screen={screen} inputState={stateWithDeltaKeys} lastScreenData={this.state.lastScreenData}/>;
         break;
       default : throw new Error("Inconsistent screen state : "+this.state.currentScreen);
     }
-    return <div className="game" style={style}
+    var className = "game";
+    if(!!Messages.get(Messages.channelIDs.FX)[Messages.ID.EXPLOSION]){
+      console.log("Shake");
+      className += " shake";
+    }
+    return <div className={className} style={style}
                                  onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
               <FX inputState={this.state.input} screen={screen}/>
@@ -89,11 +108,11 @@ var GameApp = React.createClass({
                          input : {
                            time : (this.state.input.time),
                            keys : {
-                             left  : false,
-                             right : false,
-                             up    : false,
-                             down  : false,
-                             space : false,
+                             left  : 0,
+                             right : 0,
+                             up    : 0,
+                             down  : 0,
+                             space : 0,
                              enter : false}}
                          });
         }
@@ -106,6 +125,16 @@ var GameApp = React.createClass({
   componentDidMount : function(){
     this.getDOMNode().focus();
   },
+  newValueForKey: function(valueToSet, currentTime, keyName){
+    var currentKeyValue = this.state.input.keys[keyName];
+    if(valueToSet && currentKeyValue === 0){
+      return currentTime;
+    }
+    else if(!valueToSet) {
+      return 0;
+    }
+    return currentKeyValue;
+  },
   keyHandler : function(valueToSet, e){
     var newKeys = {
       left  : this.state.input.keys.left,
@@ -116,11 +145,11 @@ var GameApp = React.createClass({
       enter : this.state.input.keys.enter
     };
 
-    if(e.keyCode === 37) newKeys.left  = valueToSet;
-    if(e.keyCode === 38) newKeys.up    = valueToSet;
-    if(e.keyCode === 39) newKeys.right = valueToSet;
-    if(e.keyCode === 40) newKeys.down  = valueToSet;
-    if(e.keyCode === 32) newKeys.space = valueToSet;
+    if(e.keyCode === 37) newKeys.left  = this.newValueForKey(valueToSet, this.state.input.time, "left");
+    if(e.keyCode === 38) newKeys.up    = this.newValueForKey(valueToSet, this.state.input.time, "up");
+    if(e.keyCode === 39) newKeys.right = this.newValueForKey(valueToSet, this.state.input.time, "right");
+    if(e.keyCode === 40) newKeys.down  = this.newValueForKey(valueToSet, this.state.input.time, "down");
+    if(e.keyCode === 32) newKeys.space = this.newValueForKey(valueToSet, this.state.input.time, "space");
     if(e.keyCode === 13) newKeys.enter = valueToSet;
 
     this.setState({
@@ -130,7 +159,7 @@ var GameApp = React.createClass({
       }
     }, function unableAutoFire(){
       var newState = React.addons.update( this.state, {
-        input: { keys: { enter : { $set : false }}} 
+        input: { keys: { enter : { $set : false }}}
       });
       this.setState(newState);
     });
@@ -138,4 +167,4 @@ var GameApp = React.createClass({
 });
 
 var output = d.getElementById("main");
-React.renderComponent( <GameApp width="500" height="500" />, output);
+React.render( <GameApp width="500" height="500" />, output);

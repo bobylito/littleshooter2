@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react/addons');
+var PureRenderMixin = require('react').addons.PureRenderMixin;
 var _ = require('underscore');
 
 var Messages = require('../Messages.js');
@@ -11,13 +12,13 @@ var id = Utils.idGenFactory();
 var Starfield = React.createClass({
   render:function(){
     var style1 = {
-      "background-image" : "url(" + this.state.bg1 + ")"
+      "backgroundImage" : "url(" + this.state.bg1 + ")"
     };
     var style2 = {
-      "background-image" : "url(" + this.state.bg2 + ")"
+      "backgroundImage" : "url(" + this.state.bg2 + ")"
     };
     var style3 = {
-      "background-image" : "url(" + this.state.bg3 + ")"
+      "backgroundImage" : "url(" + this.state.bg3 + ")"
     };
     return <div className="fx">
       <div className="starfield stars l-1" style={style1}></div>
@@ -32,6 +33,9 @@ var Starfield = React.createClass({
       bg2 : this.createStars(50),
       bg3 : this.createStars(100)
     });
+  },
+  shouldComponentUpdate: function(){
+    return false;
   },
   createStars : function(n){
     var c = document.createElement("canvas");

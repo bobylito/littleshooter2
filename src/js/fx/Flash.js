@@ -23,8 +23,13 @@ var Flash = React.createClass({
   componentWillReceiveProps:function(props){
     var now = props.inputState.time;
     var msg = Messages.get(Messages.channelIDs.FX)[Messages.ID.FLASH] || [];
-    if( !_.isEmpty(msg) ) this.setState({isFlashing: true});
-    else this.setState({isFlashing: false});
+    if( !_.isEmpty(msg) ) {
+      var self = this;
+      this.setState({isFlashing: true});
+      setTimeout( function(){
+        self.setState({isFlashing: false});
+      }, 30);
+    }
   }
 });
 

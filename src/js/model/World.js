@@ -1,8 +1,11 @@
 var Messages = require('../Messages.js');
 var _ = require('underscore');
 
+var Ship    = require('./Ship');
 var Baddies = require('./Baddies');
+var Player  = require('./Player');
 var Waves   = require('./Waves');
+var Rocket  = require('./Rocket');
 var Stats   = require('./Stats');
 var utils   = require('../Utils.js');
 
@@ -10,93 +13,21 @@ var id = utils.idGenFactory();
 
 //World
 var World = function( timestamp ){
-  this.player         = new Player;
+  this.player         = Player.create();
+  this.ship           = new Ship();
   this.baddies        = [];
   this.waveManager    = new Waves.WavesManager();
   this.currentWave    = null;
   this.timestamp      = timestamp;
   this.firstTimestamp = timestamp;
   this.stats          = new Stats( timestamp );
-};
-
-//Player
-var Player = function(){
-  this.score = 0;
-  this.life = 3;
-  this.ship = new Ship();
-}
-
-//Ship
-var Ship = function(){
-  this.position = [0.5, 0.8];
-  this.speed = [0,0];
-  this.rockets = [];
-  this.size = [0.04, 0.046];
-  this.isInvincible = false;
-  this.invincibleTimeout = null;
-  this.id = this.PRFX_ID + id();
-}
-
-Ship.prototype = {
-  PRFX_ID: "SHIP",
-  left  : function(){ this.speed[0] -= 0.0022; },
-  right : function(){ this.speed[0] += 0.0022; },
-  up    : function(){ this.speed[1] -= 0.0022; },
-  down  : function(){ this.speed[1] += 0.0022; },
-  tick  : function( deltaT, world ){
-    this.move(deltaT);
-  },
-  move  : function( deltaT ){
-    var halfSize = [this.size[0] / 2, this.size[1] / 2];
-    this.speed[0] *= 0.3;
-    this.speed[1] *= 0.3;
-    this.position[0] = Math.min(Math.max(0,
-           this.position[0] + this.speed[0] * deltaT), 1 - this.size[0]);
-    this.position[1] = Math.min(Math.max(0,
-          this.position[1] + this.speed[1] * deltaT), 1 - this.size[1]);
-    if(this.isInvincible && this.invincibleTimeout < Date.now() )
-      this.isInvincible = false;
-  },
-  collide: function(){
-    if(this.isInvincible) return;
-
-    Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
-    Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
-    Messages.post( Messages.ID.FLASH, Messages.channelIDs.FX, this.position);
-
-    this.isInvincible = true;
-    this.invincibleTimeout = Date.now() + 1000;
-    this.position = [0.5, 0.8];
-  }
-};
-
-var Rocket = function(pos, direction, isFromBaddies){
-  this.position = pos;
-  this.speed    = direction || [0, -0.001];
-  this.size     = [0.01,0.02];
-  this.id       = this.PRFX_ID + id();
-  this.isFromBaddies = isFromBaddies;
-};
-
-Rocket.prototype = {
-  PRFX_ID : "RCKT",
-  tick    : function( deltaT, world ){
-    this.move( deltaT );
-    if(this.position[1] < -0.2 || this.position[1] > 1.2) {
-      Messages.post( Messages.ID.ROCKET_LOST, Messages.channelIDs.GAME, this.id);
-    }
-  },
-  move    : function(deltaT){
-    this.position[0] += this.speed[0] * deltaT;
-    this.position[1] += this.speed[1] * deltaT;
-  },
-  collide : function(){
-    Messages.post( Messages.ID.ROCKET_LOST, Messages.channelIDs.GAME, this.id);
-  }
+  this.rockets        = [];
 };
 
 var handleMessages = function(messages, world, nextTimestamp){
-  if(!!messages[Messages.ID.PLAYER_LOSE]) world.player.life--;
+  if(!!messages[Messages.ID.PLAYER_LOSE]){
+    world.player = world.player.removeLife();
+  }
 
   //Wave trigger
   if(!!messages[Messages.ID.START_NEXT_WAVE]){
@@ -105,11 +36,7 @@ var handleMessages = function(messages, world, nextTimestamp){
     world.stats.newWave( nextTimestamp );
   }
 
-  //Ship movements
-  if(!!messages[Messages.ID.SHIP_MOVE_UP]) world.player.ship.up();
-  if(!!messages[Messages.ID.SHIP_MOVE_DOWN]) world.player.ship.down();
-  if(!!messages[Messages.ID.SHIP_MOVE_LEFT]) world.player.ship.left();
-  if(!!messages[Messages.ID.SHIP_MOVE_RIGHT]) world.player.ship.right();
+  world.ship = updateShipWithMessages( world.ship, messages );
 
   //Rockets
   var launchMsgs = messages[Messages.ID.ROCKET_LAUNCH] || [];
@@ -119,15 +46,19 @@ var handleMessages = function(messages, world, nextTimestamp){
     var missingRocketIds = _(lostMsgs).chain().map(function(m){
       return m.val;
     });
-    var remainingRockets = _.reject(world.player.ship.rockets, function(r){
+    var remainingRockets = _.reject(world.rockets, function(r){
       return missingRocketIds.contains( r.id ).value();
     });
     var newRockets = _.map(launchMsgs, function(msg){
       var rocketPosition  = [msg.val.pos[0], msg.val.pos[1]];
       var rocketDirection = msg.val.dir ? [msg.val.dir[0], msg.val.dir[1]] : null;
-      return new Rocket( rocketPosition, rocketDirection, msg.val.isFromBaddies);
+      var isFromBaddies   = !!msg.val.isFromBaddies;
+      if( isFromBaddies )
+        return new Rocket.Rocket( rocketPosition, rocketDirection, true);
+      else
+        return new Rocket.Large( rocketPosition, rocketDirection, false);
     });
-    world.player.ship.rockets = remainingRockets.concat(newRockets);
+    world.rockets = remainingRockets.concat(newRockets);
   }
 
   //Baddies
@@ -154,13 +85,25 @@ var handleMessages = function(messages, world, nextTimestamp){
   //Points
   var scoreMessages = messages[Messages.ID.UPDATE_SCORE] || [];
   if(scoreMessages.length > 0){
-    world.player.score += scoreMessages[0].val;
+    world.player = world.player.updateScore( scoreMessages[0].val );
   }
+};
+
+var updateShipWithMessages = function updateShipWithMessages( ship, messages ){
+  var keyCounts = [
+    (!!messages[Messages.ID.SHIP_MOVE_UP])    ? messages[Messages.ID.SHIP_MOVE_UP][0].val    : 0,
+    (!!messages[Messages.ID.SHIP_MOVE_RIGHT]) ? messages[Messages.ID.SHIP_MOVE_RIGHT][0].val : 0,
+    (!!messages[Messages.ID.SHIP_MOVE_DOWN])  ? messages[Messages.ID.SHIP_MOVE_DOWN][0].val  : 0,
+    (!!messages[Messages.ID.SHIP_MOVE_LEFT])  ? messages[Messages.ID.SHIP_MOVE_LEFT][0].val  : 0
+  ];
+  return ship.thrust(keyCounts);
 };
 
 var worldTick = function(world, nextTimestamp){
   var deltaT = (nextTimestamp - world.timestamp);
-  world.player.ship.tick(deltaT, world);
+
+  world.ship = world.ship.tick(deltaT, world);
+
   if(!!world.currentWave && world.currentWave.hasNext()){
     var nextMonsters = world.currentWave.getNextMonsters(nextTimestamp);
     Array.prototype.push.apply( world.baddies, nextMonsters);
@@ -172,14 +115,20 @@ var worldTick = function(world, nextTimestamp){
   world.baddies.forEach(function(b){
     b.tick(deltaT, world);
   });
-  world.player.ship.rockets.forEach(function(r){
+  world.rockets.forEach(function(r){
     r.tick(deltaT, world);
   });
-  var c = testCollision(world.player.ship.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.player.ship),
-                        world.baddies.concat( world.player.ship.rockets.filter( function(r){ return r.isFromBaddies; })));
 
-  _.chain(c).flatten().uniq().forEach(function(e){
-    e.collide( world );
+  var c = testCollision(world.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.ship),
+                        world.baddies.concat( world.rockets.filter( function(r){ return r.isFromBaddies; })));
+
+  _.chain(c).flatten().uniq().groupBy( "PRFX_ID" ).each( function( objects, prfx ){
+    if( prfx === Ship.prototype.PRFX_ID ){
+      world.ship = objects[0].collide( world, nextTimestamp );
+    }
+    else _.each( objects, 
+                    function( object ){
+                      object.collide( world, nextTimestamp ); })
   });
 
   var messages = Messages.get(Messages.channelIDs.GAME);

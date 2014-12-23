@@ -17,7 +17,8 @@ var messageIDs = {
   FLASH           : 20,
   START_NEXT_WAVE : 30,
   UPDATE_SCORE    : 40,
-  PLAYER_LOSE     : 50
+  PLAYER_LOSE     : 50,
+  SETUP_FX        : 100
 }
 
 var channelIDs = {

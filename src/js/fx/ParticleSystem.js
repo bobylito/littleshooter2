@@ -11,11 +11,12 @@ var id = Utils.idGenFactory();
 var ParticleSystem = React.createClass({
   getInitialState: function(){
     return {
+      innerTimeTick: 0,
       particles: []
     };
   },
   render: function(){
-    var now = this.props.inputState.time;
+    var now = this.state.innerTimeTick;
     var screen = this.props.screen;
     var particles = _.map(this.state.particles, function(p){
       var elapsed = now - p.t0;
@@ -41,10 +42,24 @@ var ParticleSystem = React.createClass({
         return _.map(dirs, c.bind(this, m.val));
       }).flatten().value();
     Messages.reset( Messages.channelIDs.FX );
+    this.setState({
+      innerTimeTick: now,
+      particles : particles
+    });
+  },
+  tick : function(){
+    var now = Date.now();
     var prunedParticles = _.filter(this.state.particles, function(p){
       return p.expiration > now;
     });
-    this.state.particles = prunedParticles.concat(particles);
+    this.setState({
+      innerTimeTick: now,
+      particles : prunedParticles
+    });
+    setTimeout( this.tick, 16 );
+  },
+  componentWillMount: function(){
+    this.tick();
   },
   randomVec2: function(){
     return [

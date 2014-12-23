@@ -2,17 +2,17 @@
   "name": "LSX",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-watch": "~0.5.2",
-    "browserify": "^4.1.8",
-    "grunt-react": "^0.8.2",
-    "grunt-browserify": "^2.1.0",
-    "grunt-contrib-stylus": "^0.17.0"
+    "grunt": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-watch": "*",
+    "browserify": "*",
+    "grunt-react": "*",
+    "grunt-browserify": "*",
+    "grunt-contrib-stylus": "*"
   },
   "dependencies": {
-    "envify": "^1.2.1",
-    "react": "^0.10.0",
-    "underscore": "^1.6.0"
+    "envify": "^3.2.0",
+    "react": "^0.12.1",
+    "underscore": "*"
   }
 }

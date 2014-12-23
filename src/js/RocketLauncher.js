@@ -8,10 +8,8 @@ var Rocket = require('./Rocket.js');
 var RocketLauncher = React.createClass({
   render : function(){
     var self = this;
-    var rockets = this.props.world.player.ship.rockets.map(function(r){
-      return self.transferPropsTo(
-        <Rocket key={r.id} position={r.position}/>
-      );
+    var rockets = this.props.world.rockets.map(function(r){
+      return <Rocket key={r.id} rocket={r} screen={self.props.screen}/>
     });
     return <div className="rocket-launcher">
              {rockets}
