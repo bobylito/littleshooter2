@@ -78,7 +78,7 @@ Monster.prototype = {
     this.flash=false;
   },
   collide: function( world ){
-    if( world.player.ship.isInvincible ) return;
+    if( world.ship.isInvincible ) return;
     if( this.life > 0 ){
       this.life--;
       this.position[1] = this.position[1] - (0.08 / (this.weight * this.weight)) ;
@@ -123,7 +123,7 @@ Douo.prototype.constructor = Douo;
 Douo.prototype.PRFX_ID = "douo";
 Douo.prototype.afterMove = function( dt, world ){
   var x = this.position[0] + this.size[0]/2;
-  var xPlayer = world.player.ship.position[0];
+  var xPlayer = world.ship.position[0];
   if( world.timestamp > ( this.lastFire + 1000 ) &&
       xPlayer < x + 0.1 &&
       xPlayer > x - 0.1 ) {

@@ -3,6 +3,7 @@ var _ = require('underscore');
 
 var Ship    = require('./Ship');
 var Baddies = require('./Baddies');
+var Player  = require('./Player');
 var Waves   = require('./Waves');
 var Rocket  = require('./Rocket');
 var Stats   = require('./Stats');
@@ -12,7 +13,8 @@ var id = utils.idGenFactory();
 
 //World
 var World = function( timestamp ){
-  this.player         = new Player;
+  this.player         = new Player();
+  this.ship           = new Ship();
   this.baddies        = [];
   this.waveManager    = new Waves.WavesManager();
   this.currentWave    = null;
@@ -21,13 +23,6 @@ var World = function( timestamp ){
   this.stats          = new Stats( timestamp );
   this.rockets        = [];
 };
-
-//Player
-var Player = function(){
-  this.score = 0;
-  this.life = 3;
-  this.ship = new Ship();
-}
 
 var handleMessages = function(messages, world, nextTimestamp){
   if(!!messages[Messages.ID.PLAYER_LOSE]) world.player.life--;
@@ -39,7 +34,7 @@ var handleMessages = function(messages, world, nextTimestamp){
     world.stats.newWave( nextTimestamp );
   }
 
-  world.player.ship = updateShipWithMessages( world.player.ship, messages );
+  world.ship = updateShipWithMessages( world.ship, messages );
 
   //Rockets
   var launchMsgs = messages[Messages.ID.ROCKET_LAUNCH] || [];
@@ -105,7 +100,7 @@ var updateShipWithMessages = function updateShipWithMessages( ship, messages ){
 var worldTick = function(world, nextTimestamp){
   var deltaT = (nextTimestamp - world.timestamp);
 
-  world.player.ship = world.player.ship.tick(deltaT, world);
+  world.ship = world.ship.tick(deltaT, world);
 
   if(!!world.currentWave && world.currentWave.hasNext()){
     var nextMonsters = world.currentWave.getNextMonsters(nextTimestamp);
@@ -122,12 +117,12 @@ var worldTick = function(world, nextTimestamp){
     r.tick(deltaT, world);
   });
 
-  var c = testCollision(world.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.player.ship),
+  var c = testCollision(world.rockets.filter( function(r){ return !r.isFromBaddies; }).concat(world.ship),
                         world.baddies.concat( world.rockets.filter( function(r){ return r.isFromBaddies; })));
 
   _.chain(c).flatten().uniq().groupBy( "PRFX_ID" ).each( function( objects, prfx ){
     if( prfx === Ship.prototype.PRFX_ID ){
-      world.player.ship = objects[0].collide( world, nextTimestamp );
+      world.ship = objects[0].collide( world, nextTimestamp );
     }
     else _.each( objects, 
                     function( object ){
