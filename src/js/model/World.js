@@ -13,7 +13,7 @@ var id = utils.idGenFactory();
 
 //World
 var World = function( timestamp ){
-  this.player         = new Player();
+  this.player         = Player.create();
   this.ship           = new Ship();
   this.baddies        = [];
   this.waveManager    = new Waves.WavesManager();
@@ -25,7 +25,9 @@ var World = function( timestamp ){
 };
 
 var handleMessages = function(messages, world, nextTimestamp){
-  if(!!messages[Messages.ID.PLAYER_LOSE]) world.player.life--;
+  if(!!messages[Messages.ID.PLAYER_LOSE]){
+    world.player = world.player.removeLife();
+  }
 
   //Wave trigger
   if(!!messages[Messages.ID.START_NEXT_WAVE]){
@@ -83,7 +85,7 @@ var handleMessages = function(messages, world, nextTimestamp){
   //Points
   var scoreMessages = messages[Messages.ID.UPDATE_SCORE] || [];
   if(scoreMessages.length > 0){
-    world.player.score += scoreMessages[0].val;
+    world.player = world.player.updateScore( scoreMessages[0].val );
   }
 };
 

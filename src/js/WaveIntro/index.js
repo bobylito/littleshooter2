@@ -36,7 +36,7 @@ var WaveIntro = React.createClass({
   componentWillReceiveProps: function(props){
     if(props.inputState.keys.enter) {
       var step = this.state.step;
-      if( step > 0 ){ 
+      if( step > 0 ){
         if(this.state.isVictory)
           Messages.post(Messages.ID.START_NEXT_WAVE, Messages.channelIDs.GAME);
         else{

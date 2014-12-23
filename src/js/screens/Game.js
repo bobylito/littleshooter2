@@ -41,7 +41,7 @@ var GameScreen = React.createClass({
               {hordeOrIntro}
               <Ship inputState={this.state.input} ship={this.state.world.ship} screen={this.props.screen} />
               <RocketLauncher inputState={this.state.input} world={this.state.world} screen={this.props.screen} />
-              <HUD world={this.state.world} screen={this.props.screen}/>
+              <HUD player={this.state.world.player} screen={this.props.screen}/>
            </div>;
   },
   tick : function( newProps ){
