@@ -4,21 +4,34 @@
   font-family: silkscreenbold;
 }
 
+html{ height: 100%; }
+body{ 
+  min-height      : 100%;
+  background-image: url("/assets/bg.png");}
+
 strong{
   color: red;
 }
 
+#main {
+  text-align  : center;
+  padding-top : 25px;
+}
+
 .screen {
-  width: inherit;
+  width : inherit;
   height: inherit;
 }
+
 .game{
-  position  : relative;
-  width     : 500px;
-  height    : 500px;
-  background: black;
-  outline   : none;
-  overflow  : hidden;
+  position    : relative;
+  width       : 500px;
+  height      : 500px;
+  background  : black;
+  outline     : none;
+  overflow    : hidden;
+  margin      : auto;
+  box-shadow  : 2px 5px 20px rgba(0,0,0,.7);
 }
 
 
@@ -133,6 +146,8 @@ span.monster{
 }
 
 .fx {
+  position: absolute;
+  top: 0;
   width : 100%;
   height: 100%;
   &.flash {
@@ -209,9 +224,11 @@ span.monster{
 }
 
 @keyframes shake {
-  0%      { transform: translateX( -20px ) }
-  20%     { transform: translateX(  20px ) }
-  55%     { transform: translateX( -20px ) }
-  75%     { transform: translateX(  20px ) }
-  100%    { transform: translateX(   0px ) }
+  0%      { transform: translateX( -10px ) }
+  10%     { transform: translateY(  10px ) }
+  20%     { transform: translateX(  10px ) }
+  55%     { transform: translateX( -10px ) }
+  65%     { transform: translateY( -10px ) }
+  75%     { transform: translateX(  10px ) }
+  100%    { transform: translateX(   0px ), translateY(   0px ); }
 }

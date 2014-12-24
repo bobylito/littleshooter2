@@ -75,7 +75,6 @@ var GameApp = React.createClass({
     }
     var className = "game";
     if(!!Messages.get(Messages.channelIDs.FX)[Messages.ID.EXPLOSION]){
-      console.log("Shake");
       className += " shake";
     }
     return <div className={className} style={style}

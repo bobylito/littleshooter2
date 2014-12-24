@@ -25,6 +25,7 @@ TODO - React vs Games
   [X] Explosion
   [X] Stars
   [X] Flash (when ship explod)
+  [X] ScreenShake
  [X] Sub screens
   [X] Wave intro
  [ ] Sound effects
