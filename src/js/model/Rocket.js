@@ -52,7 +52,7 @@ Rocket.prototype.PRFX_ID = "n-rocket";
 var Large = function LargeRocket(position, speed, isFromBaddies){
   GenericRocket.call(this, {
     position : position,
-    speed    : (speed || [0, -0.001]),
+    speed    : (speed || [ (0.5 - Math.random())* -0.00005 , -0.001]),
     size     : [0.02, 0.02],
     isFromBaddies : !!isFromBaddies
   });

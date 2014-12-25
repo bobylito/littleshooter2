@@ -1,5 +1,6 @@
 @import 'nib'
 @import 'fonts'
+@import 'animation'
 *{
   font-family: silkscreenbold;
 }
@@ -33,7 +34,6 @@ strong{
   margin      : auto;
   box-shadow  : 2px 5px 20px rgba(0,0,0,.7);
 }
-
 
 .intro{
   position: absolute;
@@ -145,6 +145,11 @@ span.monster{
   padding: 3px;
 }
 
+.perfect{
+  font-size: 120%;
+  color: red;
+}
+
 .fx {
   position: absolute;
   top: 0;
@@ -200,35 +205,4 @@ span.monster{
 .score{
   text-transform: none;
   font-size: 20px;
-}
-
-.shake{
-  animation: shake 150ms linear;
-}
-
-// Animations
-@keyframes blink {
-  0%   { opacity: 0; }
-  50%  { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-@keyframes vertical-scroll {
-  0%    { transform: translateY( 0 ) }
-  100%  { transform: translateY( 1500px ) }
-}
-
-@keyframes vertical-scroll-reversed {
-  0%    { transform: translateY( 1500px ) }
-  100%  { transform: translateY( 0 ) }
-}
-
-@keyframes shake {
-  0%      { transform: translateX( -10px ) }
-  10%     { transform: translateY(  10px ) }
-  20%     { transform: translateX(  10px ) }
-  55%     { transform: translateX( -10px ) }
-  65%     { transform: translateY( -10px ) }
-  75%     { transform: translateX(  10px ) }
-  100%    { transform: translateX(   0px ), translateY(   0px ); }
 }
