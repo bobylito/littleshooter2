@@ -40,7 +40,7 @@ var Monster = function( config ) {
   if( !config ) throw "WTF PEOPLE! no config object were provided to Monster "+
                       "therefore I am not able to build my minion. Sad day!";
   this.position     = config.position || [ Math.random(), -0.2];
-  this.speed        = [0,0];
+  this.speed        = config.speed || [0,0];
   this.maxSpeed     = config.maxSpeed || [0.0001, 0.0001];
   this.size         = config.size || [0.1, 0.1];
   this.life         = config.life || 3;
@@ -71,7 +71,6 @@ Monster.prototype = {
     this.position[0] += this.speed[0] * deltaT;
     this.position[1] += this.speed[1] * deltaT;
     if( this.position[1] > 1) { 
-      //this.position[1] = -0.2;
       Messages.post( Messages.ID.BADDIE_WIN, Messages.channelIDs.GAME, this.id);
       world.stats.miss( this.PRFX_ID, world.timestamp );
     }
@@ -97,6 +96,7 @@ var Ouno = function( position, movePattern){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
     maxSpeed     : [0.0003, 0.0003],
+    speed        : [0, 0.0003],
     size         : [0.04, 0.04],
     weight       : 1,
     life         : 3,
@@ -111,6 +111,7 @@ var Douo = function( position, movePattern ){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
     maxSpeed     : [0.0001, 0.0001],
+    speed        : [0, 0.0001],
     size         : [0.04, 0.04],
     weight       : 4,
     life         : 20,
@@ -142,6 +143,7 @@ var Trouo = function( position, movePattern ){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
     maxSpeed     : [0.0005, 0.0005],
+    speed        : [0, 0.0005],
     size         : [0.04, 0.04],
     weight       : 0.75,
     life         : 1,
