@@ -133,10 +133,30 @@ span.monster{
     top: 0;
     left: 0;
     .ship{
-      position: relative;
       display:inline-block;
       margin: 5px;
     }
+  }
+  .gauge{
+    top: 40px;
+    left: 5px;
+  }
+}
+.gauge{
+  position: absolute;
+  height: 20px;
+  border: 1px solid #fff;
+  .label{
+    color: #fff;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    font-size: 10px;
+  }
+  .value{
+    height: 15px;
+    background: #00f;
+    margin: 2px;
   }
 }
 

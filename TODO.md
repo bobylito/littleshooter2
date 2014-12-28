@@ -23,7 +23,7 @@ TODO - React vs Games
   [X] Trio : faster, less life and can shoot
   [ ] BOSS?
   [ ] Ninja
- [X] Ship is invisible for a short period when destroyed
+ [X] Ship is invincible for a short period when destroyed
  [X] Add special FX
   [X] Explosion
   [X] Stars
@@ -44,6 +44,7 @@ TODO - React vs Games
   [ ] Days
  [ ] Wepons
  [ ] Combos
+ [X] Bullets limits gauge
 
  0.2 : Mobile
 -------------
@@ -60,6 +61,7 @@ Gameplay
  [X] Ennemies have life
  [X] Ship life is unlimited but ship can't shoot nor collide when invicible
  [X] Life (as in the HUD) are time machine tockens used when earth is defeated
+ [X] Bullets limits
 
 TOOLS / Framework
 -----------------
