@@ -6,8 +6,8 @@ var Messages = require('../Messages.js');
 var Intro = React.createClass({
   render:function(){
     return <div className="intro">
-      <h1>Little shooter</h1>
-      <h2>
+      <h1 className="from-left">Little shooter</h1>
+      <h2 className="from-left delay-1">
         Press <span className="button">RETURN</span>
       </h2>
       <div className="ship"></div>

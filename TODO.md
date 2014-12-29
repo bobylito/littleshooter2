@@ -3,6 +3,8 @@ TODO - React vs Games
 
  0.1 : remake
 -------------
+ [ ] PROPER LOADING
+  [ ] FOUT FIX!
  [X] Add screens system
   [x] sortof
   [x] intro
@@ -20,11 +22,14 @@ TODO - React vs Games
   [X] Duo : same as ouno but slower and tougher
   [X] Trio : faster, less life and can shoot
   [ ] BOSS?
- [X] Ship is invisible for a short period when destroyed
+  [ ] Ninja
+ [X] Ship is invincible for a short period when destroyed
  [X] Add special FX
   [X] Explosion
   [X] Stars
   [X] Flash (when ship explod)
+  [X] ScreenShake
+  [ ] Better explosions (with discs)
  [X] Sub screens
   [X] Wave intro
  [ ] Sound effects
@@ -33,9 +38,13 @@ TODO - React vs Games
   [ ] Animations (text, more?)
    [ ] Sequence FX animations with a callback
  [ ] Defeat
+  [ ] Screen
+  [ ] Animation
  [ ] Textual cut scenes
+  [ ] Days
  [ ] Wepons
  [ ] Combos
+ [X] Bullets limits gauge
 
  0.2 : Mobile
 -------------
@@ -52,6 +61,7 @@ Gameplay
  [X] Ennemies have life
  [X] Ship life is unlimited but ship can't shoot nor collide when invicible
  [X] Life (as in the HUD) are time machine tockens used when earth is defeated
+ [X] Bullets limits
 
 TOOLS / Framework
 -----------------

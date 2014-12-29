@@ -1,26 +1,39 @@
 @import 'nib'
 @import 'fonts'
+@import 'animation'
 *{
   font-family: silkscreenbold;
 }
+
+html{ height: 100%; }
+body{ 
+  min-height      : 100%;
+  background-image: url("/assets/bg.png");}
 
 strong{
   color: red;
 }
 
-.screen {
-  width: inherit;
-  height: inherit;
-}
-.game{
-  position  : relative;
-  width     : 500px;
-  height    : 500px;
-  background: black;
-  outline   : none;
-  overflow  : hidden;
+#main {
+  text-align  : center;
+  padding-top : 25px;
 }
 
+.screen {
+  width : inherit;
+  height: inherit;
+}
+
+.game{
+  position    : relative;
+  width       : 500px;
+  height      : 500px;
+  background  : black;
+  outline     : none;
+  overflow    : hidden;
+  margin      : auto;
+  box-shadow  : 2px 5px 20px rgba(0,0,0,.7);
+}
 
 .intro{
   position: absolute;
@@ -120,10 +133,30 @@ span.monster{
     top: 0;
     left: 0;
     .ship{
-      position: relative;
       display:inline-block;
       margin: 5px;
     }
+  }
+  .gauge{
+    top: 40px;
+    left: 5px;
+  }
+}
+.gauge{
+  position: absolute;
+  height: 20px;
+  border: 1px solid #fff;
+  .label{
+    color: #fff;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    font-size: 10px;
+  }
+  .value{
+    height: 15px;
+    background: #00f;
+    margin: 2px;
   }
 }
 
@@ -132,7 +165,14 @@ span.monster{
   padding: 3px;
 }
 
+.perfect{
+  font-size: 120%;
+  color: red;
+}
+
 .fx {
+  position: absolute;
+  top: 0;
   width : 100%;
   height: 100%;
   &.flash {
@@ -185,33 +225,4 @@ span.monster{
 .score{
   text-transform: none;
   font-size: 20px;
-}
-
-.shake{
-  animation: shake 150ms linear;
-}
-
-// Animations
-@keyframes blink {
-  0%   { opacity: 0; }
-  50%  { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-@keyframes vertical-scroll {
-  0%    { transform: translateY( 0 ) }
-  100%  { transform: translateY( 1500px ) }
-}
-
-@keyframes vertical-scroll-reversed {
-  0%    { transform: translateY( 1500px ) }
-  100%  { transform: translateY( 0 ) }
-}
-
-@keyframes shake {
-  0%      { transform: translateX( -20px ) }
-  20%     { transform: translateX(  20px ) }
-  55%     { transform: translateX( -20px ) }
-  75%     { transform: translateX(  20px ) }
-  100%    { transform: translateX(   0px ) }
 }

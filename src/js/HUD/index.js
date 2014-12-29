@@ -2,6 +2,8 @@
 var React = require('react/addons');
 var _ = require('underscore');
 
+var Gauge = require('./Gauge');
+
 var HUD = React.createClass({
   render:function(){
     var player = this.props.player;
@@ -10,12 +12,14 @@ var HUD = React.createClass({
     });
     return <div className="hud">
       <div className="points">{player.score}</div>
+      <Gauge amount={player.getWeaponEnergyRatio()} label="power"/>
       <div className="life">{life}</div>
     </div>;
   },
   shouldComponentUpdate: function(nextProps){
-    return this.props.player.life  != nextProps.player.life ||
-           this.props.player.score != nextProps.player.score;
+    return this.props.player.life         != nextProps.player.life  ||
+           this.props.player.score        != nextProps.player.score ||
+           this.props.player.weaponEnergy != nextProps.player.weaponEnergy;
   }
 });
 

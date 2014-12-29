@@ -24,7 +24,7 @@ var World = function( timestamp ){
   this.rockets        = [];
 };
 
-var handleMessages = function(messages, world, nextTimestamp){
+var handleMessages = function(messages, world, nextTimestamp, deltaT){
   if(!!messages[Messages.ID.PLAYER_LOSE]){
     world.player = world.player.removeLife();
   }
@@ -49,15 +49,22 @@ var handleMessages = function(messages, world, nextTimestamp){
     var remainingRockets = _.reject(world.rockets, function(r){
       return missingRocketIds.contains( r.id ).value();
     });
-    var newRockets = _.map(launchMsgs, function(msg){
+    var newRockets = _.chain(launchMsgs).map(function(msg){
       var rocketPosition  = [msg.val.pos[0], msg.val.pos[1]];
       var rocketDirection = msg.val.dir ? [msg.val.dir[0], msg.val.dir[1]] : null;
       var isFromBaddies   = !!msg.val.isFromBaddies;
       if( isFromBaddies )
         return new Rocket.Rocket( rocketPosition, rocketDirection, true);
-      else
-        return new Rocket.Large( rocketPosition, rocketDirection, false);
-    });
+      else{
+        if( world.player.canShoot(nextTimestamp, deltaT) ) {
+          world.player = world.player.successShoot( nextTimestamp );
+          return new Rocket.Large( rocketPosition, rocketDirection, false);
+        }
+        else {
+          world.player = world.player.failShoot( nextTimestamp );
+        }
+      }
+    }).compact().value();
     world.rockets = remainingRockets.concat(newRockets);
   }
 
@@ -132,8 +139,10 @@ var worldTick = function(world, nextTimestamp){
   });
 
   var messages = Messages.get(Messages.channelIDs.GAME);
-  handleMessages(messages, world, nextTimestamp);
+  handleMessages(messages, world, nextTimestamp, deltaT);
   Messages.reset( Messages.channelIDs.GAME );
+
+  world.player = world.player.recharge(nextTimestamp, deltaT);
 
   world.timestamp = nextTimestamp;
   return world;

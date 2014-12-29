@@ -31,7 +31,7 @@ var GameApp = React.createClass({
           up    : 0,
           down  : 0,
           space : 0,
-          enter : false,
+          enter : false
         }
       }
     };
@@ -75,7 +75,6 @@ var GameApp = React.createClass({
     }
     var className = "game";
     if(!!Messages.get(Messages.channelIDs.FX)[Messages.ID.EXPLOSION]){
-      console.log("Shake");
       className += " shake";
     }
     return <div className={className} style={style}
@@ -113,6 +112,7 @@ var GameApp = React.createClass({
                              up    : 0,
                              down  : 0,
                              space : 0,
+                             f     : false,
                              enter : false}}
                          });
         }
@@ -150,6 +150,7 @@ var GameApp = React.createClass({
     if(e.keyCode === 39) newKeys.right = this.newValueForKey(valueToSet, this.state.input.time, "right");
     if(e.keyCode === 40) newKeys.down  = this.newValueForKey(valueToSet, this.state.input.time, "down");
     if(e.keyCode === 32) newKeys.space = this.newValueForKey(valueToSet, this.state.input.time, "space");
+    if(e.keyCode === 70) this.fulscreen();
     if(e.keyCode === 13) newKeys.enter = valueToSet;
 
     this.setState({
@@ -163,6 +164,18 @@ var GameApp = React.createClass({
       });
       this.setState(newState);
     });
+  },
+  fulscreen: function(){
+    var elem = this.getDOMNode();
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    }
   }
 });
 
