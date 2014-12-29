@@ -56,7 +56,7 @@ var ParticleSystem = React.createClass({
       innerTimeTick: now,
       particles : prunedParticles
     });
-    setTimeout( this.tick, 16 );
+    setTimeout( this.tick, 30);
   },
   componentWillMount: function(){
     this.tick();
