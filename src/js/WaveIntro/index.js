@@ -40,13 +40,14 @@ var WaveIntro = React.createClass({
         if(this.state.isVictory)
           Messages.post(Messages.ID.START_NEXT_WAVE, Messages.channelIDs.GAME);
         else{
-          Messages.post(Messages.ID.PLAYER_LOSE, Messages.channelIDs.GAME);
           Messages.post(Messages.ID.START_NEXT_WAVE,
                         Messages.channelIDs.GAME,
                         this.props.world.waveManager.currentWave);
         }
       }
       else {
+        if(this.props.world.player.life < 1)
+          Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT, this.props.world);
         this.setState({
           step : (step + 1)
         });
@@ -77,6 +78,7 @@ var WaveIntro = React.createClass({
         Messages.post(Messages.ID.UPDATE_SCORE, Messages.channelIDs.GAME, score);
       }
       else {
+        Messages.post(Messages.ID.PLAYER_LOSE, Messages.channelIDs.GAME);
         this.setState({
           score: 0,
           isVictory : false
