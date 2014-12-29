@@ -15,7 +15,7 @@ var Ship = function( config ){
 }
 
 var accel = function accel(i){
-  return Math.min(0.003, 0.0001 * i);
+  return Math.min(0.003, 0.000001 * Math.pow(i,3) );
 };
 
 var Physics = {

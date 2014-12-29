@@ -62,6 +62,7 @@ Gameplay
  [X] Ship life is unlimited but ship can't shoot nor collide when invicible
  [X] Life (as in the HUD) are time machine tockens used when earth is defeated
  [X] Bullets limits
+ [ ] Killing ennemy gives energy boost, reduce the normal energy replainish rate
 
 TOOLS / Framework
 -----------------
