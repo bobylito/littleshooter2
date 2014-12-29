@@ -19,8 +19,8 @@ TODO - React vs Games
    [X] move patterns
    [ ] Real patterns!!
  [X] Make different kind of ennemies
-  [X] Duo : same as ouno but slower and tougher
-  [X] Trio : faster, less life and can shoot
+  [X] Duo : faster and less life
+  [X] Trio : slower, more life and can shoot
   [ ] BOSS?
   [ ] Ninja
  [X] Ship is invincible for a short period when destroyed
@@ -45,6 +45,9 @@ TODO - React vs Games
  [ ] Wepons
  [ ] Combos
  [X] Bullets limits gauge
+ [ ] Cleanup
+  [ ] Move all state ship parts into model
+ [X] Laser beam as shooting aid
 
  0.2 : Mobile
 -------------
