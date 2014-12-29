@@ -450,7 +450,7 @@
 /* line 8 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 html{height:100%}
 /* line 9 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-body{min-height:100%;background-image:url("/assets/bg.png")}
+body{min-height:100%;background-image:url("../assets/bg.png")}
 /* line 13 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 strong{color:#f00}
 /* line 17 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
