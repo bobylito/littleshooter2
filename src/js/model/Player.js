@@ -4,11 +4,14 @@ var _ = require('underscore');
 //Player
 var Player = function( config ){
   config = config || {
-    weaponEnergy : 100
+    score: 0,
+    life: 3,
+    weaponEnergy : 100,
+    lastUsedWeaponAt: 0
   };
-  this.score = config.score || 0;
-  this.life  = config.life  || 3;
-  this.lastUsedWeaponAt = config.lastUsedWeaponAt || 0;
+  this.score = config.score;
+  this.life  = config.life;
+  this.lastUsedWeaponAt = config.lastUsedWeaponAt;
   this.weaponEnergy = config.weaponEnergy;
 }
 
