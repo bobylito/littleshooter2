@@ -48,17 +48,21 @@ strong{
     height: inherit;
   }
 }
-div:-webkit-full-screen .game, div:-moz-full-screen .game, div:-ms-fullscreen .game{
+div:-webkit-full-screen{
+  background: black;
+}
+div:-webkit-full-screen .game {
   zoom:1.5;
 }
 
 .intro{
   position: absolute;
-  top     : 20%;
+  top     : 0;
   width   : 100%;
   color   : white;
-  text-align: center;
+  text-align    : center;
   text-transform: uppercase;
+  padding-top   : 20%;
 
   h1, h2{
     margin:auto;
@@ -67,11 +71,10 @@ div:-webkit-full-screen .game, div:-moz-full-screen .game, div:-ms-fullscreen .g
     font-size:80%;
     margin-top: 20px;
   }
-
   .ship{
     position    : absolute;
-    top         : 400%;
-    left        : 50%;
+    top         : 400px;
+    left        : calc(50% + 10px);
     margin-left : -10px;
   }
 }
