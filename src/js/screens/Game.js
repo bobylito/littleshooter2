@@ -39,15 +39,13 @@ var GameScreen = React.createClass({
                 <WaveIntro inputState={this.state.input} world={this.state.world} screen={this.props.screen} />;
     return <div className="screen">
               {hordeOrIntro}
-              <Ship inputState={this.state.input} ship={this.state.world.ship} screen={this.props.screen} />
+              <Ship inputState={this.state.input} ship={this.state.world.ship} baddies={this.state.world.baddies} screen={this.props.screen} />
               <RocketLauncher inputState={this.state.input} world={this.state.world} screen={this.props.screen} />
               <HUD player={this.state.world.player} screen={this.props.screen}/>
            </div>;
   },
   tick : function( newProps ){
     var nextWorld = models.tick(this.state.world, newProps.inputState.time);
-    if(nextWorld.player.life < 1)
-      Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT, nextWorld);
     this.setState({
       world: nextWorld,
       input: newProps.inputState

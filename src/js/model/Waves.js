@@ -44,63 +44,70 @@ function WavesManager(){
 }
 WavesManager.prototype = {
   CONFIG : [
-    [
-      [0,    "ouno", "straight"],
-      [0,  "ouno", "straight"]
-    ],
-    [
-      [0,    "ouno", "straight"],
-      [0,  "ouno", "straight"],
-      [4000,  "trouo",   "straight"],
-      [4000,  "trouo",  "straight"],
-      [8000,    "ouno", "straight"],
-      [8000,  "trouo",   "straight"],
-      [8000,  "ouno", "straight"]
-    ],
-    [
-      [0,    "ouno", "straight"],
-      [2000,  "ouno", "straight"],
-      [3000, "ouno", "straight"],
-      [4000, "ouno", "square"],
-      [5000, "ouno", "square"],
-      [5000, "ouno", "square"],
-      [10000, "ouno", "square"],
-      [10000, "ouno", "square"],
-      [10000, "ouno", "square"],
-      [15000, "ouno", "square"],
-      [15000, "ouno", "square"],
-      [20000,  "ouno", "square"],
-      [20000, "ouno", "straight"],
-      [23000, "ouno", "straight"],
-      [23000, "ouno", "straight"],
-      [23000, "ouno", "straight"]
-    ],
-    [
-      [0,    "ouno", "straight"],
-      [0,  "ouno", "straight"],
-      [4000,  "trouo",   "straight"],
-      [4000,  "trouo",  "straight"],
-      [8000,  "douo", "straight"],
-    ]
+    { title: "Wake up!",
+      wave : [
+        [0,    "ouno", "straight"],
+        [0,  "ouno", "straight"]
+      ] },
+    { title: "I hope they're fine...",
+      wave : [
+        [0,    "ouno", "straight"],
+        [0,  "ouno", "straight"],
+        [4000,  "trouo",   "straight"],
+        [4000,  "trouo",  "straight"],
+        [8000,    "ouno", "straight"],
+        [8000,  "trouo",   "straight"],
+        [8000,  "ouno", "straight"]
+      ]},
+    { title: "Can anyone hear me?",
+      wave : [
+        [0,    "ouno", "straight"],
+        [2000,  "ouno", "straight"],
+        [3000, "ouno", "straight"],
+        [4000, "ouno", "square"],
+        [5000, "ouno", "square"],
+        [5000, "ouno", "square"],
+        [10000, "ouno", "square"],
+        [10000, "ouno", "square"],
+        [10000, "ouno", "square"],
+        [15000, "ouno", "square"],
+        [15000, "ouno", "square"],
+        [20000,  "ouno", "square"],
+        [20000, "ouno", "straight"],
+        [23000, "ouno", "straight"],
+        [23000, "ouno", "straight"],
+        [23000, "ouno", "straight"]
+      ]},
+    { title: "Is it the end?",
+      wave : [
+        [0,    "ouno", "straight"],
+        [0,  "ouno", "straight"],
+        [4000,  "trouo",   "straight"],
+        [4000,  "trouo",  "straight"],
+        [8000,  "douo", "straight"]
+      ]}
   ],
   getNextWave: function( timestamp, waveNumber){
     if( _.isNumber(waveNumber) ) 
-      this.currentWave = waveNumber % this.CONFIG.length;
+      this.currentWave = waveNumber;
     else 
-      this.currentWave = (this.currentWave + 1) % this.CONFIG.length;
+      this.currentWave = (this.currentWave + 1);
 
-    var nextWaveConfig = this.CONFIG[this.currentWave];
-    return new Wave(timestamp, nextWaveConfig);
+    var nextWaveConfig = this.CONFIG[this.currentWave % this.CONFIG.length];
+    return new Wave(timestamp, nextWaveConfig.wave);
   },
   getTotalMonsterInCurrentWave : function(){
     if( this.currentWave === -1 ) return undefined;
     else
-      return this.CONFIG[this.currentWave].length;
+      return this.CONFIG[this.currentWave % this.CONFIG.length].wave.length;
   },
   getCurrentWave: function(){
     if( this.currentWave === -1 ) return undefined;
     else
-      return this.CONFIG[this.currentWave];
+      return this.CONFIG[this.currentWave % this.CONFIG.length].wave;
+  },
+  getWave: function(i){
+    return this.CONFIG[i % this.CONFIG.length];
   }
 };
 

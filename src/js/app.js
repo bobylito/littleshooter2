@@ -77,12 +77,12 @@ var GameApp = React.createClass({
     if(!!Messages.get(Messages.channelIDs.FX)[Messages.ID.EXPLOSION]){
       className += " shake";
     }
-    return <div className={className} style={style}
+    return <div> <div className={className} style={style}
                                  onKeyDown = { this.keyHandler.bind(this, true) }
                                  onKeyUp   = { this.keyHandler.bind(this, false) } tabIndex="1">
               <FX inputState={this.state.input} screen={screen}/>
               {screenComponent}
-           </div>;
+           </div></div>;
   },
   tick : function(  ){
     var t = Date.now();

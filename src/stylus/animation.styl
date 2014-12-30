@@ -10,6 +10,18 @@
   animation: fromTop 1s linear;
 }
 
+.from-top-fade-in{
+  animation-name: fromTop, simpleFadeIn;
+  animation-duration: 1s, 1s;
+  animation-timing-function: ease-in-out, ease-in-out;
+}
+
+.from-bottom-fade-in{
+  animation-name: fromBottom, simpleFadeIn;
+  animation-duration: 1s, 1s;
+  animation-timing-function: ease-in-out, ease-in-out;
+}
+
 .fade-in {
   animation: fadeIn 1s linear;
 }
@@ -25,6 +37,14 @@
   animation-iteration-count: 1, infinite;
   animation-timing-function: ease-in, ease-in-out;
   animation-fill-mode: both, none;
+}
+
+.light-blink {
+  animation: lightblink 600ms ease-in-out;
+}
+
+.blink {
+  animation : blink 200ms infinite;
 }
 
 .delay-1, .delay-2, .delay-3, .delay-4, .delay-5, .delay-6, .delay-7, .delay-8 {
@@ -84,9 +104,13 @@
 } 
 
 @keyframes fromTop {
-  0%      { transform: translateY( -100% )} /* Find a way to specify out of screen position*/
-  90%     { transform: translateY( 10% )}
-  100%    { transform: translateY( 0% )}
+  0%      { transform: translateY( -100px )}
+  100%    { transform: translateY( 0 )}
+}
+
+@keyframes fromBottom {
+  0%      { transform: translateY( 100px )}
+  100%    { transform: translateY( 0 )}
 }
 
 @keyframes fadeIn {
@@ -97,9 +121,22 @@
             transform: scale( 1 )}
 } 
 
+@keyframes simpleFadeIn {
+  0%      { opacity: 0;}
+  100%    { opacity: 1;}
+} 
+
 @keyframes impact {
   0%      { opacity: 0;
             transform: scale(3); }
   100%    { opacity: 1;
             transform: scale(1.0); }
 }
+
+@keyframes explosion {
+  0%      { background-color: white }
+  40%     { background-color: yellow }
+  60%     { background-color: orange }
+  100%    { background-color: black }
+}
+

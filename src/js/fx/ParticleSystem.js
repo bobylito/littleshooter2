@@ -25,16 +25,16 @@ var ParticleSystem = React.createClass({
         (p.pos[1] + p.dir[1] * elapsed) * screen.height
       ];
       var style   = {
-        transform: T.translate(newPos[0], newPos[1])
+        transform: T.translate(newPos[0], newPos[1]) + " " + T.scale( (-Math.pow( (elapsed/100) - 1 ,2) + 3) )
       };
-      return <div className="particle positionable" style={style} key={p.id}/>;
+      return <div className="particle positionable explosion" style={style} key={p.id}/>;
     });
     return <div className="particleSystem">{particles}</div>
   },
   componentWillReceiveProps: function(props){
     var self= this;
     var now = props.inputState.time;
-    var c   = this.createParticle.bind(this, now, 2000);
+    var c   = this.createParticle.bind(this, now, 400);
     var msg = Messages.get(Messages.channelIDs.FX)[Messages.ID.EXPLOSION] || [];
     var particles = _(msg).chain()
       .map(function(m){
@@ -56,15 +56,15 @@ var ParticleSystem = React.createClass({
       innerTimeTick: now,
       particles : prunedParticles
     });
-    setTimeout( this.tick, 16 );
+    setTimeout( this.tick, 30);
   },
   componentWillMount: function(){
     this.tick();
   },
   randomVec2: function(){
     return [
-      (Math.random() - 0.5) * 0.01,
-      (Math.random() - 0.5) * 0.01
+      (Math.random() - 0.5) * 0.001,
+      (Math.random() - 0.5) * 0.001
     ];
   },
   createParticle: function(now, duration, position, dir){

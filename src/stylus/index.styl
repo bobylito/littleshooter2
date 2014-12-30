@@ -7,8 +7,9 @@
 
 html{ height: 100%; }
 body{ 
-  min-height      : 100%;
-  background-image: url("../assets/bg.png");}
+  min-height          : 100%;
+  background-position : center, center;
+  background-image    : url("../assets/bg.png");}
 
 strong{
   color: red;
@@ -22,6 +23,15 @@ strong{
 .screen {
   width : inherit;
   height: inherit;
+  .ship .laser{
+    height: 100%;
+    position: absolute;
+    height: 500px;
+    background: rgba(180, 0, 0, 0.51);
+    width: 1px;
+    bottom: 20px;
+    left: 10px;
+  }
 }
 
 .game{
@@ -33,6 +43,13 @@ strong{
   overflow    : hidden;
   margin      : auto;
   box-shadow  : 2px 5px 20px rgba(0,0,0,.7);
+  > div{
+    width : inherit;
+    height: inherit;
+  }
+}
+div:-webkit-full-screen .game, div:-moz-full-screen .game, div:-ms-fullscreen .game{
+  zoom:1.5;
 }
 
 .intro{
@@ -69,14 +86,18 @@ strong{
   height          : 23px;
   background-image: url("../assets/spaceShip.png");
   z-index         : 3;
-  &.blink {
-    animation : blink 200ms infinite;
-  }
 }
 .particle{
   width     : 5px;
   height    : 5px;
   background: red;
+  &.explosion {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    animation: explosion 300ms ease-out;
+    animation-fill-mode:forwards;
+  }
 }
 .rocket-launcher {
   z-index: 1;
