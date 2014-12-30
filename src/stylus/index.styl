@@ -57,11 +57,12 @@ div:-webkit-full-screen .game {
 
 .intro{
   position: absolute;
-  top     : 20%;
+  top     : 0;
   width   : 100%;
   color   : white;
-  text-align: center;
+  text-align    : center;
   text-transform: uppercase;
+  padding-top   : 20%;
 
   h1, h2{
     margin:auto;
@@ -70,11 +71,10 @@ div:-webkit-full-screen .game {
     font-size:80%;
     margin-top: 20px;
   }
-
   .ship{
     position    : absolute;
-    top         : 400%;
-    left        : 50%;
+    top         : 400px;
+    left        : calc(50% + 10px);
     margin-left : -10px;
   }
 }
