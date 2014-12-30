@@ -15,7 +15,7 @@ var Ship = function( config ){
 }
 
 var accel = function accel(i){
-  return Math.min(0.003, 0.000001 * Math.pow(i,3) );
+  return Math.min(0.003, 0.00001 * Math.pow(i,3) );
 };
 
 var Physics = {
@@ -57,7 +57,7 @@ Ship.prototype = {
   },
   tick  : function( deltaT, world ){
     var newState = this._copy();
-    newState.speed = Physics.friction( newState.speed, 0.3, deltaT );
+    newState.speed = Physics.friction( newState.speed, 0.2, deltaT );
     newState.position = Physics.move( newState.position, newState.speed, deltaT, [[0,1], [0,1]], newState.size);
     if(newState.isInvincible && newState.invincibleTimeout < Date.now() )
       newState.isInvincible = false;
