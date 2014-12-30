@@ -10,6 +10,18 @@
   animation: fromTop 1s linear;
 }
 
+.from-top-fade-in{
+  animation-name: fromTop, simpleFadeIn;
+  animation-duration: 1s, 1s;
+  animation-timing-function: ease-in-out, ease-in-out;
+}
+
+.from-bottom-fade-in{
+  animation-name: fromBottom, simpleFadeIn;
+  animation-duration: 1s, 1s;
+  animation-timing-function: ease-in-out, ease-in-out;
+}
+
 .fade-in {
   animation: fadeIn 1s linear;
 }
@@ -92,9 +104,13 @@
 } 
 
 @keyframes fromTop {
-  0%      { transform: translateY( -100% )} /* Find a way to specify out of screen position*/
-  90%     { transform: translateY( 10% )}
-  100%    { transform: translateY( 0% )}
+  0%      { transform: translateY( -100px )}
+  100%    { transform: translateY( 0 )}
+}
+
+@keyframes fromBottom {
+  0%      { transform: translateY( 100px )}
+  100%    { transform: translateY( 0 )}
 }
 
 @keyframes fadeIn {
@@ -103,6 +119,11 @@
   95%     { transform: scale( 1.05 );}
   100%    { opacity: 1;
             transform: scale( 1 )}
+} 
+
+@keyframes simpleFadeIn {
+  0%      { opacity: 0;}
+  100%    { opacity: 1;}
 } 
 
 @keyframes impact {
