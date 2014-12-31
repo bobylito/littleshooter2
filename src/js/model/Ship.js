@@ -4,6 +4,8 @@ var Messages = require('../Messages.js');
 var utils   = require('../Utils.js');
 var id = utils.idGenFactory();
 
+var Sounds = require('../Sounds');
+
 var Ship = function( config ){
   config = config || {};
   this.id       = this.PRFX_ID + id();
@@ -69,6 +71,8 @@ Ship.prototype = {
     Messages.post( Messages.ID.SHIP_DESTROYED, Messages.channelIDs.GAME, this.id);
     Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
     Messages.post( Messages.ID.FLASH, Messages.channelIDs.FX, this.position);
+
+    Sounds.sprites.play('explosion');
 
     var newState = this._copy();
     newState.isInvincible = true;

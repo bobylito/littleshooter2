@@ -6,6 +6,8 @@ var _ = require('underscore');
 var T = require('./Transform');
 var Messages = require('./Messages.js');
 
+var Sounds = require('./Sounds');
+
 var Ship = React.createClass({
   getInitialState:function(){
     return {
@@ -67,6 +69,7 @@ var Ship = React.createClass({
 
     if(input.keys.space)  {
       if( input.time > this.state.lastFire + 50 && !ship.isInvincible) {
+
         var shipPos = ship.position;
         
         Messages.post(
