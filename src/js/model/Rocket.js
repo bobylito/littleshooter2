@@ -15,6 +15,8 @@ var GenericRocket = function GenericRocket(config){
   this.speed    = config.speed;
   this.id       = this.PRFX_ID + id();
   this.isFromBaddies = !!(config.isFromBaddies);
+  this.power    = config.power || 1;
+  this.cost     = config.cost  || 1;
 };
 
 GenericRocket.prototype = {
@@ -48,7 +50,7 @@ var Rocket = function Rocket(position, speed, isFromBaddies){
 Rocket.prototype = Object.create(GenericRocket.prototype);
 Rocket.prototype.constructor = GenericRocket;
 Rocket.prototype.PRFX_ID = "n-rocket";
-  
+
 var Large = function LargeRocket(position, speed, isFromBaddies){
   GenericRocket.call(this, {
     position : position,
