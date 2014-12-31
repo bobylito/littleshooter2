@@ -33,7 +33,10 @@ TODO - React vs Games
  [X] Sub screens
   [X] Wave intro
  [X] Sound effects
- [ ] More sound
+ [ ] More sounds
+ [ ] Music
+  [X] Main theme (sorta)
+  [ ] Better music
  [ ] Polish
   [X] Font
   [X] Animations (text, more?)
