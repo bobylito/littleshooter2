@@ -14,8 +14,10 @@ var Ship = function( config ){
   this.invincibleTimeout = config.invincibleTimeout || null;
 }
 
-var accel = function accel(i){
-  return Math.min(0.003, 0.00001 * Math.pow(i,3) );
+var accel = function accel(i, currentSpeed){
+  if(i === 0) return currentSpeed;
+  var normalizedValue = Math.min( 8, Math.max( Math.pow(i / 16 - 1, 2), 4));
+  return 0.0001 * normalizedValue;
 };
 
 var Physics = {
@@ -43,12 +45,13 @@ var Physics = {
 
 Ship.prototype = {
   PRFX_ID: "SHIP",
-  _left  : function( i ){ this.speed[0] -= accel(i); },
-  _right : function( i ){ this.speed[0] += accel(i); },
-  _up    : function( i ){ this.speed[1] -= accel(i); },
-  _down  : function( i ){ this.speed[1] += accel(i); },
+  _left  : function( i ){ this.speed[0] = -accel(i, this.speed[0]); },
+  _right : function( i ){ this.speed[0] = -accel(i, this.speed[0]); },
+  _up    : function( i ){ this.speed[1] = -accel(i, this.speed[1]); },
+  _down  : function( i ){ this.speed[1] =  accel(i, this.speed[1]); },
   thrust: function( keyCounts ) {
     var newState = this._copy();
+    newState.speed = [0,0];
     newState._up(    keyCounts[0] );
     newState._right( keyCounts[1] );
     newState._down(  keyCounts[2] );
@@ -57,7 +60,6 @@ Ship.prototype = {
   },
   tick  : function( deltaT, world ){
     var newState = this._copy();
-    newState.speed = Physics.friction( newState.speed, 0.2, deltaT );
     newState.position = Physics.move( newState.position, newState.speed, deltaT, [[0,1], [0,1]], newState.size);
     if(newState.isInvincible && newState.invincibleTimeout < Date.now() )
       newState.isInvincible = false;
