@@ -29,25 +29,26 @@ TODO - React vs Games
   [X] Stars
   [X] Flash (when ship explod)
   [X] ScreenShake
-  [ ] Better explosions (with discs)
+  [X] Better explosions (with discs)
  [X] Sub screens
   [X] Wave intro
- [ ] Sound effects
+ [X] Sound effects
+ [ ] More sound
  [ ] Polish
   [X] Font
-  [ ] Animations (text, more?)
-   [ ] Sequence FX animations with a callback
+  [X] Animations (text, more?)
  [ ] Defeat
   [ ] Screen
   [ ] Animation
- [ ] Textual cut scenes
-  [ ] Days
+ [X] Textual cut scenes
+  [X] Days
  [ ] Wepons
  [ ] Combos
  [X] Bullets limits gauge
  [ ] Cleanup
   [ ] Move all state ship parts into model
  [X] Laser beam as shooting aid
+ [ ] Preview ennemies
 
  0.2 : Mobile
 -------------
@@ -61,11 +62,12 @@ Gameplay
  [ ] Two type of weapons :
   [X] Bullets (push ennemies/very limited damage, fast, illimited qt, autofire?)
   [ ] Bomb/Rockets (destroy, slow, limited, cooldown/quantity?)
+ [ ] Limit range of weapon
  [X] Ennemies have life
  [X] Ship life is unlimited but ship can't shoot nor collide when invicible
  [X] Life (as in the HUD) are time machine tockens used when earth is defeated
  [X] Bullets limits
- [ ] Killing ennemy gives energy boost, reduce the normal energy replainish rate
+ [ ] Killing ennemy gives energy boost and the normal energy replainish rate should be lower
 
 TOOLS / Framework
 -----------------
