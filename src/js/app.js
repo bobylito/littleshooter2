@@ -10,9 +10,13 @@ var Messages = require('./Messages.js');
 var Intro = require('./screens/Intro.js');
 var Game = require('./screens/Game.js');
 var GameOver = require('./screens/GameOver.js');
+var Loading = require('./screens/Loading');
 var FX = require('./fx');
 
+var Sounds = require('./Sounds');
+
 var SCREENS = {
+  LOADING   : 10,
   INTRO     : 0,
   GAME      : 1,
   GAME_OVER : 2
@@ -21,7 +25,7 @@ var SCREENS = {
 var GameApp = React.createClass({
   getInitialState: function(){
     return {
-      currentScreen: 0,
+      currentScreen: SCREENS.LOADING,
       lastScreenData: {},
       input : {
         time : (Date.now()),
@@ -62,6 +66,9 @@ var GameApp = React.createClass({
     };
     var screenComponent;
     switch(this.state.currentScreen){
+      case SCREENS.LOADING : 
+        screenComponent = <Loading />
+        break;
       case SCREENS.INTRO :
         screenComponent = <Intro screen={screen} inputState={stateWithDeltaKeys} lastScreenData={this.state.lastScreenData}/>;
         break;
@@ -97,7 +104,11 @@ var GameApp = React.createClass({
   },
   checkMessages : function(){
     var messages = Messages.get(Messages.channelIDs.ROOT);
-    if(messages[Messages.ID.CHANGE_SCREEN] &&
+    if( messages[Messages.ID.LOADED_SOUNDS] ) {
+      this.setState({ currentScreen : SCREENS.INTRO });
+      Messages.reset();
+    }
+    if( messages[Messages.ID.CHANGE_SCREEN] &&
         messages[Messages.ID.CHANGE_SCREEN].length > 0) {
           var msg = messages[Messages.ID.CHANGE_SCREEN];
           var nextScreen = this.state.currentScreen < 2 ? this.state.currentScreen + 1 : 0;

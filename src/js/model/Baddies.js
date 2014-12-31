@@ -3,6 +3,8 @@ var utils = require('../Utils.js');
 
 var id = utils.idGenFactory();
 
+var Sounds = require('../Sounds');
+
 //Returns the current acceleration value
 var Patterns = {
   "straight" : function straightP(deltaT, timestamp){
@@ -87,6 +89,7 @@ Monster.prototype = {
     else {
       Messages.post( Messages.ID.BADDIE_DESTROYED, Messages.channelIDs.GAME, this.id);
       Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
+      Sounds.sprites.play('explosion');
       world.stats.kill( this.PRFX_ID, world.timestamp );
     }
   }
@@ -128,6 +131,7 @@ Douo.prototype.afterMove = function( dt, world ){
   if( world.timestamp > ( this.lastFire + 1000 ) &&
       xPlayer < x + 0.1 &&
       xPlayer > x - 0.1 ) {
+    Sounds.sprites.play('alienRocket');
     Messages.post(
       Messages.ID.ROCKET_LAUNCH,
       Messages.channelIDs.GAME,

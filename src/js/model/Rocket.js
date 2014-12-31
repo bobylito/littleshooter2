@@ -3,6 +3,8 @@ var _ = require('underscore');
 var Messages = require('../Messages.js');
 var utils   = require('../Utils.js');
 
+var Sounds = require('../Sounds');
+
 var id = utils.idGenFactory();
 
 var GenericRocket = function GenericRocket(config){
@@ -58,6 +60,7 @@ var Large = function LargeRocket(position, speed, isFromBaddies){
     size     : [0.02, 0.02],
     isFromBaddies : !!isFromBaddies
   });
+  Sounds.sprites.play('rocket');
 };
 
 Large.prototype = Object.create(GenericRocket.prototype);
