@@ -7,24 +7,22 @@ var Sounds = require('../Sounds');
 
 //Returns the current acceleration value
 var Patterns = {
-  "straight" : function straightP(deltaT, timestamp){
-    return [0, 0.00001];
+  "straight" : function straightP(deltaT, timestamp){ 
+    return [0, this.maxSpeed[1]];
   },
-  "square" : function squareP(deltaT, timestamp){
+  "triangle" : function squareP(deltaT, timestamp){
     var t0 = timestamp;
     var p = this.pattern = function(deltaT, timestamp){
       var elapsed = timestamp - t0;
-      var c = Math.floor(elapsed / 100) % 4;
-      if( c === 0 ) return [0, 0.00001];
-      else if( c === 1 ) return [0.000005, 0];
-      else if( c === 2 ) return [0, 0.00001];
-      else if( c === 3 ) return [-0.000005, 0];
+      var c = Math.floor(elapsed / 2000) % 2;
+      if( c === 0 ) return [this.maxSpeed[0], this.maxSpeed[1]];
+      else if( c === 1 ) return [-this.maxSpeed[0], this.maxSpeed[1]];
       else {
-        console.log( "Invariant break : c should be in [0,3], was ", c);
+        console.log( "Invariant break : c should be in [0,1], was ", c);
         return [0, 0.00001];
       }
     };
-    return p(deltaT, timestamp);
+    return p.call(this, deltaT, timestamp);
   }
 };
 
@@ -67,9 +65,9 @@ Monster.prototype = {
     this.tick( deltaT, world );
   },
   move: function(deltaT, world){
-    var acc = this.pattern(deltaT, world.timestamp);
-    this.speed[0] = Math.min( this.maxSpeed[0], this.speed[0] + acc[0]);
-    this.speed[1] = Math.min( this.maxSpeed[1], this.speed[1] + acc[1]);
+    this.speed = this.pattern(deltaT, world.timestamp);
+    //this.speed[0] = Math.min( this.maxSpeed[0], this.speed[0] + acc[0]);
+    //this.speed[1] = Math.min( this.maxSpeed[1], this.speed[1] + acc[1]);
     this.position[0] += this.speed[0] * deltaT;
     this.position[1] += this.speed[1] * deltaT;
     if( this.position[1] > 1) { 

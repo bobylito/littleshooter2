@@ -57,7 +57,7 @@ WavesManager.prototype = {
         [20, "zouro", "straight"],
         [21, "zouro", "straight"]
       ] },
-    { title: "Far from home",
+    { title: "This is such a cold space",
       wave : [
         [1, "zouro", "straight"],
         [3, "zouro", "straight"],
@@ -71,12 +71,42 @@ WavesManager.prototype = {
         [20, "zouro", "straight"],
         [24, "zouro", "straight"],
         [24, "zouro", "straight"]
-      ] }
+      ] },
+    { title: "I should not rest",
+      wave : [
+        [1, "zouro", "straight"],
+        [3, "zouro", "triangle"],
+        [5, "zouro", "straight"],
+        [7, "zouro", "straight"],
+        [9, "zouro", "triangle"],
+        [13, "zouro", "straight"],
+        [13, "zouro", "straight"],
+        [16, "zouro", "straight"],
+        [18, "zouro", "straight"],
+        [20, "zouro", "straight"],
+        [24, "zouro", "triangle"],
+        [24, "zouro", "triangle"]
+      ] },
+    { title: "New friends?",
+      wave : [
+        [1, "zouro", "straight"],
+        [3, "zouro", "straight"],
+        [8, "ouno", "straight"],
+        [13, "zouro", "straight"],
+        [13, "zouro", "straight"],
+        [16, "zouro", "straight"],
+        [18, "zouro", "straight"],
+        [20, "zouro", "straight"],
+        [26, "zouro", "straight"],
+        [26, "zouro", "straight"],
+        [32, "ouno", "straight"],
+        [34, "ouno", "straight"]
+      ] },
   ],
   getNextWave: function( timestamp, waveNumber){
-    if( _.isNumber(waveNumber) ) 
+    if( _.isNumber(waveNumber) )
       this.currentWave = waveNumber;
-    else 
+    else
       this.currentWave = (this.currentWave + 1);
 
     var nextWaveConfig = this.CONFIG[this.currentWave % this.CONFIG.length];

@@ -17,7 +17,7 @@ TODO - React vs Games
    [X] Simple dispatch : equal space of all the ennemies entering the screen at the same time
    [X] original position patterns?
    [X] move patterns
-   [ ] Real patterns!!
+   [ ] Real patterns!! : based on speed?
  [X] Make different kind of ennemies
   [X] Duo : faster and less life
   [X] Trio : slower, more life and can shoot
@@ -36,7 +36,7 @@ TODO - React vs Games
  [ ] More sounds
  [ ] Music
   [X] Main theme (sorta)
-  [ ] Better music
+  [ ] Better music?
  [ ] Polish
   [X] Font
   [X] Animations (text, more?)
