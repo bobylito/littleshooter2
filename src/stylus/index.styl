@@ -1,8 +1,10 @@
 @import 'nib'
 @import 'fonts'
 @import 'animation'
+@import 'baddies'
 *{
   font-family: silkscreenbold;
+  outline     : none;
 }
 
 html{ height: 100%; }
@@ -40,7 +42,6 @@ strong{
   width       : 500px;
   height      : 500px;
   background  : black;
-  outline     : none;
   overflow    : hidden;
   margin      : auto;
   box-shadow  : 2px 5px 20px rgba(0,0,0,.7);
@@ -120,24 +121,6 @@ div:-webkit-full-screen .game {
     height: 10px;
     background:white;
   }
-}
-span.monster{
-  display: inline-block;
-}
-.ouno{
-  width: 20px;
-  height : 20px;
-  background-image:url("../assets/ouno.png");
-}
-.douo{
-  width: 20px;
-  height : 20px;
-  background-image:url("../assets/duo.png");
-}
-.trouo{
-  width: 20px;
-  height : 20px;
-  background-image:url("../assets/trouo.png");
 }
 
 .flash {

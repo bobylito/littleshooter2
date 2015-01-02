@@ -28,7 +28,7 @@ Wave.prototype = {
   },
   takeMonster: function( currentTime, monsters, res ){
     if( monsters.length === 0 ) return [monsters, res];
-    if( monsters[0][0] > currentTime) return [monsters, res];
+    if( monsters[0][0] * 1000 > currentTime) return [monsters, res];
 
     var tail = _.tail(monsters);
     var monsterName = monsters[0][1];
@@ -46,46 +46,32 @@ WavesManager.prototype = {
   CONFIG : [
     { title: "Wake up!",
       wave : [
-        [0,    "ouno", "straight"],
-        [0,  "ouno", "straight"]
+        [1, "zouro", "straight"],
+        [3, "zouro", "straight"],
+        [5, "zouro", "straight"],
+        [7, "zouro", "straight"],
+        [9, "zouro", "straight"],
+        [13, "zouro", "straight"],
+        [18, "zouro", "straight"],
+        [19, "zouro", "straight"],
+        [20, "zouro", "straight"],
+        [21, "zouro", "straight"]
       ] },
-    { title: "I hope they're fine...",
+    { title: "Far from home",
       wave : [
-        [0,    "ouno", "straight"],
-        [0,  "ouno", "straight"],
-        [4000,  "trouo",   "straight"],
-        [4000,  "trouo",  "straight"],
-        [8000,    "ouno", "straight"],
-        [8000,  "trouo",   "straight"],
-        [8000,  "ouno", "straight"]
-      ]},
-    { title: "Can anyone hear me?",
-      wave : [
-        [0,    "ouno", "straight"],
-        [2000,  "ouno", "straight"],
-        [3000, "ouno", "straight"],
-        [4000, "ouno", "square"],
-        [5000, "ouno", "square"],
-        [5000, "ouno", "square"],
-        [10000, "ouno", "square"],
-        [10000, "ouno", "square"],
-        [10000, "ouno", "square"],
-        [15000, "ouno", "square"],
-        [15000, "ouno", "square"],
-        [20000,  "ouno", "square"],
-        [20000, "ouno", "straight"],
-        [23000, "ouno", "straight"],
-        [23000, "ouno", "straight"],
-        [23000, "ouno", "straight"]
-      ]},
-    { title: "Is it the end?",
-      wave : [
-        [0,    "ouno", "straight"],
-        [0,  "ouno", "straight"],
-        [4000,  "trouo",   "straight"],
-        [4000,  "trouo",  "straight"],
-        [8000,  "douo", "straight"]
-      ]}
+        [1, "zouro", "straight"],
+        [3, "zouro", "straight"],
+        [5, "zouro", "straight"],
+        [7, "zouro", "straight"],
+        [9, "zouro", "straight"],
+        [13, "zouro", "straight"],
+        [13, "zouro", "straight"],
+        [16, "zouro", "straight"],
+        [18, "zouro", "straight"],
+        [20, "zouro", "straight"],
+        [24, "zouro", "straight"],
+        [24, "zouro", "straight"]
+      ] }
   ],
   getNextWave: function( timestamp, waveNumber){
     if( _.isNumber(waveNumber) ) 
