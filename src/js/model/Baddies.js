@@ -95,6 +95,35 @@ Monster.prototype = {
   }
 };
 
+var Zouro = function( position, movePattern){
+  Monster.call( this, {
+    position     : position || [ Math.random(), -0.2],
+    maxSpeed     : [0.0001, 0.0001],
+    speed        : [0, 0.0001],
+    size         : [0.04, 0.04],
+    weight       : 1,
+    life         : 3,
+    pattern      : movePattern
+  });
+};
+Zouro.prototype = Object.create( Monster.prototype );
+Zouro.prototype.constructor = Zouro;
+Zouro.prototype.PRFX_ID = "zouro";
+
+var Ouno = function( position, movePattern){
+  Monster.call( this, {
+    position     : position || [ Math.random(), -0.2],
+    maxSpeed     : [0.0003, 0.0003],
+    speed        : [0, 0.0003],
+    size         : [0.04, 0.04],
+    weight       : 1,
+    life         : 2,
+    pattern      : movePattern
+  });
+};
+Ouno.prototype = Object.create( Monster.prototype );
+Ouno.prototype.constructor = Ouno;
+Ouno.prototype.PRFX_ID = "ouno";
 var Ouno = function( position, movePattern){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
@@ -142,7 +171,6 @@ Douo.prototype.afterMove = function( dt, world ){
   }
 };
 
-//Make it launch rockets!
 var Trouo = function( position, movePattern ){
   Monster.call( this, {
     position     : position || [ Math.random(), -0.2],
@@ -159,6 +187,7 @@ Trouo.prototype.constructor = Trouo;
 Trouo.prototype.PRFX_ID = "trouo";
 
 var monsterCatalog = {
+  "zouro" : Zouro,
   "ouno"  : Ouno,
   "douo"  : Douo,
   "trouo" : Trouo
@@ -172,6 +201,7 @@ var makeMonster = function makeMonster(monsterId, position, movePattern){
 }
 
 module.exports = {
+  Zouro : Zouro,
   Ouno  : Ouno,
   Douo  : Douo,
   Trouo : Trouo,
