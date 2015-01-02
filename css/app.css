@@ -1,5 +1,5 @@
 
-/* line 253 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 236 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 
 /* line 1 : /Users/bobylito/Dropbox/source.sync/reactGames/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 
@@ -533,109 +533,115 @@
 60%{background-color:#ffa500}
 /* line 140 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/animation.styl */
 100%{background-color:#000}}
-/* line 4 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-*{font-family:silkscreenbold}
-/* line 8 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-html{height:100%}
-/* line 9 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-body{min-height:100%;background-position:center,center;background-image:url("../assets/bg.png")}
-/* line 14 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-strong{color:#f00}
-/* line 18 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-#main{text-align:center;padding-top:25px}
-/* line 23 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.screen{width:inherit;height:inherit;}
-/* line 26 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.screen .ship .laser{display:none;height:100%;position:absolute;height:500px;background:rgba(180,0,0,0.51);width:1px;bottom:20px;left:10px}
-/* line 38 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.game{position:relative;width:500px;height:500px;background:#000;outline:none;overflow:hidden;margin:auto;-webkit-box-shadow:2px 5px 20px rgba(0,0,0,0.7);box-shadow:2px 5px 20px rgba(0,0,0,0.7);}
-/* line 47 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.game > div{width:inherit;height:inherit}
-/* line 52 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-div:-webkit-full-screen{background:#000}
-/* line 55 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-div:-webkit-full-screen .game{zoom:1.5}
-/* line 59 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.intro{position:absolute;top:0;width:100%;color:#fff;text-align:center;text-transform:uppercase;padding-top:20%;}
-/* line 68 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.intro h1,.intro h2{margin:auto}
-/* line 71 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.intro h2{font-size:80%;margin-top:20px}
-/* line 75 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.intro .ship{position:absolute;top:400px;left:calc(50% + 10px);margin-left:-10px}
-/* line 83 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.positionable{position:absolute;top:0;left:0}
-/* line 88 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.ship{width:20px;height:23px;background-image:url("../assets/spaceShip.png");z-index:3}
-/* line 94 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.particle{width:5px;height:5px;background:#f00;}
-/* line 98 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.particle.explosion{width:20px;height:20px;background-color:#fff;-webkit-animation:explosion 300ms ease-out;-moz-animation:explosion 300ms ease-out;-o-animation:explosion 300ms ease-out;-ms-animation:explosion 300ms ease-out;animation:explosion 300ms ease-out;-webkit-animation-fill-mode:forwards;-moz-animation-fill-mode:forwards;-o-animation-fill-mode:forwards;-ms-animation-fill-mode:forwards;animation-fill-mode:forwards}
-/* line 106 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.rocket-launcher{z-index:1;}
-/* line 108 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.rocket-launcher .rocket{width:5px;height:10px;background:#fff}
-/* line 113 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.rocket-launcher .n-rocket{width:5px;height:10px;background:#fff}
-/* line 118 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
-.rocket-launcher .l-rocket{width:10px;height:10px;background:#fff}
-/* line 124 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 141 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/animation.styl */
+
+/* line 141 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/baddies.styl */
+
+/* line 1 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/baddies.styl */
 span.monster{display:inline-block}
-/* line 127 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 4 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/baddies.styl */
+.zouro{width:20px;height:20px;background-image:url("../assets/zouro.png")}
+/* line 9 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/baddies.styl */
 .ouno{width:20px;height:20px;background-image:url("../assets/ouno.png")}
-/* line 132 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 14 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/baddies.styl */
 .douo{width:20px;height:20px;background-image:url("../assets/duo.png")}
-/* line 137 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 19 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/baddies.styl */
 .trouo{width:20px;height:20px;background-image:url("../assets/trouo.png")}
-/* line 143 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 5 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+*{font-family:silkscreenbold;outline:none}
+/* line 10 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+html{height:100%}
+/* line 11 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+body{min-height:100%;background-position:center,center;background-image:url("../assets/bg.png")}
+/* line 16 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+strong{color:#f00}
+/* line 20 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+#main{text-align:center;padding-top:25px}
+/* line 25 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.screen{width:inherit;height:inherit;}
+/* line 28 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.screen .ship .laser{display:none;height:100%;position:absolute;height:500px;background:rgba(180,0,0,0.51);width:1px;bottom:20px;left:10px}
+/* line 40 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.game{position:relative;width:500px;height:500px;background:#000;overflow:hidden;margin:auto;-webkit-box-shadow:2px 5px 20px rgba(0,0,0,0.7);box-shadow:2px 5px 20px rgba(0,0,0,0.7);}
+/* line 48 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.game > div{width:inherit;height:inherit}
+/* line 53 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+div:-webkit-full-screen{background:#000}
+/* line 56 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+div:-webkit-full-screen .game{zoom:1.5}
+/* line 60 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.intro{position:absolute;top:0;width:100%;color:#fff;text-align:center;text-transform:uppercase;padding-top:20%;}
+/* line 69 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.intro h1,.intro h2{margin:auto}
+/* line 72 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.intro h2{font-size:80%;margin-top:20px}
+/* line 76 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.intro .ship{position:absolute;top:400px;left:calc(50% + 10px);margin-left:-10px}
+/* line 84 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.positionable{position:absolute;top:0;left:0}
+/* line 89 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.ship{width:20px;height:23px;background-image:url("../assets/spaceShip.png");z-index:3}
+/* line 95 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.particle{width:5px;height:5px;background:#f00;}
+/* line 99 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.particle.explosion{width:20px;height:20px;background-color:#fff;-webkit-animation:explosion 300ms ease-out;-moz-animation:explosion 300ms ease-out;-o-animation:explosion 300ms ease-out;-ms-animation:explosion 300ms ease-out;animation:explosion 300ms ease-out;-webkit-animation-fill-mode:forwards;-moz-animation-fill-mode:forwards;-o-animation-fill-mode:forwards;-ms-animation-fill-mode:forwards;animation-fill-mode:forwards}
+/* line 107 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.rocket-launcher{z-index:1;}
+/* line 109 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.rocket-launcher .rocket{width:5px;height:10px;background:#fff}
+/* line 114 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.rocket-launcher .n-rocket{width:5px;height:10px;background:#fff}
+/* line 119 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+.rocket-launcher .l-rocket{width:10px;height:10px;background:#fff}
+/* line 126 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .flash{background-image:none;background:#fff}
-/* line 148 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 131 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 
-/* line 149 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 132 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .hud .points{position:absolute;top:0;right:0;text-align:right;color:#fff}
-/* line 156 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 139 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .hud .life{position:absolute;top:0;left:0;}
-/* line 160 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 143 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .hud .life .ship{display:inline-block;margin:5px}
-/* line 165 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 148 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .hud .gauge{top:40px;left:5px}
-/* line 170 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 153 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .gauge{position:absolute;height:20px;border:1px solid #fff;}
-/* line 174 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 157 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .gauge .label{color:#fff;position:absolute;top:5px;left:4px;font-size:10px}
-/* line 181 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 164 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .gauge .value{height:15px;background:#00f;margin:2px}
-/* line 188 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 171 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .button{border:4px solid #f00;padding:3px}
-/* line 193 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 176 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .perfect{font-size:120%;color:#f00}
-/* line 198 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 181 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx{position:absolute;top:0;width:100%;height:100%;}
-/* line 203 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 186 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx.flash{background:#fff}
-/* line 207 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 190 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx .starfield{position:absolute;top:-1500px;left:0;}
-/* line 211 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 194 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx .starfield.stars{width:100%;height:2000px;background-repeat:repeat-y}
-/* line 216 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 199 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx .starfield.l-1{-webkit-animation:vertical-scroll 10s linear infinite;-moz-animation:vertical-scroll 10s linear infinite;-o-animation:vertical-scroll 10s linear infinite;-ms-animation:vertical-scroll 10s linear infinite;animation:vertical-scroll 10s linear infinite}
-/* line 219 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 202 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx .starfield.l-2{-webkit-animation:vertical-scroll 15s linear infinite;-moz-animation:vertical-scroll 15s linear infinite;-o-animation:vertical-scroll 15s linear infinite;-ms-animation:vertical-scroll 15s linear infinite;animation:vertical-scroll 15s linear infinite}
-/* line 222 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 205 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx .starfield.l-3{-webkit-animation:vertical-scroll 20s linear infinite;-moz-animation:vertical-scroll 20s linear infinite;-o-animation:vertical-scroll 20s linear infinite;-ms-animation:vertical-scroll 20s linear infinite;animation:vertical-scroll 20s linear infinite}
-/* line 225 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 208 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 
-/* line 226 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 209 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx .starfield.reversed.l-1{-webkit-animation:vertical-scroll-reversed 2s linear infinite;-moz-animation:vertical-scroll-reversed 2s linear infinite;-o-animation:vertical-scroll-reversed 2s linear infinite;-ms-animation:vertical-scroll-reversed 2s linear infinite;animation:vertical-scroll-reversed 2s linear infinite}
-/* line 229 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 212 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx .starfield.reversed.l-2{-webkit-animation:vertical-scroll-reversed 4s linear infinite;-moz-animation:vertical-scroll-reversed 4s linear infinite;-o-animation:vertical-scroll-reversed 4s linear infinite;-ms-animation:vertical-scroll-reversed 4s linear infinite;animation:vertical-scroll-reversed 4s linear infinite}
-/* line 232 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 215 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .fx .starfield.reversed.l-3{-webkit-animation:vertical-scroll-reversed 6s linear infinite;-moz-animation:vertical-scroll-reversed 6s linear infinite;-o-animation:vertical-scroll-reversed 6s linear infinite;-ms-animation:vertical-scroll-reversed 6s linear infinite;animation:vertical-scroll-reversed 6s linear infinite}
-/* line 239 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 222 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .kill-list{text-transform:none;font-size:20px;}
-/* line 242 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 225 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .kill-list ul{padding:0;}
-/* line 244 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 227 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .kill-list ul li{list-style-type:none}
-/* line 250 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
+/* line 233 : /Users/bobylito/Dropbox/source.sync/reactGames/src/stylus/index.styl */
 .score{text-transform:none;font-size:20px}
