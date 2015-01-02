@@ -1,4 +1,4 @@
 *.swp
-/js
-/css
+/js/*
+/css/*
 node_modules
