@@ -133,7 +133,7 @@ var worldTick = function(world, nextTimestamp){
     if( prfx === Ship.prototype.PRFX_ID ){
       world.ship = objects[0].collide( world, nextTimestamp );
     }
-    else _.each( objects, 
+    else _.each( objects,
                     function( object ){
                       object.collide( world, nextTimestamp ); })
   });
