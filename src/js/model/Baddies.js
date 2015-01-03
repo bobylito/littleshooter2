@@ -5,10 +5,39 @@ var id = utils.idGenFactory();
 
 var Sounds = require('../Sounds');
 
+/**
+ * Check if the position is within the bounds with respect the margins
+ * The space to which the margins are applied are [ [0,1], [0,1] ]
+ * Margins are uniform same for left/right and top/down
+ */
+var isOutsideBounds = function(margins, position){
+  return position[0] > (1-margins[0]) ||
+         position[0] < margins[0] ||
+         position[1] > 1-margins[1] ||
+         position[1] < margins[1];
+};
 //Returns the current acceleration value
 var Patterns = {
-  "straight" : function straightP(deltaT, timestamp){ 
+  "straight" : function straightP(deltaT, timestamp){
     return [0, this.maxSpeed[1]];
+  },
+  "left" : function leftP(deltaT, timestamp){
+    return [ -this.maxSpeed[0], 0 ];
+  },
+  "right" : function leftP(deltaT, timestamp){
+    return [ this.maxSpeed[0], 0 ];
+  },
+  "downLeft" : function downLeftP(deltaT, timestamp){
+    return [ -this.maxSpeed[0],  this.maxSpeed[1] ];
+  },
+  "downRight":function downRightP(deltaT, timestamp){
+    return [  this.maxSpeed[0],  this.maxSpeed[1] ];
+  },
+  "upLeft": function upLeftP(deltaT, timestamp){
+    return [ -this.maxSpeed[0], -this.maxSpeed[1] ];
+  },
+  "upRight": function upRightP(deltaT, timestamp){
+    return [  this.maxSpeed[0], -this.maxSpeed[1] ];
   },
   "triangle" : function squareP(deltaT, timestamp){
     var t0 = timestamp;
@@ -23,18 +52,76 @@ var Patterns = {
       }
     };
     return p.call(this, deltaT, timestamp);
+  },
+  "largeScan" : function lScanPattern(deltaT, timestamp){
+    var state = 0;
+    var lastTurnPosition = 0;
+    var p = this.pattern = function initializedLScan(deltaT, timestamp){
+      if(state === 0){
+        if( this.position[1] > 0.1 ) state = 1;
+        return Patterns.straight.call(this, deltaT, timestamp);
+      }
+      else if(state === 1){
+        if( this.position[0] <= 0.1 ){
+          lastTurnPosition = this.position[1];
+          state = 2;
+        }
+        return Patterns.left.call(this, deltaT, timestamp);
+      }
+      else if(state === 2){
+        if( this.position[1] > lastTurnPosition + 0.1 ) {
+          if(this.position [0] > 0.5) state = 1;
+          else state = 3;
+        }
+        return Patterns.straight.call(this, deltaT, timestamp);
+      }
+      else if(state === 3){
+        if( this.position[0] >= 0.9 ) {
+          lastTurnPosition = this.position[1];
+          state = 2;
+        }
+        return Patterns.right.call(this, deltaT, timestamp);
+      }
+    };
+    return p.call(this, deltaT, timestamp);
+  },
+  "pong": function pongP(deltaT, timestamp){
+    var state = 0;
+    var p = this.pattern = function initializedLScan(deltaT, timestamp){
+      if(state === 0){
+        if( this.position[0] > 0.9 ) state = 1;
+        return Patterns.downRight.call(this, deltaT, timestamp);
+      }
+      else if(state === 1){
+        if( this.position[1] > 0.8 ) state = 2;
+        return Patterns.downLeft.call(this, deltaT, timestamp);
+      }
+      else if(state === 2){
+        if( this.position[0] < 0.1 ) state = 3;
+        return Patterns.upLeft.call(this, deltaT, timestamp);
+      }
+      else if(state === 3){
+        if( this.position[1] < 0.1 ) state = 4;
+        return Patterns.upRight.call(this, deltaT, timestamp);
+      }
+      else if(state === 4){
+        return Patterns.straight.call(this, deltaT, timestamp);
+      }
+    };
+    return p.call(this, deltaT, timestamp);
+  
   }
 };
 
 //Baddie
 /**
- * @param config : object containing the following keys 
+ * @param config : object containing the following keys
  *  - position : vec2 (eg array of two elements)
  *  - maxSpeed : vec2
  *  - size : vec2
  *  - life : Number
- *  - weight : Number 
- *  - pattern : (deltaT: Number, timestamp: Number) => acceleration: vec2 
+ *  - weight : Number
+ *  - pattern : (deltaT: Number, timestamp: Number) => acceleration: vec2
  */
 var Monster = function( config ) {
   if( !config ) throw "WTF PEOPLE! no config object were provided to Monster "+
@@ -70,7 +157,7 @@ Monster.prototype = {
     //this.speed[1] = Math.min( this.maxSpeed[1], this.speed[1] + acc[1]);
     this.position[0] += this.speed[0] * deltaT;
     this.position[1] += this.speed[1] * deltaT;
-    if( this.position[1] > 1) { 
+    if( this.position[1] > 1) {
       Messages.post( Messages.ID.BADDIE_WIN, Messages.channelIDs.GAME, this.id);
       world.stats.miss( this.PRFX_ID, world.timestamp );
     }
@@ -101,7 +188,7 @@ var Zouro = function( position, movePattern){
     size         : [0.04, 0.04],
     weight       : 1,
     life         : 3,
-    pattern      : movePattern
+    pattern      : movePattern || "straight"
   });
 };
 Zouro.prototype = Object.create( Monster.prototype );
@@ -115,22 +202,8 @@ var Ouno = function( position, movePattern){
     speed        : [0, 0.0003],
     size         : [0.04, 0.04],
     weight       : 1,
-    life         : 2,
-    pattern      : movePattern
-  });
-};
-Ouno.prototype = Object.create( Monster.prototype );
-Ouno.prototype.constructor = Ouno;
-Ouno.prototype.PRFX_ID = "ouno";
-var Ouno = function( position, movePattern){
-  Monster.call( this, {
-    position     : position || [ Math.random(), -0.2],
-    maxSpeed     : [0.0003, 0.0003],
-    speed        : [0, 0.0003],
-    size         : [0.04, 0.04],
-    weight       : 1,
     life         : 3,
-    pattern      : movePattern
+    pattern      : movePattern || "largeScan"
   });
 };
 Ouno.prototype = Object.create( Monster.prototype );
@@ -145,7 +218,7 @@ var Douo = function( position, movePattern ){
     size         : [0.04, 0.04],
     weight       : 4,
     life         : 20,
-    pattern      : movePattern
+    pattern      : movePattern || "straight"
   });
   this.lastFire     = 0;
 };
@@ -177,7 +250,7 @@ var Trouo = function( position, movePattern ){
     size         : [0.04, 0.04],
     weight       : 0.75,
     life         : 1,
-    pattern      : movePattern
+    pattern      : movePattern || "pong"
   });
 };
 Trouo.prototype = Object.create(Monster.prototype);
