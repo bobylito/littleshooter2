@@ -35,7 +35,7 @@ Player.prototype = {
   successShoot: function(t){
     var newState = new Player( this );
     newState.lastUsedWeaponAt = t; 
-    newState.weaponEnergy -= 5;
+    newState.weaponEnergy = Math.max(0, this.weaponEnergy - 5);
     return Object.freeze(newState);
   },
   failShoot: function(t){
@@ -52,7 +52,7 @@ Player.prototype = {
     else return this;
   },
   canShoot: function(){
-    return this.weaponEnergy >= 0;
+    return this.weaponEnergy > 0;
   },
   getWeaponEnergyRatio: function(){
     return this.weaponEnergy / 100;
