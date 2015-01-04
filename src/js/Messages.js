@@ -19,6 +19,8 @@ var messageIDs = {
   START_NEXT_WAVE : 30,
   UPDATE_SCORE    : 40,
   PLAYER_LOSE     : 50,
+  STARFIELD_OUT   : 60,
+  STARFIELD_IN    : 61,
   SETUP_FX        : 100,
   LOADED_SOUNDS   : 200
 }

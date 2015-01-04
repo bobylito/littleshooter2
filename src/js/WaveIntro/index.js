@@ -25,8 +25,8 @@ var WaveIntro = React.createClass({
       var waveNumber = this.props.world.waveManager.currentWave + (this.state.isVictory ? 1 : 0);
       var nextWave = this.props.world.waveManager.getWave(waveNumber);
       return <div className="day intro">
-               <h1 className="from-bottom-fade-in">Day {waveNumber + 1}</h1>
-               <p className="from-top-fade-in delay-1">{ nextWave.title }</p>
+               <h1 className="from-bottom-fade-in delay-1">Day {waveNumber + 1}</h1>
+               <p className="from-top-fade-in delay-2">{ nextWave.title }</p>
              </div>
     }
     else if(this.state.step === 2){
@@ -56,6 +56,7 @@ var WaveIntro = React.createClass({
       }
     }
     else if( this.state.step === 1 && this.props.inputState.time > this.state.timeout){
+      Messages.post( Messages.ID.STARFIELD_IN, Messages.channelIDs.FX );
       this.setState({
         step : 2
       });
@@ -70,16 +71,16 @@ var WaveIntro = React.createClass({
     }
   },
   componentDidMount: function(){
-    if( this.state.step === 1){
-      this.setState({
-        timeout : this.props.inputState.time + 3000
-      });
-    }
+    this.setupTimeout();
   },
   componentDidUpdate: function(){
+    this.setupTimeout();
+  },
+  setupTimeout: function(){
     if( this.state.step === 1){
+      Messages.post( Messages.ID.STARFIELD_OUT, Messages.channelIDs.FX );
       this.setState({
-        timeout : this.props.inputState.time + 3000
+        timeout : this.props.inputState.time + 4000
       });
     }
   },

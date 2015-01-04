@@ -20,6 +20,9 @@ var FX = React.createClass({
   shouldComponentUpdate: function(){
     var messages = Messages.get(Messages.channelIDs.FX);
     return !_.isEmpty(messages);
+  },
+  componentDidUpdate: function(){
+    Messages.reset( Messages.channelIDs.FX );
   }
 });
 

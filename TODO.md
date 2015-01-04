@@ -11,7 +11,7 @@ TODO - React vs Games
   [x] Add back the game
   [X] Game Over
  [X] Fix position (make rockets shoot straight)
- [ ] Script sequence of ennemies
+ [X] Script sequence of ennemies
   [X] Basic wave system
   [X] Script how the enemies enter the screen
    [X] Simple dispatch : equal space of all the ennemies entering the screen at the same time
@@ -37,7 +37,8 @@ TODO - React vs Games
  [X] More sounds
  [ ] Music
   [X] Main theme (sorta)
-  [ ] Better music?
+  [ ] Victory
+  [ ] Defeat
  [ ] Polish
   [X] Font
   [X] Animations (text, more?)
