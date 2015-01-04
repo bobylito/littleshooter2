@@ -15,6 +15,7 @@ var messageIDs = {
   BADDIE_HIT      : 10,
   BADDIE_WIN      : 11,
   FLASH           : 20,
+  ALERT           : 21,
   START_NEXT_WAVE : 30,
   UPDATE_SCORE    : 40,
   PLAYER_LOSE     : 50,

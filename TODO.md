@@ -30,11 +30,11 @@ TODO - React vs Games
   [X] Flash (when ship explod)
   [X] ScreenShake
   [X] Better explosions (with discs)
-  [ ] Feedback on winning baddies
+  [X] Feedback on winning baddies
  [X] Sub screens
   [X] Wave intro
  [X] Sound effects
- [ ] More sounds
+ [X] More sounds
  [ ] Music
   [X] Main theme (sorta)
   [ ] Better music?

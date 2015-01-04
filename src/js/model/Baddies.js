@@ -159,6 +159,7 @@ Monster.prototype = {
     this.position[1] += this.speed[1] * deltaT;
     if( this.position[1] > 1) {
       Messages.post( Messages.ID.BADDIE_WIN, Messages.channelIDs.GAME, this.id);
+      Messages.post( Messages.ID.ALERT, Messages.channelIDs.FX);
       world.stats.miss( this.PRFX_ID, world.timestamp );
     }
     this.flash=false;
