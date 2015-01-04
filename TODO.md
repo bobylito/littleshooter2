@@ -17,7 +17,7 @@ TODO - React vs Games
    [X] Simple dispatch : equal space of all the ennemies entering the screen at the same time
    [X] original position patterns?
    [X] move patterns
-   [ ] Real patterns!! : based on speed?
+   [X] Real patterns!! : based on speed?
  [X] Make different kind of ennemies
   [X] Duo : faster and less life
   [X] Trio : slower, more life and can shoot
@@ -30,6 +30,7 @@ TODO - React vs Games
   [X] Flash (when ship explod)
   [X] ScreenShake
   [X] Better explosions (with discs)
+  [ ] Feedback on winning baddies
  [X] Sub screens
   [X] Wave intro
  [X] Sound effects

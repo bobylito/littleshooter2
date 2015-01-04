@@ -6,6 +6,8 @@ var Messages = require('../Messages');
 var Victory = require('./Victory');
 var Defeat = require('./Defeat');
 
+var Sounds = require('../Sounds');
+
 var WaveIntro = React.createClass({
   getInitialState: function(){
     return {
@@ -44,6 +46,7 @@ var WaveIntro = React.createClass({
   componentWillReceiveProps: function(props){
     var step = this.state.step;
     if( step === 2 && props.inputState.keys.enter){
+      Sounds.sprites.play("validate");
       if(this.state.isVictory)
         Messages.post(Messages.ID.START_NEXT_WAVE, Messages.channelIDs.GAME);
       else{
@@ -58,6 +61,7 @@ var WaveIntro = React.createClass({
       });
     }
     else if( step === 0 && props.inputState.keys.enter){
+      Sounds.sprites.play("validate");
       if(this.props.world.player.life < 1)
         Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT, this.props.world);
       this.setState({
