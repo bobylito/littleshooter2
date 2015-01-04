@@ -43,40 +43,11 @@ function WavesManager(){
   this.currentWave = -1;
 }
 WavesManager.prototype = {
-  CONFIG : [
-    { title: "Wake up!",
-      wave : [
-        [1, "zouro", "straight"],
-        [3, "zouro", "straight"],
-        [5, "zouro", "straight"],
-        [7, "zouro", "straight"],
-        [9, "zouro", "straight"],
-        [13, "zouro", "straight"],
-        [18, "zouro", "straight"],
-        [19, "zouro", "straight"],
-        [20, "zouro", "straight"],
-        [21, "zouro", "straight"]
-      ] },
-    { title: "Far from home",
-      wave : [
-        [1, "zouro", "straight"],
-        [3, "zouro", "straight"],
-        [5, "zouro", "straight"],
-        [7, "zouro", "straight"],
-        [9, "zouro", "straight"],
-        [13, "zouro", "straight"],
-        [13, "zouro", "straight"],
-        [16, "zouro", "straight"],
-        [18, "zouro", "straight"],
-        [20, "zouro", "straight"],
-        [24, "zouro", "straight"],
-        [24, "zouro", "straight"]
-      ] }
-  ],
+  CONFIG : require('./levels'),
   getNextWave: function( timestamp, waveNumber){
-    if( _.isNumber(waveNumber) ) 
+    if( _.isNumber(waveNumber) )
       this.currentWave = waveNumber;
-    else 
+    else
       this.currentWave = (this.currentWave + 1);
 
     var nextWaveConfig = this.CONFIG[this.currentWave % this.CONFIG.length];

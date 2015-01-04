@@ -8,9 +8,10 @@ var Gauge = React.createClass({
   },
   render: function(){
     var style = {
-      width: this.props.amount * 100
+      width: this.props.amount * 100,
     };
-    return <div className="gauge" style={ {width: 105} }>
+    var className = "gauge" + (( this.props.amount < .4) ? " warning" : "");
+    return <div className={className} style={ {width: 104} }>
              <span className="label">{this.props.label}</span>
              <div className="value" style={style}/>
            </div>;

@@ -15,9 +15,12 @@ var messageIDs = {
   BADDIE_HIT      : 10,
   BADDIE_WIN      : 11,
   FLASH           : 20,
+  ALERT           : 21,
   START_NEXT_WAVE : 30,
   UPDATE_SCORE    : 40,
   PLAYER_LOSE     : 50,
+  STARFIELD_OUT   : 60,
+  STARFIELD_IN    : 61,
   SETUP_FX        : 100,
   LOADED_SOUNDS   : 200
 }

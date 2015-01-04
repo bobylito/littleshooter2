@@ -11,13 +11,13 @@ TODO - React vs Games
   [x] Add back the game
   [X] Game Over
  [X] Fix position (make rockets shoot straight)
- [ ] Script sequence of ennemies
+ [X] Script sequence of ennemies
   [X] Basic wave system
   [X] Script how the enemies enter the screen
    [X] Simple dispatch : equal space of all the ennemies entering the screen at the same time
    [X] original position patterns?
    [X] move patterns
-   [ ] Real patterns!!
+   [X] Real patterns!! : based on speed?
  [X] Make different kind of ennemies
   [X] Duo : faster and less life
   [X] Trio : slower, more life and can shoot
@@ -30,13 +30,15 @@ TODO - React vs Games
   [X] Flash (when ship explod)
   [X] ScreenShake
   [X] Better explosions (with discs)
+  [X] Feedback on winning baddies
  [X] Sub screens
   [X] Wave intro
  [X] Sound effects
- [ ] More sounds
+ [X] More sounds
  [ ] Music
   [X] Main theme (sorta)
-  [ ] Better music
+  [ ] Victory
+  [ ] Defeat
  [ ] Polish
   [X] Font
   [X] Animations (text, more?)
@@ -52,6 +54,7 @@ TODO - React vs Games
   [ ] Move all state ship parts into model
  [X] Laser beam as shooting aid
  [ ] Preview ennemies
+ [X] Score update
 
  0.2 : Mobile
 -------------

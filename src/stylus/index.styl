@@ -131,9 +131,18 @@ div:-webkit-full-screen .game {
 .hud {
   .points {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
     text-align:right;
+    color:white;
+    font-size: 150%;
+  }
+  .day {
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    text-align: right;
+    font-size: 110%;
     color:white;
   }
   .life{
@@ -148,6 +157,12 @@ div:-webkit-full-screen .game {
   .gauge{
     top: 40px;
     left: 5px;
+    &.warning{
+      border: 1px solid red;
+      .label{
+        animation: mediumBlink 500ms infinite;
+      }
+    }
   }
 }
 .gauge{
@@ -185,6 +200,11 @@ div:-webkit-full-screen .game {
   height: 100%;
   &.flash {
     background:white;
+  }
+  &.alert {
+    box-sizing: border-box;
+    border: 10px solid red;
+    animation: simpleFadeOut 300ms forwards;
   }
 
   .starfield {

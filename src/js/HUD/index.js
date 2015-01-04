@@ -7,6 +7,7 @@ var Gauge = require('./Gauge');
 var HUD = React.createClass({
   render:function(){
     var player = this.props.player;
+    var dayNumber = this.props.world.waveManager.currentWave;
     var life = _.map( _.range(player.life), function(i){
       return <div className="ship" key={i}/>
     });
@@ -14,6 +15,7 @@ var HUD = React.createClass({
       <div className="points">{player.score}</div>
       <Gauge amount={player.getWeaponEnergyRatio()} label="power"/>
       <div className="life">{life}</div>
+      <div className="day">Day {dayNumber}</div>
     </div>;
   },
   shouldComponentUpdate: function(nextProps){

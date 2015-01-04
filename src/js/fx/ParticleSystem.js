@@ -41,7 +41,6 @@ var ParticleSystem = React.createClass({
         var dirs = _.map( _.range(5), self.randomVec2);
         return _.map(dirs, c.bind(this, m.val));
       }).flatten().value();
-    Messages.reset( Messages.channelIDs.FX );
     this.setState({
       innerTimeTick: now,
       particles : particles

@@ -26,6 +26,16 @@
   animation: fadeIn 1s linear;
 }
 
+.simple-fade-in{
+  animation: simpleFadeIn 500ms ease-in;
+  animation-fill-mode: forwards;
+}
+
+.simple-fade-out{
+  animation: simpleFadeOut 500ms ease-in;
+  animation-fill-mode: forwards;
+}
+
 .impact {
   animation: impact 200ms ease-in;
 }
@@ -66,6 +76,12 @@
   100% { opacity: 1; }
 }
 
+@keyframes mediumBlink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
 @keyframes lightblink {
   0%   { opacity: 1; }
   50%  { opacity: 0.8; }
@@ -88,12 +104,12 @@
 }
 
 @keyframes shake {
-  0%      { transform: translateX( -10px ) }
-  10%     { transform: translateY(  10px ) }
-  20%     { transform: translateX(  10px ) }
-  55%     { transform: translateX( -10px ) }
-  65%     { transform: translateY( -10px ) }
-  75%     { transform: translateX(  10px ) }
+  0%      { transform: translateX( -20px ) }
+  10%     { transform: translateY(  20px ) }
+  20%     { transform: translateX(  20px ) }
+  55%     { transform: translateX( -20px ) }
+  65%     { transform: translateY( -20px ) }
+  75%     { transform: translateX(  20px ) }
   100%    { transform: translateX(   0px ), translateY(   0px ); }
 }
 
@@ -124,6 +140,11 @@
 @keyframes simpleFadeIn {
   0%      { opacity: 0;}
   100%    { opacity: 1;}
+} 
+
+@keyframes simpleFadeOut {
+  0%      { opacity: 1;}
+  100%    { opacity: 0;}
 } 
 
 @keyframes impact {

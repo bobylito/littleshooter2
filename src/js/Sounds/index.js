@@ -8,7 +8,9 @@ var sprites = new Howl({
   sprite : {
     rocket: [0, 430],
     explosion: [430, 945],
-    alienRocket: [1374, 295]
+    alienRocket: [1374, 295],
+    validate: [1669, 76],
+    hit: [1746, 200]
   },
   onload : function(){
     Messages.post( Messages.ID.LOADED_SOUNDS, Messages.channelIDs.ROOT );

@@ -3,6 +3,8 @@
 var React = require('react/addons');
 var Messages = require('../Messages.js');
 
+var Sounds = require('../Sounds');
+
 var Intro = React.createClass({
   render:function(){
     return <div className="intro">
@@ -14,8 +16,10 @@ var Intro = React.createClass({
     </div>;
   },
   componentWillReceiveProps:function(next){
-    if(next.inputState.keys.enter)
+    if(next.inputState.keys.enter){
+      Sounds.sprites.play("validate"); 
       Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT);
+    }
   }
 });
 

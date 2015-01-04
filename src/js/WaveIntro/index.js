@@ -6,6 +6,8 @@ var Messages = require('../Messages');
 var Victory = require('./Victory');
 var Defeat = require('./Defeat');
 
+var Sounds = require('../Sounds');
+
 var WaveIntro = React.createClass({
   getInitialState: function(){
     return {
@@ -23,8 +25,8 @@ var WaveIntro = React.createClass({
       var waveNumber = this.props.world.waveManager.currentWave + (this.state.isVictory ? 1 : 0);
       var nextWave = this.props.world.waveManager.getWave(waveNumber);
       return <div className="day intro">
-               <h1 className="from-bottom-fade-in">Day {waveNumber + 1}</h1>
-               <p className="from-top-fade-in delay-1">{ nextWave.title }</p>
+               <h1 className="from-bottom-fade-in delay-1">Day {waveNumber + 1}</h1>
+               <p className="from-top-fade-in delay-2">{ nextWave.title }</p>
              </div>
     }
     else if(this.state.step === 2){
@@ -44,6 +46,7 @@ var WaveIntro = React.createClass({
   componentWillReceiveProps: function(props){
     var step = this.state.step;
     if( step === 2 && props.inputState.keys.enter){
+      Sounds.sprites.play("validate");
       if(this.state.isVictory)
         Messages.post(Messages.ID.START_NEXT_WAVE, Messages.channelIDs.GAME);
       else{
@@ -53,11 +56,13 @@ var WaveIntro = React.createClass({
       }
     }
     else if( this.state.step === 1 && this.props.inputState.time > this.state.timeout){
+      Messages.post( Messages.ID.STARFIELD_IN, Messages.channelIDs.FX );
       this.setState({
         step : 2
       });
     }
     else if( step === 0 && props.inputState.keys.enter){
+      Sounds.sprites.play("validate");
       if(this.props.world.player.life < 1)
         Messages.post(Messages.ID.CHANGE_SCREEN, Messages.channelIDs.ROOT, this.props.world);
       this.setState({
@@ -66,16 +71,16 @@ var WaveIntro = React.createClass({
     }
   },
   componentDidMount: function(){
-    if( this.state.step === 1){
-      this.setState({
-        timeout : this.props.inputState.time + 3000
-      });
-    }
+    this.setupTimeout();
   },
   componentDidUpdate: function(){
+    this.setupTimeout();
+  },
+  setupTimeout: function(){
     if( this.state.step === 1){
+      Messages.post( Messages.ID.STARFIELD_OUT, Messages.channelIDs.FX );
       this.setState({
-        timeout : this.props.inputState.time + 3000
+        timeout : this.props.inputState.time + 4000
       });
     }
   },
@@ -89,13 +94,13 @@ var WaveIntro = React.createClass({
       });
     }
     else {
-      var total  = this.props.world.waveManager.getTotalMonsterInCurrentWave();
-      var killed = _.reduce( this.props.world.stats.currentWave.kill,
+      var total  = world.waveManager.getTotalMonsterInCurrentWave();
+      var killed = _.reduce( world.stats.currentWave.kill,
                             function(memo, monsters){
                               return memo + monsters.length;
                             }, 0);
       if( killed / total > 0.75) {
-        var score  = total * 50;
+        var score  = (killed === total) ? total * 50 : 0;
         this.setState({
           score: score,
           isVictory : true
