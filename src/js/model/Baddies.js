@@ -135,6 +135,7 @@ var Monster = function( config ) {
   this.pattern      = config.pattern ? (Patterns[config.pattern]).bind(this) :
                                        (Patterns.straight).bind(this);
   this.id           = this.PRFX_ID + id();
+  this.value        = config.value || 50;
 }
 
 Monster.prototype = {
@@ -174,6 +175,7 @@ Monster.prototype = {
     }
     else {
       Messages.post( Messages.ID.BADDIE_DESTROYED, Messages.channelIDs.GAME, this.id);
+      Messages.post( Messages.ID.UPDATE_SCORE, Messages.channelIDs.GAME, this.value);
       Messages.post( Messages.ID.EXPLOSION, Messages.channelIDs.FX, this.position);
       Sounds.sprites.play('explosion');
       world.stats.kill( this.PRFX_ID, world.timestamp );
@@ -204,7 +206,8 @@ var Ouno = function( position, movePattern){
     size         : [0.04, 0.04],
     weight       : 1,
     life         : 3,
-    pattern      : movePattern || "largeScan"
+    pattern      : movePattern || "largeScan",
+    value        : 100
   });
 };
 Ouno.prototype = Object.create( Monster.prototype );
@@ -219,7 +222,8 @@ var Douo = function( position, movePattern ){
     size         : [0.04, 0.04],
     weight       : 4,
     life         : 20,
-    pattern      : movePattern || "straight"
+    pattern      : movePattern || "straight",
+    value        : 200
   });
   this.lastFire     = 0;
 };
@@ -251,7 +255,8 @@ var Trouo = function( position, movePattern ){
     size         : [0.04, 0.04],
     weight       : 0.75,
     life         : 1,
-    pattern      : movePattern || "pong"
+    pattern      : movePattern || "pong",
+    value        : 75
   });
 };
 Trouo.prototype = Object.create(Monster.prototype);

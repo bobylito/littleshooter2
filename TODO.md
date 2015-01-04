@@ -53,6 +53,7 @@ TODO - React vs Games
   [ ] Move all state ship parts into model
  [X] Laser beam as shooting aid
  [ ] Preview ennemies
+ [X] Score update
 
  0.2 : Mobile
 -------------

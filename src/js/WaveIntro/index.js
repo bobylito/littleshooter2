@@ -99,7 +99,7 @@ var WaveIntro = React.createClass({
                               return memo + monsters.length;
                             }, 0);
       if( killed / total > 0.75) {
-        var score  = total * 50;
+        var score  = (killed === total) ? total * 50 : 0;
         this.setState({
           score: score,
           isVictory : true

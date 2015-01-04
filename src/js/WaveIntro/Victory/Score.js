@@ -5,7 +5,7 @@ var Score = React.createClass({
   render: function(){
     var score = this.props.score; 
     return <div className="score"> 
-      <h2>Score</h2>
+      <h2>Bonus score</h2>
       <p>{score}</p>
     </div>;
   }
