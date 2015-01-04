@@ -94,8 +94,8 @@ var WaveIntro = React.createClass({
       });
     }
     else {
-      var total  = this.props.world.waveManager.getTotalMonsterInCurrentWave();
-      var killed = _.reduce( this.props.world.stats.currentWave.kill,
+      var total  = world.waveManager.getTotalMonsterInCurrentWave();
+      var killed = _.reduce( world.stats.currentWave.kill,
                             function(memo, monsters){
                               return memo + monsters.length;
                             }, 0);

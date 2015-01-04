@@ -34,15 +34,26 @@ var GameScreen = React.createClass({
   },
 
   render : function(){
-    var hordeOrIntro = this.state.world.currentWave ?
-                <Horde world={this.state.world} screen={this.props.screen}/> :
+    if( !!this.state.world.currentWave ){
+      return <div className="screen">
+               <Horde world={this.state.world} screen={this.props.screen}/> :
+               <Ship inputState={this.state.input} ship={this.state.world.ship}
+                     baddies={this.state.world.baddies} screen={this.props.screen} />
+               <RocketLauncher inputState={this.state.input} world={this.state.world}
+                               screen={this.props.screen} />
+               <HUD player={this.state.world.player} screen={this.props.screen}
+                    world={this.state.world}/>
+             </div>;
+    }
+    else {
+      return <div className="screen">
                 <WaveIntro inputState={this.state.input} world={this.state.world} screen={this.props.screen} />;
-    return <div className="screen">
-              {hordeOrIntro}
-              <Ship inputState={this.state.input} ship={this.state.world.ship} baddies={this.state.world.baddies} screen={this.props.screen} />
-              <RocketLauncher inputState={this.state.input} world={this.state.world} screen={this.props.screen} />
-              <HUD player={this.state.world.player} screen={this.props.screen}/>
-           </div>;
+                <Ship inputState={this.state.input} ship={this.state.world.ship}
+                      baddies={this.state.world.baddies} screen={this.props.screen} />
+                <RocketLauncher inputState={this.state.input} world={this.state.world}
+                                screen={this.props.screen} />
+             </div>;
+    }
   },
   tick : function( newProps ){
     var nextWorld = models.tick(this.state.world, newProps.inputState.time);
