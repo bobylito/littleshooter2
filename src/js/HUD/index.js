@@ -7,11 +7,11 @@ var Gauge = require('./Gauge');
 var HUD = React.createClass({
   render:function(){
     var player = this.props.player;
-    var dayNumber = this.props.world.waveManager.currentWave;
+    var dayNumber = this.props.world.waveManager.currentWave + 1;
     var life = _.map( _.range(player.life), function(i){
       return <div className="ship" key={i}/>
     });
-    return <div className="hud">
+    return <div className="hud simple-fade-in">
       <div className="points">{player.score}</div>
       <Gauge amount={player.getWeaponEnergyRatio()} label="power"/>
       <div className="life">{life}</div>
