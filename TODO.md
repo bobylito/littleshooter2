@@ -53,7 +53,7 @@ TODO - React vs Games
  [ ] Cleanup
   [ ] Move all state ship parts into model
  [X] Laser beam as shooting aid
- [ ] Preview ennemies
+ [ ] Preview enemies
  [X] Score update
 
  0.2 : Mobile
@@ -62,18 +62,18 @@ TODO - React vs Games
 Gameplay
 --------
 
- [X] Bullets push ennemies
+ [X] Bullets push enemies
  [X] Split in missions
- [X] Target of missions : have a limited number of ennemies reaching past the player
+ [X] Target of missions : have a limited number of enemies reaching past the player
  [ ] Two type of weapons :
-  [X] Bullets (push ennemies/very limited damage, fast, illimited qt, autofire?)
+  [X] Bullets (push enemies/very limited damage, fast, illimited qt, autofire?)
   [ ] Bomb/Rockets (destroy, slow, limited, cooldown/quantity?)
  [ ] Limit range of weapon
- [X] Ennemies have life
+ [X] enemies have life
  [X] Ship life is unlimited but ship can't shoot nor collide when invicible
  [X] Life (as in the HUD) are time machine tockens used when earth is defeated
  [X] Bullets limits
- [ ] Killing ennemy gives energy boost and the normal energy replainish rate should be lower
+ [ ] Killing enemy gives energy boost and the normal energy replainish rate should be lower
 
 TOOLS / Framework
 -----------------
