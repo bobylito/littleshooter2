@@ -15,7 +15,7 @@ var KillList = React.createClass( {
     var perfectText = _.isEmpty(currentWave.miss) ?
       <div className={"perfect impact delay-"+ (i+1) }>Perfect</div> : undefined;
     return <div className="kill-list">
-      <h2 className={this.props.className}>Ennemies killed</h2>
+      <h2 className={this.props.className}>Enemies killed</h2>
       <ul>
         {killList}
       </ul>
