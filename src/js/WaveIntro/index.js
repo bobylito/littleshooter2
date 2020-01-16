@@ -32,7 +32,7 @@ var WaveIntro = React.createClass({
     else if(this.state.step === 2){
       return <div className="wave-intro intro">
           <h1 className="impact">Next Wave Incoming</h1>
-          <p className="from-left">Kill at least <strong>3/4</strong> of the ennemies</p>
+          <p className="from-left">Kill at least <strong>3/4</strong> of the enemies</p>
           <h2 className="impact delay-1">Get ready!</h2>
           <p className="fade-in-then-blink">
             Press <span className="button">enter</span>
