@@ -6,7 +6,7 @@ var Defeat = React.createClass({
   render: function(){
     return <div className="wave-intro intro">
       <h1>DEFEAT!</h1>
-      <p>Earth was not able defend itself from the ennemies <strong>you</strong> let go</p>
+      <p>Earth was not able defend itself from the enemiess/ <strong>you</strong> let go</p>
       <p>Press <span className="button">enter</span> to go back in time and fix this.</p>
     </div>;
   }
