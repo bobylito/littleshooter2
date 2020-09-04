@@ -13,7 +13,7 @@
   "dependencies": {
     "envify": "^3.2.0",
     "howler": "^1.1.25",
-    "react": "^0.12.1",
+    "react": "^16.13.1",
     "underscore": "*"
   }
 }
